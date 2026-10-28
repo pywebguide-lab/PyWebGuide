@@ -10,11 +10,15 @@ PyWeb Guide — учебный веб-ресурс о Python в веб-разр�
     index.html                — главная, дорожная карта с прогрессом
     about.html                — О Python
     frameworks.html           — Django, Flask, FastAPI, мини-тест
-    project.html              — первый проект по шагам (Flask и Django)
+    databases.html            — SQL, SQLite, ORM и миграции Django
+    project.html              — первый проект по шагам (Flask и Django), частые ошибки
+    deploy.html               — публикация на PythonAnywhere
+    404.html                  — страница «не найдено» для GitHub Pages
     contacts.html             — учебная форма, об авторах
     styles.css                — оформление и медиазапросы
     script.js                 — меню, мини-тест, прогресс, учебная форма
     assets/knowledge-map.svg  — схема пути запроса
+    assets/icon.svg, *.png    — иконки сайта и картинка превью для мессенджеров
     sitemap.xml               — карта сайта для поисковых систем
 
   Старые адреса ЛР3 (#/about, #/frameworks, #/contacts) перенаправляются
@@ -29,6 +33,14 @@ PyWeb Guide — учебный веб-ресурс о Python в веб-разр�
   - отдельные HTML-страницы со своими title, description, canonical;
   - краткий раздел о FastAPI;
   - исправлены замечания Lighthouse (порядок заголовков, имя ссылки-логотипа).
+
+ДОРАБОТКА 2
+  - разделы «Базы данных» и «Публикация», вторая часть первого проекта;
+  - частые ошибки с решениями, проверка знаний с объяснениями;
+  - подсветка синтаксиса Python, светлая тема (ключ pyweb_theme);
+  - «Продолжить обучение» на главной, превью Open Graph, иконки,
+    страница 404, микроразметка schema.org.
+  Все примеры кода проверены на Python 3.13, Flask 3.1.3 и Django 6.1.2.
 
 ОГРАНИЧЕНИЯ
   - Примеры на Python учебные: сервер в проекте не запускается.

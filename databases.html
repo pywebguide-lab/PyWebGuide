@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Базы данных: SQL, SQLite и ORM Django — PyWeb Guide</title>
+
+  <meta name="description" content="Как сайт хранит данные: SQL на примере SQLite, защита от SQL-инъекций, ORM и миграции Django. С проверкой знаний.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/databases.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Базы данных: SQL, SQLite и ORM Django — PyWeb Guide">
+  <meta property="og:description" content="Как сайт хранит данные: SQL на примере SQLite, защита от SQL-инъекций, ORM и миграции Django. С проверкой знаний.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/databases.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link active" href="databases.html" aria-current="page">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li><a class="nav-link" href="contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+      <div class="container page-hero">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a>
+          <span aria-hidden="true">/</span>
+          <span>Базы данных</span>
+        </nav>
+
+        <p class="eyebrow">Раздел 3</p>
+        <h1>Базы данных: как сайт запоминает информацию</h1>
+        <p class="lead">
+          Пользователи, задачи, товары, комментарии — всё, что должно сохраниться после закрытия вкладки,
+          хранится в базе данных. Разберём SQL на примере SQLite и покажем, как то же самое делает ORM в Django.
+        </p>
+      </div>
+
+      <section class="section" aria-labelledby="why-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="why-title">Зачем серверу база данных</h2>
+            <p>Переменные в Python живут, пока работает программа. База данных хранит данные на диске и умеет быстро их находить.</p>
+          </div>
+
+          <div class="card-grid">
+            <article class="card reveal">
+              <h3><span class="tag">🗂️</span>Таблицы</h3>
+              <p>Данные лежат в таблицах: строка — одна запись (товар), столбец — одно свойство (название, цена).</p>
+            </article>
+
+            <article class="card reveal">
+              <h3><span class="tag">🔑</span>Первичный ключ</h3>
+              <p>У каждой строки есть уникальный номер <code>id</code>. По нему запись можно найти, изменить или удалить.</p>
+            </article>
+
+            <article class="card reveal">
+              <h3><span class="tag">💬</span>SQL</h3>
+              <p>Язык запросов к базе: <code>SELECT</code> читает, <code>INSERT</code> добавляет, <code>UPDATE</code> меняет, <code>DELETE</code> удаляет.</p>
+            </article>
+
+            <article class="card reveal">
+              <h3><span class="tag">🧩</span>ORM</h3>
+              <p>Прослойка, которая превращает классы Python в таблицы, а вызовы методов — в SQL-запросы.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sql-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="sql-title">SQL на практике: модуль sqlite3</h2>
+            <p>
+              SQLite — база данных в одном файле. Она встроена в Python, сервер для неё не нужен,
+              поэтому это лучший вариант для учебных проектов. Сохраните код в файл и запустите — он создаст <code>shop.db</code>.
+            </p>
+          </div>
+
+          <div class="code-block reveal">
+            <div class="code-head">
+              <span>shop.py</span>
+              <button class="copy-btn" type="button">Копировать</button>
+            </div>
+            <pre><code>import sqlite3
+
+conn = sqlite3.connect("shop.db")
+
+conn.execute("""
+    CREATE TABLE IF NOT EXISTS products (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        price INTEGER NOT NULL
+    )
+""")
+
+conn.execute("INSERT INTO products (name, price) VALUES (?, ?)", ("Тетрадь", 350))
+conn.execute("INSERT INTO products (name, price) VALUES (?, ?)", ("Ручка", 150))
+conn.commit()
+
+for name, price in conn.execute("SELECT name, price FROM products WHERE price &lt; ?", (300,)):
+    print(name, price)  # Ручка 150
+
+conn.execute("UPDATE products SET price = ? WHERE name = ?", (400, "Тетрадь"))
+conn.execute("DELETE FROM products WHERE name = ?", ("Ручка",))
+conn.commit()
+
+print(conn.execute("SELECT name, price FROM products").fetchall())  # [('Тетрадь', 400)]
+conn.close()</code></pre>
+          </div>
+
+          <p class="notice" role="note">
+            <strong>Не забывайте <code>commit()</code>.</strong> Изменения (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>)
+            попадают в файл только после вызова <code>conn.commit()</code>. Без него данные пропадут при закрытии соединения.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="inject-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="inject-title">Главное правило безопасности: параметры вместо f-строк</h2>
+            <p>
+              Если вставить текст пользователя прямо в SQL, пользователь сможет изменить сам запрос.
+              Это называется SQL-инъекцией — одна из самых частых уязвимостей сайтов.
+            </p>
+          </div>
+
+          <div class="code-grid">
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>Опасно: f-строка</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>name = "' OR '1'='1"  # так может ввести пользователь
+
+rows = conn.execute(
+    f"SELECT * FROM products WHERE name = '{name}'"
+).fetchall()
+# вернутся ВСЕ товары: условие стало всегда истинным</code></pre>
+            </div>
+
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>Безопасно: параметр ?</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>name = "' OR '1'='1"
+
+rows = conn.execute(
+    "SELECT * FROM products WHERE name = ?", (name,)
+).fetchall()
+# вернётся пустой список: товара с таким названием нет</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="orm-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="orm-title">То же самое через ORM Django</h2>
+            <p>
+              В Django таблицу описывают классом-моделью, а запросы пишут методами Python.
+              SQL Django составляет сам и всегда подставляет значения как параметры — инъекция здесь не страшна.
+            </p>
+          </div>
+
+          <div class="code-grid">
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>shop/models.py</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>from django.db import models
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.PositiveIntegerField()</code></pre>
+            </div>
+
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>python manage.py shell</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>from shop.models import Product
+
+Product.objects.create(name="Тетрадь", price=350)
+Product.objects.create(name="Ручка", price=150)
+
+cheap = Product.objects.filter(price__lt=300)  # Ручка
+Product.objects.filter(name="Тетрадь").update(price=400)
+Product.objects.filter(name="Ручка").delete()</code></pre>
+            </div>
+          </div>
+
+          <div class="table-wrap reveal stack-gap" tabindex="0" role="region" aria-label="Таблица: SQL и ORM Django">
+            <table>
+              <caption>Одни и те же операции на SQL и в ORM Django</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Действие</th>
+                  <th scope="col">SQL</th>
+                  <th scope="col">ORM Django</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Добавить</td>
+                  <td><code>INSERT INTO products (name, price) VALUES (?, ?)</code></td>
+                  <td><code>Product.objects.create(name=…, price=…)</code></td>
+                </tr>
+                <tr>
+                  <td>Найти по условию</td>
+                  <td><code>SELECT … FROM products WHERE price &lt; 300</code></td>
+                  <td><code>Product.objects.filter(price__lt=300)</code></td>
+                </tr>
+                <tr>
+                  <td>Изменить</td>
+                  <td><code>UPDATE products SET price = 400 WHERE …</code></td>
+                  <td><code>Product.objects.filter(…).update(price=400)</code></td>
+                </tr>
+                <tr>
+                  <td>Удалить</td>
+                  <td><code>DELETE FROM products WHERE …</code></td>
+                  <td><code>Product.objects.filter(…).delete()</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="migr-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="migr-title">Миграции: как модель становится таблицей</h2>
+            <p>
+              Миграция — файл с инструкцией «как изменить базу». Django создаёт его по изменениям в моделях,
+              а затем применяет. Так структура базы всегда совпадает с кодом, и её легко повторить на другом компьютере.
+            </p>
+          </div>
+
+          <div class="code-grid">
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>Терминал</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>python manage.py makemigrations   # создать миграцию по моделям
+python manage.py migrate          # применить её к базе
+python manage.py sqlmigrate shop 0001   # показать SQL миграции</code></pre>
+            </div>
+
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>SQL, который сгенерировал Django</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>CREATE TABLE "shop_product" (
+    "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" varchar(100) NOT NULL,
+    "price" integer unsigned NOT NULL CHECK ("price" &gt;= 0)
+);</code></pre>
+            </div>
+          </div>
+
+          <p class="note stack-gap">
+            Обратите внимание: <code>PositiveIntegerField</code> превратился в проверку <code>CHECK ("price" &gt;= 0)</code> —
+            база сама не даст сохранить отрицательную цену. Вывод получен командой <code>sqlmigrate</code> на Django 6.1 и SQLite.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="choose-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="choose-title">Какую базу выбрать</h2>
+            <p>Код с ORM почти не меняется при смене базы — меняются настройки подключения.</p>
+          </div>
+
+          <div class="table-wrap reveal" tabindex="0" role="region" aria-label="Таблица: выбор базы данных">
+            <table>
+              <caption>Популярные базы данных для Python-проектов</caption>
+              <thead>
+                <tr>
+                  <th scope="col">База</th>
+                  <th scope="col">Когда использовать</th>
+                  <th scope="col">Особенности</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>SQLite</strong></td>
+                  <td>Учебные проекты, прототипы, небольшие сайты</td>
+                  <td>Один файл, встроена в Python, база по умолчанию в Django</td>
+                </tr>
+                <tr>
+                  <td><strong>PostgreSQL</strong></td>
+                  <td>Реальные проекты с пользователями</td>
+                  <td>Отдельный сервер, надёжная работа при одновременных запросах</td>
+                </tr>
+                <tr>
+                  <td><strong>MySQL / MariaDB</strong></td>
+                  <td>Когда её предоставляет хостинг</td>
+                  <td>Отдельный сервер, распространена на хостингах</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="note stack-gap">
+            Во Flask своей ORM нет. Можно писать SQL через <code>sqlite3</code>, как во <a href="project.html#flask">втором шаге проекта на Flask</a>,
+            или подключить расширение <a href="https://flask-sqlalchemy.readthedocs.io/" rel="noopener">Flask-SQLAlchemy</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="check-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="check-title">Проверь себя</h2>
+            <p>Четыре вопроса по разделу. После ответа появится объяснение.</p>
+          </div>
+
+          <form class="quiz knowledge-check reveal" novalidate>
+            <fieldset data-answer="b">
+              <legend>1. Какая команда SQL изменяет уже существующие записи?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="db1" value="a"> <span>INSERT</span></label>
+                <label class="quiz-option"><input type="radio" name="db1" value="b"> <span>UPDATE</span></label>
+                <label class="quiz-option"><input type="radio" name="db1" value="c"> <span>SELECT</span></label>
+              </div>
+              <p class="check-explain" hidden>UPDATE меняет существующие строки, INSERT добавляет новые, SELECT только читает.</p>
+            </fieldset>
+
+            <fieldset data-answer="a">
+              <legend>2. Как безопасно подставить ввод пользователя в запрос sqlite3?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="db2" value="a"> <span>Через параметр <code>?</code> и кортеж значений</span></label>
+                <label class="quiz-option"><input type="radio" name="db2" value="b"> <span>Через f-строку</span></label>
+                <label class="quiz-option"><input type="radio" name="db2" value="c"> <span>Через сложение строк</span></label>
+              </div>
+              <p class="check-explain" hidden>Параметры передаются отдельно от текста запроса, поэтому ввод пользователя не может изменить SQL. F-строка и сложение строк открывают дорогу SQL-инъекции.</p>
+            </fieldset>
+
+            <fieldset data-answer="c">
+              <legend>3. Вы добавили поле в модель Django. Что нужно сделать, чтобы изменилась таблица?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="db3" value="a"> <span>Ничего, Django обновит таблицу сам</span></label>
+                <label class="quiz-option"><input type="radio" name="db3" value="b"> <span>Удалить файл базы данных</span></label>
+                <label class="quiz-option"><input type="radio" name="db3" value="c"> <span>Выполнить makemigrations, затем migrate</span></label>
+              </div>
+              <p class="check-explain" hidden>makemigrations создаёт файл миграции по изменениям модели, migrate применяет его к базе. Удалять базу не нужно — данные сохранятся.</p>
+            </fieldset>
+
+            <fieldset data-answer="b">
+              <legend>4. Почему изменения в sqlite3 могут не сохраниться?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="db4" value="a"> <span>SQLite не умеет хранить данные</span></label>
+                <label class="quiz-option"><input type="radio" name="db4" value="b"> <span>Забыли вызвать <code>conn.commit()</code></span></label>
+                <label class="quiz-option"><input type="radio" name="db4" value="c"> <span>Нужно перезагрузить компьютер</span></label>
+              </div>
+              <p class="check-explain" hidden>Изменяющие запросы выполняются в транзакции и записываются в файл только после commit().</p>
+            </fieldset>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" type="submit">Проверить ответы</button>
+              <button class="btn btn-secondary" type="reset">Сбросить</button>
+            </div>
+            <p class="check-score" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sources-title">
+        <div class="container">
+          <div class="panel sources reveal">
+            <h2 id="sources-title">Источники</h2>
+            <p class="note">Примеры проверены на Python 3.13, SQLite и Django 6.1.2, <time datetime="2026-10-28">28.10.2026</time>.</p>
+            <ul class="list">
+              <li><a href="https://docs.python.org/3/library/sqlite3.html" rel="noopener">Python: модуль sqlite3</a> — подключение, параметры, транзакции</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/topics/db/models/" rel="noopener">Django 6.1: модели</a> — поля и связи</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/topics/db/queries/" rel="noopener">Django 6.1: запросы через ORM</a> — filter, update, delete</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/topics/migrations/" rel="noopener">Django 6.1: миграции</a></li>
+              <li><a href="https://owasp.org/www-community/attacks/SQL_Injection" rel="noopener">OWASP: SQL-инъекция</a> — описание уязвимости</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Дальше">
+        <div class="container">
+          <div class="cta-panel reveal">
+            <div>
+              <h2>Попробуйте на практике</h2>
+              <p class="lead cta-lead">
+                В первом проекте вы подключите SQLite к Flask и поработаете с моделью в Django.
+              </p>
+            </div>
+            <div class="cta-actions">
+              <a class="btn btn-primary" href="project.html">Открыть первый проект</a>
+            </div>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

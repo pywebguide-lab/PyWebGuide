@@ -7,11 +7,37 @@
 
   <meta name="description" content="PyWeb Guide — учебный ресурс о Python в веб-разработке: backend, Django и Flask, дорожная карта новичка с отметкой прогресса, первый проект по шагам.">
   <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="PyWeb Guide — Python в веб-разработке">
+  <meta property="og:description" content="PyWeb Guide — учебный ресурс о Python в веб-разработке: backend, Django и Flask, дорожная карта новичка с отметкой прогресса, первый проект по шагам.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0b0f16">
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐍%3C/text%3E%3C/svg%3E">
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
   <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
 
   <script>
     // Старые адреса вида #/about (версия ЛР3) ведут на отдельные страницы
@@ -20,6 +46,21 @@
       var target = old[location.hash.replace(/\/$/, "")];
       if (target) location.replace(target);
     })();
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "PyWeb Guide",
+      "url": "https://pywebguide-lab.github.io/PyWebGuide/",
+      "inLanguage": "ru",
+      "description": "Учебный ресурс о Python в веб-разработке: Django, Flask, базы данных и первый проект по шагам.",
+      "author": [
+        { "@type": "Person", "name": "Жангужин Е. Е." },
+        { "@type": "Person", "name": "Косяк Р. А." }
+      ]
+    }
   </script>
 </head>
 
@@ -37,7 +78,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html">
-        <span class="brand-icon" aria-hidden="true">🐍</span>
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
         <span class="brand-text">PyWeb <span>Guide</span></span>
       </a>
 
@@ -52,10 +93,16 @@
           <li><a class="nav-link active" href="index.html" aria-current="page">Главная</a></li>
           <li><a class="nav-link" href="about.html">О Python</a></li>
           <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
           <li><a class="nav-link" href="contacts.html">Контакты</a></li>
         </ul>
       </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
     </div>
   </header>
 
@@ -148,6 +195,21 @@ urlpatterns = [path("", views.home)]
         </div>
       </div>
 
+      <section class="section" id="continue" aria-labelledby="continue-title" hidden>
+        <div class="container">
+          <div class="continue-box">
+            <div>
+              <h2 id="continue-title">Продолжить обучение</h2>
+              <p>Вы уже начали первый проект — вот где вы остановились.</p>
+            </div>
+            <div class="continue-links">
+              <a class="btn btn-primary" href="project.html#flask" data-track="project-flask" data-total="6" hidden>Flask: <span data-track-count></span></a>
+              <a class="btn btn-primary" href="project.html#django" data-track="project-django" data-total="10" hidden>Django: <span data-track-count></span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section" aria-label="Что здесь можно изучить">
         <div class="container">
           <div class="section-head reveal">
@@ -161,7 +223,7 @@ urlpatterns = [path("", views.home)]
           <div class="card-grid">
             <article class="card reveal">
               <h3><span class="tag">🌐</span>Что такое backend</h3>
-              <p>Серверная часть приложения: принимает запрос, обрабатывает данные и возвращает ответ пользователю.</p>
+              <p>Серверная часть приложения: принимает запрос, обрабатывает данные и возвращает ответ пользователю. <a href="about.html">Как Python работает на сервере</a>.</p>
             </article>
 
             <article class="card reveal">
@@ -176,7 +238,7 @@ urlpatterns = [path("", views.home)]
 
             <article class="card reveal">
               <h3><span class="tag">🧭</span>Когда что выбирать</h3>
-              <p>Зависит от размера проекта, сроков и опыта: короткий сервис — Flask, большой сайт — Django.</p>
+              <p>Зависит от размера проекта, сроков и опыта: короткий сервис — Flask, большой сайт — Django. <a href="frameworks.html">Сравнение Django и Flask</a>.</p>
             </article>
           </div>
         </div>
@@ -227,7 +289,7 @@ urlpatterns = [path("", views.home)]
               <span class="timeline-dot">4</span>
               <div class="timeline-content">
                 <h3>Подключи данные</h3>
-                <p>SQLite, ORM, модели и простые запросы — следующий шаг к реальному приложению.</p>
+                <p>SQLite, ORM, модели и простые запросы — следующий шаг к реальному приложению. Разбор с примерами — в разделе <a href="databases.html">«Базы данных»</a>.</p>
                 <label class="step-check"><input type="checkbox" data-step="4"> Шаг пройден</label>
               </div>
             </div>

@@ -7,11 +7,37 @@
 
   <meta name="description" content="Авторы учебного ресурса PyWeb Guide и учебная форма обратной связи.">
   <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/contacts.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Контакты и авторы — PyWeb Guide">
+  <meta property="og:description" content="Авторы учебного ресурса PyWeb Guide и учебная форма обратной связи.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/contacts.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0b0f16">
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐍%3C/text%3E%3C/svg%3E">
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
   <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
 </head>
 
 <body id="top">
@@ -28,7 +54,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html">
-        <span class="brand-icon" aria-hidden="true">🐍</span>
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
         <span class="brand-text">PyWeb <span>Guide</span></span>
       </a>
 
@@ -43,10 +69,16 @@
           <li><a class="nav-link" href="index.html">Главная</a></li>
           <li><a class="nav-link" href="about.html">О Python</a></li>
           <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
           <li><a class="nav-link active" href="contacts.html" aria-current="page">Контакты</a></li>
         </ul>
       </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
     </div>
   </header>
 
@@ -59,7 +91,7 @@
           <span>Контакты</span>
         </nav>
 
-        <p class="eyebrow">Раздел 4</p>
+        <p class="eyebrow">Раздел 6</p>
         <h1>Контакты</h1>
         <p class="lead">
           Это учебная форма обратной связи. Сообщение сохраняется только в вашем браузере
@@ -123,7 +155,7 @@
 
                 <div class="info-item">
                   <strong>Разделы</strong>
-                  <p>Главная, О Python, Фреймворки, Первый проект, Контакты</p>
+                  <p>Главная, О Python, Фреймворки, Базы данных, Первый проект, Публикация, Контакты</p>
                 </div>
 
                 <div class="info-item">

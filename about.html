@@ -7,11 +7,37 @@
 
   <meta name="description" content="Python как язык серверной разработки: что такое backend, путь HTTP-запроса, примеры кода на Flask и SQLite, мини-словарь терминов.">
   <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/about.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="О Python — PyWeb Guide">
+  <meta property="og:description" content="Python как язык серверной разработки: что такое backend, путь HTTP-запроса, примеры кода на Flask и SQLite, мини-словарь терминов.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/about.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0b0f16">
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐍%3C/text%3E%3C/svg%3E">
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
   <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
 </head>
 
 <body id="top">
@@ -28,7 +54,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html">
-        <span class="brand-icon" aria-hidden="true">🐍</span>
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
         <span class="brand-text">PyWeb <span>Guide</span></span>
       </a>
 
@@ -43,10 +69,16 @@
           <li><a class="nav-link" href="index.html">Главная</a></li>
           <li><a class="nav-link active" href="about.html" aria-current="page">О Python</a></li>
           <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
           <li><a class="nav-link" href="contacts.html">Контакты</a></li>
         </ul>
       </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
     </div>
   </header>
 
@@ -309,6 +341,63 @@ conn.close()</code></pre>
               <li>Сравнить, какие задачи лучше решать фреймворком, а не вручную.</li>
             </ul>
           </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="check-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="check-title">Проверь себя</h2>
+            <p>Четыре вопроса по разделу. После ответа появится объяснение.</p>
+          </div>
+
+          <form class="quiz knowledge-check reveal" novalidate>
+            <fieldset data-answer="b">
+              <legend>1. Где выполняется код backend-части сайта?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="ab1" value="a"> <span>В браузере пользователя</span></label>
+                <label class="quiz-option"><input type="radio" name="ab1" value="b"> <span>На сервере</span></label>
+                <label class="quiz-option"><input type="radio" name="ab1" value="c"> <span>В базе данных</span></label>
+              </div>
+              <p class="check-explain" hidden>Backend работает на сервере: принимает запрос, выполняет логику и возвращает ответ. В браузере работает frontend — HTML, CSS и JavaScript.</p>
+            </fieldset>
+
+            <fieldset data-answer="c">
+              <legend>2. Что делает маршрутизация во фреймворке?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="ab2" value="a"> <span>Ускоряет загрузку страниц</span></label>
+                <label class="quiz-option"><input type="radio" name="ab2" value="b"> <span>Сохраняет данные в базу</span></label>
+                <label class="quiz-option"><input type="radio" name="ab2" value="c"> <span>Сопоставляет адрес страницы с функцией, которая её обработает</span></label>
+              </div>
+              <p class="check-explain" hidden>Маршрут связывает адрес (например, <code>/</code> или <code>/about</code>) с функцией Python. Во Flask это декоратор <code>@app.route</code>, в Django — список <code>urlpatterns</code>.</p>
+            </fieldset>
+
+            <fieldset data-answer="a">
+              <legend>3. В каком формате сервер обычно отдаёт данные другим программам?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="ab3" value="a"> <span>JSON</span></label>
+                <label class="quiz-option"><input type="radio" name="ab3" value="b"> <span>Картинка PNG</span></label>
+                <label class="quiz-option"><input type="radio" name="ab3" value="c"> <span>Документ Word</span></label>
+              </div>
+              <p class="check-explain" hidden>JSON — текстовый формат «ключ: значение», который легко читают и JavaScript, и мобильные приложения. Так работают API.</p>
+            </fieldset>
+
+            <fieldset data-answer="b">
+              <legend>4. Что происходит первым, когда пользователь открывает страницу?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="ab4" value="a"> <span>Сервер обращается к базе данных</span></label>
+                <label class="quiz-option"><input type="radio" name="ab4" value="b"> <span>Браузер отправляет HTTP-запрос на сервер</span></label>
+                <label class="quiz-option"><input type="radio" name="ab4" value="c"> <span>Фреймворк формирует ответ</span></label>
+              </div>
+              <p class="check-explain" hidden>Цепочка начинается в браузере: запрос → фреймворк находит маршрут → логика и база данных → ответ. Смотрите схему «Как проходит запрос пользователя» выше.</p>
+            </fieldset>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" type="submit">Проверить ответы</button>
+              <button class="btn btn-secondary" type="reset">Сбросить</button>
+            </div>
+            <p class="check-score" role="status" aria-live="polite"></p>
+          </form>
         </div>
       </section>
 

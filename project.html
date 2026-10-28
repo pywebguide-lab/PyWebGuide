@@ -7,11 +7,57 @@
 
   <meta name="description" content="Пошаговая инструкция: список задач на Flask 3.1 и на Django 6.1 — от установки до работающего приложения. Отмечайте пройденные шаги.">
   <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/project.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Первый проект на Flask и Django — PyWeb Guide">
+  <meta property="og:description" content="Пошаговая инструкция: список задач на Flask 3.1 и на Django 6.1 — от установки до работающего приложения. Отмечайте пройденные шаги.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/project.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0b0f16">
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐍%3C/text%3E%3C/svg%3E">
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
   <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LearningResource",
+      "name": "Первый проект: список задач на Flask и Django",
+      "description": "Пошаговое создание списка задач на Flask 3.1 и Django 6.1: от установки до базы данных и формы.",
+      "url": "https://pywebguide-lab.github.io/PyWebGuide/project.html",
+      "inLanguage": "ru",
+      "educationalLevel": "Начальный",
+      "learningResourceType": "Пошаговое руководство",
+      "timeRequired": "PT1H",
+      "dateModified": "2026-10-28",
+      "isPartOf": { "@type": "WebSite", "name": "PyWeb Guide", "url": "https://pywebguide-lab.github.io/PyWebGuide/" },
+      "author": [
+        { "@type": "Person", "name": "Жангужин Е. Е." },
+        { "@type": "Person", "name": "Косяк Р. А." }
+      ]
+    }
+  </script>
 </head>
 
 <body id="top">
@@ -28,7 +74,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html">
-        <span class="brand-icon" aria-hidden="true">🐍</span>
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
         <span class="brand-text">PyWeb <span>Guide</span></span>
       </a>
 
@@ -43,10 +89,16 @@
           <li><a class="nav-link" href="index.html">Главная</a></li>
           <li><a class="nav-link" href="about.html">О Python</a></li>
           <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
           <li><a class="nav-link active" href="project.html" aria-current="page">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
           <li><a class="nav-link" href="contacts.html">Контакты</a></li>
         </ul>
       </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
     </div>
   </header>
 
@@ -59,11 +111,12 @@
           <span>Первый проект</span>
         </nav>
 
-        <p class="eyebrow">Раздел 3</p>
+        <p class="eyebrow">Раздел 4</p>
         <h1>Первый проект: список задач</h1>
         <p class="lead">
           Сделаем одно и то же приложение — список задач — двумя способами: на Flask и на Django.
-          Выберите один вариант и пройдите его до конца. На Flask уйдёт около 15 минут, на Django — около 30.
+          Выберите один вариант и пройдите его до конца. В каждом две части: сначала простейший список,
+          затем база данных, удаление и отметка «выполнено». На Flask уйдёт около 30 минут, на Django — около часа.
         </p>
 
         <div class="hero-actions">
@@ -92,6 +145,7 @@
             <strong>Команды для Windows.</strong> На macOS и Linux вместо <code>python</code> пишите <code>python3</code>,
             а виртуальное окружение активируйте командой <code>source .venv/bin/activate</code>.
             Отмеченные шаги сохраняются в этом браузере — можно вернуться позже и продолжить.
+            Если что-то пошло не так, загляните в <a href="#errors">частые ошибки</a> внизу страницы.
           </p>
         </div>
       </section>
@@ -100,13 +154,13 @@
       <section class="section project-track" id="flask" aria-labelledby="flask-title">
         <div class="container">
           <div class="section-head reveal">
-            <span class="badge-inline">⚪ Flask 3.1 · ~15 минут</span>
+            <span class="badge-inline">⚪ Flask 3.1 · ~30 минут</span>
             <h2 id="flask-title">Вариант 1. Список задач на Flask</h2>
             <p>Одно приложение в одном файле: страница со списком и форма добавления задачи.</p>
           </div>
 
           <div class="progress-box reveal" data-progress="project-flask">
-            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 4 шагов пройдено</p>
+            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 6 шагов пройдено</p>
             <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
             <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Сбросить прогресс</button>
           </div>
@@ -185,14 +239,97 @@ def index():
               </p>
               <label class="step-check"><input type="checkbox" data-step="4"> Шаг пройден</label>
             </li>
+
+            <li class="project-step project-part reveal">
+              <p class="eyebrow">Часть 2. База данных и удаление</p>
+              <h3>Шаг 5. Храните задачи в SQLite</h3>
+              <p>
+                Замените весь <code>app.py</code> этим кодом. Модуль <code>sqlite3</code> входит в Python, ничего устанавливать не нужно.
+                Файл базы <code>tasks.db</code> появится рядом с <code>app.py</code> при первом запуске.
+                Знаки <code>?</code> в запросах — параметры: Python сам безопасно подставит значения,
+                поэтому ввод пользователя не сможет изменить сам SQL-запрос. Подробнее — в разделе <a href="databases.html">«Базы данных»</a>.
+              </p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>app.py</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>import sqlite3
+from pathlib import Path
+
+from flask import Flask, redirect, render_template_string, request, url_for
+
+app = Flask(__name__)
+DB = Path(__file__).with_name("tasks.db")
+
+PAGE = """
+&lt;!doctype html&gt;
+&lt;title&gt;Мои задачи&lt;/title&gt;
+&lt;h1&gt;Мои задачи&lt;/h1&gt;
+&lt;form method="post" action="{{ url_for('add') }}"&gt;
+  &lt;input name="title" placeholder="Новая задача" required&gt;
+  &lt;button&gt;Добавить&lt;/button&gt;
+&lt;/form&gt;
+&lt;ul&gt;
+  {% for task in tasks %}
+    &lt;li&gt;
+      {{ task["title"] }}
+      &lt;form method="post" action="{{ url_for('delete', task_id=task['id']) }}"&gt;
+        &lt;button&gt;Удалить&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+"""
+
+def query(sql, params=()):
+    conn = sqlite3.connect(DB)
+    conn.row_factory = sqlite3.Row
+    try:
+        rows = conn.execute(sql, params).fetchall()
+        conn.commit()
+        return rows
+    finally:
+        conn.close()
+
+query("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, title TEXT NOT NULL)")
+
+@app.get("/")
+def index():
+    tasks = query("SELECT id, title FROM tasks ORDER BY id")
+    return render_template_string(PAGE, tasks=tasks)
+
+@app.post("/add")
+def add():
+    query("INSERT INTO tasks (title) VALUES (?)", (request.form["title"],))
+    return redirect(url_for("index"))
+
+@app.post("/delete/&lt;int:task_id&gt;")
+def delete(task_id):
+    query("DELETE FROM tasks WHERE id = ?", (task_id,))
+    return redirect(url_for("index"))</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="5"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 6. Проверьте, что данные сохраняются</h3>
+              <p>
+                Запустите сервер той же командой, добавьте пару задач и удалите одну.
+                Затем остановите сервер (<kbd>Ctrl</kbd> + <kbd>C</kbd>) и запустите снова — задачи останутся на месте.
+                Удаление сделано через <code>POST</code>, а не обычную ссылку: изменяющие данные действия
+                не должны выполняться простым переходом по адресу.
+              </p>
+              <label class="step-check"><input type="checkbox" data-step="6"> Шаг пройден</label>
+            </li>
           </ol>
 
           <div class="panel reveal stack-gap">
             <h3>Что дальше</h3>
             <ul class="list">
               <li>Вынесите HTML в шаблон <code>templates/index.html</code> и используйте <code>render_template</code>.</li>
-              <li>Сохраняйте задачи в SQLite — пример есть в разделе <a href="about.html">«О Python»</a>.</li>
-              <li>Добавьте кнопку удаления задачи — это отдельный маршрут.</li>
+              <li>Добавьте отметку «выполнено»: колонка <code>done INTEGER DEFAULT 0</code> и запрос <code>UPDATE</code>.</li>
+              <li>Опубликуйте приложение в интернете — инструкция в разделе <a href="deploy.html">«Публикация»</a>.</li>
             </ul>
           </div>
         </div>
@@ -202,13 +339,13 @@ def index():
       <section class="section project-track" id="django" aria-labelledby="django-title">
         <div class="container">
           <div class="section-head reveal">
-            <span class="badge-inline">🟢 Django 6.1 · ~30 минут</span>
+            <span class="badge-inline">🟢 Django 6.1 · ~60 минут</span>
             <h2 id="django-title">Вариант 2. Список задач на Django</h2>
             <p>Задачи хранятся в базе данных SQLite, а добавлять их можно через встроенную админ-панель.</p>
           </div>
 
           <div class="progress-box reveal" data-progress="project-django">
-            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 6 шагов пройдено</p>
+            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 10 шагов пройдено</p>
             <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
             <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Сбросить прогресс</button>
           </div>
@@ -233,20 +370,20 @@ python manage.py startapp tasks</code></pre>
 
             <li class="project-step reveal">
               <h3>Шаг 2. Подключите приложение</h3>
-              <p>В файле <code>mysite/settings.py</code> добавьте <code>"tasks"</code> в конец списка <code>INSTALLED_APPS</code>.</p>
+              <p>В файле <code>mysite/settings.py</code> добавьте строку <code>'tasks',</code> в конец списка <code>INSTALLED_APPS</code>.</p>
               <div class="code-block">
                 <div class="code-head">
                   <span>mysite/settings.py</span>
                   <button class="copy-btn" type="button">Копировать</button>
                 </div>
                 <pre><code>INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "tasks",
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'tasks',
 ]</code></pre>
               </div>
               <label class="step-check"><input type="checkbox" data-step="2"> Шаг пройден</label>
@@ -370,16 +507,225 @@ urlpatterns = [
               </div>
               <label class="step-check"><input type="checkbox" data-step="6"> Шаг пройден</label>
             </li>
+
+            <li class="project-step project-part reveal">
+              <p class="eyebrow">Часть 2. Работа без админки</p>
+              <h3>Шаг 7. Создайте форму</h3>
+              <p>
+                <code>ModelForm</code> строит форму прямо по модели: сама проверяет длину названия
+                и сохраняет задачу в базу. Создайте новый файл <code>tasks/forms.py</code>.
+              </p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>tasks/forms.py</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>from django import forms
+
+from .models import Task
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ["title"]</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="7"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 8. Добавьте представления и маршруты</h3>
+              <p>
+                Замените <code>tasks/views.py</code> и <code>mysite/urls.py</code> целиком.
+                Декоратор <code>@require_POST</code> разрешает менять данные только отправкой формы, а не переходом по ссылке.
+                Имена маршрутов (<code>name="index"</code>) нужны, чтобы ссылаться на них из шаблона.
+              </p>
+              <div class="code-grid">
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>tasks/views.py</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
+
+from .forms import TaskForm
+from .models import Task
+
+def index(request):
+    if request.method == "POST":
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("index")
+    else:
+        form = TaskForm()
+    return render(request, "tasks/index.html", {"tasks": Task.objects.all(), "form": form})
+
+@require_POST
+def toggle(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.done = not task.done
+    task.save()
+    return redirect("index")
+
+@require_POST
+def delete(request, pk):
+    get_object_or_404(Task, pk=pk).delete()
+    return redirect("index")</code></pre>
+                </div>
+
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>mysite/urls.py</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>from django.contrib import admin
+from django.urls import path
+
+from tasks import views
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", views.index, name="index"),
+    path("tasks/&lt;int:pk&gt;/toggle/", views.toggle, name="toggle"),
+    path("tasks/&lt;int:pk&gt;/delete/", views.delete, name="delete"),
+]</code></pre>
+                </div>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="8"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 9. Обновите шаблон</h3>
+              <p>
+                Тег <code>{% csrf_token %}</code> обязателен в каждой форме с <code>method="post"</code>:
+                он защищает от подделки запросов с чужих сайтов. Без него Django ответит ошибкой 403.
+              </p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>tasks/templates/tasks/index.html</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>&lt;h1&gt;Мои задачи&lt;/h1&gt;
+
+&lt;form method="post"&gt;
+  {% csrf_token %}
+  {{ form.title }}
+  &lt;button&gt;Добавить&lt;/button&gt;
+  {{ form.title.errors }}
+&lt;/form&gt;
+
+&lt;ul&gt;
+  {% for task in tasks %}
+    &lt;li&gt;
+      {% if task.done %}&lt;s&gt;{{ task.title }}&lt;/s&gt;{% else %}{{ task.title }}{% endif %}
+      &lt;form method="post" action="{% url 'toggle' task.pk %}"&gt;
+        {% csrf_token %}
+        &lt;button&gt;{% if task.done %}Вернуть{% else %}Готово{% endif %}&lt;/button&gt;
+      &lt;/form&gt;
+      &lt;form method="post" action="{% url 'delete' task.pk %}"&gt;
+        {% csrf_token %}
+        &lt;button&gt;Удалить&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/li&gt;
+  {% empty %}
+    &lt;li&gt;Задач пока нет.&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="9"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 10. Проверьте</h3>
+              <p>
+                Запустите <code>python manage.py runserver</code> и откройте <code>http://127.0.0.1:8000/</code>.
+                Добавьте задачу, отметьте её кнопкой «Готово» — она станет зачёркнутой, — затем удалите.
+                Попробуйте добавить пустую задачу: форма покажет ошибку, а в базу ничего не попадёт.
+                Миграции делать не нужно — модель не менялась.
+              </p>
+              <label class="step-check"><input type="checkbox" data-step="10"> Шаг пройден</label>
+            </li>
           </ol>
 
           <div class="panel reveal stack-gap">
             <h3>Что дальше</h3>
             <ul class="list">
-              <li>Добавьте форму на саму страницу, чтобы создавать задачи без админки (класс <code>ModelForm</code>).</li>
-              <li>Выведите отдельно невыполненные задачи: <code>Task.objects.filter(done=False)</code>.</li>
+              <li>Покажите сначала невыполненные задачи: <code>Task.objects.order_by("done", "-id")</code>.</li>
               <li>Пройдите официальное руководство Django — оно продолжает эту же логику на примере опросов.</li>
+              <li>Опубликуйте приложение в интернете — инструкция в разделе <a href="deploy.html">«Публикация»</a>.</li>
             </ul>
           </div>
+        </div>
+      </section>
+
+      <section class="section faq" id="errors" aria-labelledby="errors-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="errors-title">Частые ошибки и как их исправить</h2>
+            <p>Сообщения приведены так, как их показывают Windows, Flask и Django. Нажмите на ошибку, чтобы увидеть решение.</p>
+          </div>
+
+          <details class="reveal">
+            <summary>Команда python открывает Microsoft Store или пишет «Python was not found»</summary>
+            <p>
+              <span class="error-text">Python was not found; run without arguments to install from the Microsoft Store…</span>
+              Python не установлен или не добавлен в PATH, и Windows подставляет свою заглушку.
+              Установите Python с <a href="https://www.python.org/downloads/" rel="noopener">python.org</a> и отметьте пункт
+              «Add python.exe to PATH». Если Python уже стоит, используйте команду <code>py</code>:
+              <code>py -m venv .venv</code>. После активации окружения команда <code>python</code> заработает.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>PowerShell не даёт активировать окружение: «выполнение сценариев отключено»</summary>
+            <p>
+              <span class="error-text">Невозможно загрузить файл …\.venv\Scripts\Activate.ps1, так как выполнение сценариев отключено в этой системе.</span>
+              В английской Windows: <span class="error-text">…Activate.ps1 cannot be loaded because running scripts is disabled on this system.</span>
+              Разрешите запуск локальных скриптов для своей учётной записи — один раз:
+              <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>.
+              Другой вариант — открыть терминал «Командная строка» (cmd) вместо PowerShell.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>«flask» или «django-admin» не распознано как имя командлета</summary>
+            <p>
+              <span class="error-text">Имя "flask" не распознано как имя командлета, функции, файла сценария или выполняемой программы.</span>
+              Окружение не активировано или пакет не установлен. Активируйте окружение
+              (в начале строки терминала появится <code>(.venv)</code>) и повторите <code>pip install flask</code>
+              или <code>pip install django</code>.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>Django: «no such table: tasks_task»</summary>
+            <p>
+              <span class="error-text">django.db.utils.OperationalError: no such table: tasks_task</span>
+              Таблица для модели ещё не создана. Выполните шаг 4: <code>python manage.py makemigrations</code>
+              и <code>python manage.py migrate</code>. Если команда пишет «No changes detected», проверьте,
+              что <code>'tasks'</code> добавлено в <code>INSTALLED_APPS</code> (шаг 2).
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>Django: «TemplateDoesNotExist at /»</summary>
+            <p>
+              <span class="error-text">TemplateDoesNotExist at / — tasks/index.html</span>
+              Django не нашёл шаблон. Путь должен быть точно таким: <code>tasks/templates/tasks/index.html</code> —
+              папка <code>tasks</code> внутри <code>templates</code> повторяется намеренно.
+              Также проверьте, что приложение есть в <code>INSTALLED_APPS</code>.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>Django: «Forbidden (403) CSRF verification failed»</summary>
+            <p>
+              <span class="error-text">Forbidden (403) CSRF verification failed. Request aborted.</span>
+              В форме не хватает тега <code>{% csrf_token %}</code>. Он нужен в каждой форме с
+              <code>method="post"</code> — сравните свой шаблон с шагом 9.
+            </p>
+          </details>
         </div>
       </section>
 
@@ -393,6 +739,9 @@ urlpatterns = [
               <li><a href="https://flask.palletsprojects.com/en/stable/quickstart/" rel="noopener">Flask: Quickstart — маршруты, формы, шаблоны</a></li>
               <li><a href="https://docs.djangoproject.com/en/6.1/intro/tutorial01/" rel="noopener">Django 6.1: официальное руководство, часть 1</a> — проект, приложение, маршруты</li>
               <li><a href="https://docs.djangoproject.com/en/6.1/intro/tutorial02/" rel="noopener">Django 6.1: руководство, часть 2</a> — модели, миграции, админка</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/topics/forms/modelforms/" rel="noopener">Django 6.1: ModelForm</a> — формы на основе моделей</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/howto/csrf/" rel="noopener">Django 6.1: защита от CSRF</a> — зачем нужен csrf_token</li>
+              <li><a href="https://docs.python.org/3/library/sqlite3.html" rel="noopener">Python: модуль sqlite3</a> — параметры запросов и подключение</li>
               <li><a href="https://docs.python.org/3/library/venv.html" rel="noopener">Python: модуль venv</a> — виртуальные окружения</li>
             </ul>
           </div>

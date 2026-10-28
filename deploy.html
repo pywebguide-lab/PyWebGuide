@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Публикация Flask и Django на PythonAnywhere — PyWeb Guide</title>
+
+  <meta name="description" content="Как бесплатно выложить приложение на Flask или Django в интернет: GitHub, PythonAnywhere, WSGI, статические файлы.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/deploy.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Публикация Flask и Django на PythonAnywhere — PyWeb Guide">
+  <meta property="og:description" content="Как бесплатно выложить приложение на Flask или Django в интернет: GitHub, PythonAnywhere, WSGI, статические файлы.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/deploy.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link active" href="deploy.html" aria-current="page">Публикация</a></li>
+          <li><a class="nav-link" href="contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+      <div class="container page-hero">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a>
+          <span aria-hidden="true">/</span>
+          <span>Публикация</span>
+        </nav>
+
+        <p class="eyebrow">Раздел 5</p>
+        <h1>Публикация: как выложить приложение в интернет</h1>
+        <p class="lead">
+          Пока сервер запущен на вашем компьютере, сайт видите только вы. Разберём, как бесплатно опубликовать
+          список задач из <a href="project.html">первого проекта</a> на хостинге PythonAnywhere —
+          он создан специально для Python и не требует настройки сервера.
+        </p>
+      </div>
+
+      <section class="section" aria-labelledby="plan-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="plan-title">Что получится и какие есть ограничения</h2>
+            <p>После публикации приложение откроется по адресу <code>https://ваш-логин.pythonanywhere.com</code>.</p>
+          </div>
+
+          <div class="compare-grid">
+            <article class="panel reveal">
+              <h3>Бесплатный тариф Beginner</h3>
+              <ul class="list">
+                <li>Одно веб-приложение на адресе <code>логин.pythonanywhere.com</code></li>
+                <li>512 МБ на диске — для учебного проекта с SQLite хватает с запасом</li>
+                <li>Приложение работает месяц; затем его нужно продлить кнопкой на вкладке Web</li>
+                <li>Выход в интернет из кода — только к сайтам из разрешённого списка</li>
+              </ul>
+            </article>
+
+            <article class="panel reveal">
+              <h3>Порядок действий</h3>
+              <ol class="list">
+                <li>Выложить код на GitHub</li>
+                <li>Скопировать его на PythonAnywhere и установить зависимости</li>
+                <li>Создать веб-приложение и указать WSGI-файл</li>
+                <li>Для Django — настроить адрес и статические файлы</li>
+                <li>Нажать Reload и открыть сайт</li>
+              </ol>
+            </article>
+          </div>
+
+          <p class="note stack-gap">Условия тарифа взяты из справки PythonAnywhere на октябрь 2026 года и могут измениться — актуальные данные есть в источниках внизу страницы.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="deploy-steps-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="deploy-steps-title">Пошаговая инструкция</h2>
+            <p>В командах замените <code>username</code> на свой логин PythonAnywhere, а <code>USER/REPO</code> — на адрес своего репозитория GitHub.</p>
+          </div>
+
+          <ol class="project-steps">
+            <li class="project-step reveal">
+              <h3>Шаг 1. Подготовьте проект и выложите его на GitHub</h3>
+              <p>
+                Файл <code>requirements.txt</code> перечисляет библиотеки проекта — по нему сервер установит то же самое.
+                Файл <code>.gitignore</code> не даёт отправить в репозиторий окружение и локальную базу данных.
+                Репозиторий заранее создайте на github.com.
+              </p>
+              <div class="code-grid">
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>Терминал (в папке проекта)</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>pip freeze &gt; requirements.txt
+git init
+git add .
+git commit -m "Первый проект: список задач"
+git branch -M main
+git remote add origin https://github.com/USER/REPO.git
+git push -u origin main</code></pre>
+                </div>
+
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>.gitignore</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>.venv/
+__pycache__/
+*.db
+db.sqlite3
+static/</code></pre>
+                </div>
+              </div>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 2. Скопируйте код на PythonAnywhere</h3>
+              <p>
+                Зарегистрируйтесь на <a href="https://www.pythonanywhere.com/" rel="noopener">pythonanywhere.com</a> (тариф Beginner),
+                откройте вкладку <strong>Consoles</strong> и запустите <strong>Bash</strong>.
+                Команда <code>mkvirtualenv</code> создаёт окружение и сразу его активирует.
+              </p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>Терминал (консоль Bash на PythonAnywhere)</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>git clone https://github.com/USER/REPO.git mysite
+mkvirtualenv --python=/usr/bin/python3.13 mysite-venv
+cd mysite
+pip install -r requirements.txt</code></pre>
+              </div>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 3. Создайте веб-приложение</h3>
+              <p>
+                На вкладке <strong>Web</strong> нажмите <strong>Add a new web app</strong>, выберите
+                <strong>Manual configuration</strong> (не готовый шаблон Flask или Django — он создаст пустой проект)
+                и ту же версию Python 3.13. Затем в разделе <strong>Virtualenv</strong> впишите имя
+                <code>mysite-venv</code> — путь дополнится сам.
+              </p>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 4. Настройте WSGI-файл</h3>
+              <p>
+                WSGI-файл объясняет серверу, где лежит ваше приложение. Откройте ссылку на него в разделе
+                <strong>Code</strong> на вкладке Web, удалите всё содержимое и вставьте вариант для своего фреймворка.
+              </p>
+              <div class="code-grid">
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>WSGI-файл: Flask</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>import sys
+
+path = "/home/username/mysite"
+if path not in sys.path:
+    sys.path.insert(0, path)
+
+from app import app as application</code></pre>
+                </div>
+
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>WSGI-файл: Django</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>import os
+import sys
+
+path = "/home/username/mysite"
+if path not in sys.path:
+    sys.path.insert(0, path)
+
+os.environ["DJANGO_SETTINGS_MODULE"] = "mysite.settings"
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()</code></pre>
+                </div>
+              </div>
+              <p class="note stack-gap">
+                Строка <code>from app import app</code> означает «из файла <code>app.py</code> взять объект <code>app</code>».
+                Если ваш файл называется иначе, исправьте первое слово.
+              </p>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 5. Только для Django: адрес, база и статика</h3>
+              <p>
+                В <code>mysite/settings.py</code> выключите режим отладки, разрешите свой адрес и укажите папку для статических файлов —
+                без неё админка откроется без оформления. Затем выполните команды в консоли Bash.
+              </p>
+              <div class="code-grid">
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>mysite/settings.py</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>DEBUG = False
+
+ALLOWED_HOSTS = ["username.pythonanywhere.com"]
+
+STATIC_ROOT = BASE_DIR / "static"</code></pre>
+                </div>
+
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>Терминал (консоль Bash на PythonAnywhere)</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>cd ~/mysite
+workon mysite-venv
+python manage.py migrate
+python manage.py collectstatic
+python manage.py createsuperuser</code></pre>
+                </div>
+              </div>
+              <p class="note stack-gap">
+                На вкладке Web в разделе <strong>Static files</strong> добавьте строку: URL <code>/static/</code>,
+                Directory <code>/home/username/mysite/static</code>.
+              </p>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 6. Перезапустите и проверьте</h3>
+              <p>
+                Нажмите зелёную кнопку <strong>Reload</strong> на вкладке Web и откройте <code>https://username.pythonanywhere.com</code>.
+                Если вместо сайта ошибка, откройте <strong>Error log</strong> на той же вкладке — последняя строка обычно подсказывает причину.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="update-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="update-title">Как обновлять сайт и чего не делать</h2>
+          </div>
+
+          <div class="compare-grid">
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>Терминал: обновление после изменений в коде</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>cd ~/mysite
+git pull
+# для Django, если менялись модели:
+python manage.py migrate
+# затем кнопка Reload на вкладке Web</code></pre>
+            </div>
+
+            <article class="panel reveal">
+              <h3>Безопасность</h3>
+              <ul class="list">
+                <li>Не оставляйте <code>DEBUG = True</code> на сервере: при ошибке посетители увидят настройки и куски кода.</li>
+                <li><code>SECRET_KEY</code> из <code>settings.py</code> не должен лежать в публичном репозитории — храните его в переменной окружения.</li>
+                <li>Не отправляйте на GitHub базу данных с реальными данными — для этого в <code>.gitignore</code> есть <code>*.db</code>.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sources-title">
+        <div class="container">
+          <div class="panel sources reveal">
+            <h2 id="sources-title">Источники</h2>
+            <p class="note">Справка PythonAnywhere проверена <time datetime="2026-10-28">28.10.2026</time>.</p>
+            <ul class="list">
+              <li><a href="https://help.pythonanywhere.com/pages/Flask/" rel="noopener">PythonAnywhere: публикация Flask</a></li>
+              <li><a href="https://help.pythonanywhere.com/pages/DeployExistingDjangoProject/" rel="noopener">PythonAnywhere: публикация готового проекта Django</a></li>
+              <li><a href="https://help.pythonanywhere.com/pages/FreeAccountsFeatures/" rel="noopener">PythonAnywhere: возможности бесплатного тарифа</a></li>
+              <li><a href="https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/" rel="noopener">PythonAnywhere: переменные окружения</a> — где хранить SECRET_KEY</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/" rel="noopener">Django 6.1: чек-лист перед публикацией</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Дальше">
+        <div class="container">
+          <div class="cta-panel reveal">
+            <div>
+              <h2>Ещё нет проекта для публикации?</h2>
+              <p class="lead cta-lead">Сделайте список задач на Flask или Django — это займёт от получаса.</p>
+            </div>
+            <div class="cta-actions">
+              <a class="btn btn-primary" href="project.html">Открыть первый проект</a>
+            </div>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
