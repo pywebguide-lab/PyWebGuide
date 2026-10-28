@@ -172,6 +172,38 @@
     });
   }
 
+  /* Вкладки Flask / Django в окне кода на главной */
+  const tabs = Array.prototype.slice.call(document.querySelectorAll(".window-tab"));
+
+  function selectTab(tab, moveFocus) {
+    tabs.forEach(function (item) {
+      const selected = item === tab;
+      const panel = document.getElementById(item.getAttribute("aria-controls"));
+
+      item.setAttribute("aria-selected", String(selected));
+      item.tabIndex = selected ? 0 : -1;
+      panel.classList.toggle("is-active", selected);
+      panel.inert = !selected;
+    });
+
+    if (moveFocus) tab.focus();
+  }
+
+  tabs.forEach(function (tab, index) {
+    tab.addEventListener("click", function () {
+      selectTab(tab, false);
+    });
+
+    // Стрелки переключают вкладки, как принято для role="tablist"
+    tab.addEventListener("keydown", function (event) {
+      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+
+      event.preventDefault();
+      const step = event.key === "ArrowRight" ? 1 : -1;
+      selectTab(tabs[(index + step + tabs.length) % tabs.length], true);
+    });
+  });
+
   /* Copy code */
   document.addEventListener("click", async function (event) {
     const button = event.target.closest(".copy-btn");
@@ -179,7 +211,8 @@
     if (!button) return;
 
     const block = button.closest(".code-block, .window");
-    const code = block ? block.querySelector("code") : null;
+    // В окне с вкладками копируется код открытой вкладки
+    const code = block ? block.querySelector(".is-active code") || block.querySelector("code") : null;
 
     if (!code) return;
 

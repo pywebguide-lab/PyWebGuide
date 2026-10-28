@@ -1662,6 +1662,57 @@ code {
   margin-top: 10px;
 }
 
+/* Вкладки в окне кода на главной */
+.window-tabs {
+  display: flex;
+  gap: 4px;
+  margin-left: 10px;
+}
+
+.window-tab {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.window-tab:hover {
+  color: var(--text);
+}
+
+.window-tab[aria-selected="true"] {
+  color: var(--text);
+  background: rgba(76, 141, 255, 0.16);
+  border-color: rgba(76, 141, 255, 0.3);
+}
+
+.window-bar .copy-btn {
+  margin-left: auto;
+  min-height: 32px;
+  font-size: 0.85rem;
+}
+
+/* Обе вкладки в одной ячейке сетки: высота окна не прыгает при переключении */
+.window-panels {
+  display: grid;
+}
+
+.window-panels > .window-code {
+  grid-area: 1 / 1;
+  visibility: hidden;
+}
+
+.window-panels > .window-code.is-active {
+  visibility: visible;
+}
+
 /* Следующий шаг после мини-теста */
 .quiz-next {
   margin-top: 6px;

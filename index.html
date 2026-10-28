@@ -108,12 +108,18 @@
           <div class="hero-visual reveal">
             <div class="window">
               <div class="window-bar">
-                <span></span>
-                <span></span>
-                <span></span>
-                <p>app.py</p>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <div class="window-tabs" role="tablist" aria-label="Одна страница на двух фреймворках">
+                  <button class="window-tab" type="button" role="tab" id="tab-flask" aria-selected="true" aria-controls="code-flask">Flask</button>
+                  <button class="window-tab" type="button" role="tab" id="tab-django" aria-selected="false" aria-controls="code-django" tabindex="-1">Django</button>
+                </div>
+                <button class="copy-btn" type="button">Копировать</button>
               </div>
-              <pre class="window-code"><code>from flask import Flask
+              <div class="window-panels">
+                <pre class="window-code is-active" id="code-flask" role="tabpanel" aria-labelledby="tab-flask" tabindex="0"><code># app.py
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -121,10 +127,23 @@ app = Flask(__name__)
 def home():
     return "PyWeb Guide 🚀"
 
-if __name__ == "__main__":
-    app.run()</code></pre>
+# запуск: flask --app app run --debug</code></pre>
+                <pre class="window-code" id="code-django" role="tabpanel" aria-labelledby="tab-django" tabindex="0" inert><code># myapp/views.py
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("PyWeb Guide 🚀")
+
+# mysite/urls.py
+from django.urls import path
+from myapp import views
+
+urlpatterns = [path("", views.home)]
+
+# запуск: python manage.py runserver</code></pre>
+              </div>
             </div>
-            <p class="note hero-note">Учебный пример: сервер на этой странице не запускается.</p>
+            <p class="note hero-note">Одна и та же страница на двух фреймворках. Скопируйте код и запустите у себя командой из последней строки.</p>
           </div>
         </div>
       </div>
