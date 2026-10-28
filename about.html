@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>О Python — PyWeb Guide</title>
+
+  <meta name="description" content="Python как язык серверной разработки: что такое backend, путь HTTP-запроса, примеры кода на Flask и SQLite, мини-словарь терминов.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/about.html">
+  <meta name="theme-color" content="#0b0f16">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐍%3C/text%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon" aria-hidden="true">🐍</span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link active" href="about.html" aria-current="page">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+      <div class="container page-hero">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a>
+          <span aria-hidden="true">/</span>
+          <span>О Python</span>
+        </nav>
+
+        <p class="eyebrow">Раздел 1</p>
+        <h1>Python как язык серверной разработки</h1>
+        <p class="lead">
+          Простой синтаксис, мощная экосистема и зрелые фреймворки делают Python
+          удобным языком для входа в веб-разработку.
+        </p>
+      </div>
+
+      <section class="section" aria-label="Что такое backend">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Что такое backend-разработка</h2>
+            <p>
+              Backend — это часть приложения, которая работает на сервере:
+              принимает запросы, обрабатывает логику, обращается к базе данных и отправляет ответ.
+            </p>
+          </div>
+
+          <div class="card-grid">
+            <article class="card reveal">
+              <h3>🌐 Обработка запросов</h3>
+              <p>Фреймворк принимает HTTP-запрос и определяет, какой код должен его обработать.</p>
+            </article>
+
+            <article class="card reveal">
+              <h3>🗄️ База данных</h3>
+              <p>Приложение читает и сохраняет пользователей, товары, статьи и другие данные через ORM или SQL.</p>
+            </article>
+
+            <article class="card reveal">
+              <h3>📤 Формирование ответа</h3>
+              <p>Сервер возвращает HTML, JSON или файл — то, что в итоге видит пользователь.</p>
+            </article>
+
+            <article class="card reveal">
+              <h3>🔐 Логика и безопасность</h3>
+              <p>Проверка данных, права доступа, обработка ошибок и подготовка корректного ответа.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Задачи Python на сервере">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Какие задачи Python решает на сервере</h2>
+            <p>Сервер принимает запросы, работает с данными и возвращает ответы. Вот что для этого делает код на Python.</p>
+          </div>
+
+          <div class="panel reveal">
+            <ul class="check-list">
+              <li>Сопоставляет адрес страницы с нужной функцией (маршрутизация).</li>
+              <li>Проверяет данные, которые прислал пользователь, например из формы.</li>
+              <li>Читает и записывает данные в базу.</li>
+              <li>Проверяет права доступа и вход пользователей.</li>
+              <li>Собирает HTML-страницы из шаблонов.</li>
+              <li>Отдаёт данные в формате JSON для других программ.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Как проходит запрос">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Как проходит запрос пользователя</h2>
+            <p>Упрощённая цепочка от клика до ответа сервера.</p>
+          </div>
+
+          <div class="steps">
+            <article class="step reveal">
+              <strong>1</strong>
+              <h3>Браузер</h3>
+              <p>Пользователь открывает страницу или отправляет форму.</p>
+            </article>
+
+            <article class="step reveal">
+              <strong>2</strong>
+              <h3>HTTP-запрос</h3>
+              <p>Запрос уходит на сервер: метод, адрес и данные.</p>
+            </article>
+
+            <article class="step reveal">
+              <strong>3</strong>
+              <h3>Фреймворк</h3>
+              <p>Django или Flask находит нужный маршрут и обработчик.</p>
+            </article>
+
+            <article class="step reveal">
+              <strong>4</strong>
+              <h3>Логика и БД</h3>
+              <p>Код проверяет данные, читает или сохраняет информацию.</p>
+            </article>
+
+            <article class="step reveal">
+              <strong>5</strong>
+              <h3>Ответ</h3>
+              <p>Сервер возвращает страницу, JSON или ошибку.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Сильные стороны Python">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Сильные стороны Python в вебе</h2>
+            <p>Ключевые причины, по которым язык остаётся популярным выбором для серверной разработки.</p>
+          </div>
+
+          <div class="table-wrap reveal" tabindex="0" role="region" aria-label="Таблица: сильные стороны Python">
+            <table>
+              <caption>Почему Python хорошо подходит для старта в веб-разработке</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Особенность</th>
+                  <th scope="col">Почему это важно</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Читаемый синтаксис</td>
+                  <td>Код проще поддерживать и разбирать в команде, ниже порог входа для новичков.</td>
+                </tr>
+                <tr>
+                  <td>Готовые фреймворки</td>
+                  <td>Django и Flask закрывают большую часть типовых задач серверной разработки.</td>
+                </tr>
+                <tr>
+                  <td>Экосистема библиотек</td>
+                  <td>Легко подключить базу данных, аутентификацию, API-инструменты и аналитику.</td>
+                </tr>
+                <tr>
+                  <td>Связь с анализом данных</td>
+                  <td>Один язык можно использовать для веба, автоматизации и задач анализа данных.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Примеры кода">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Примеры кода</h2>
+            <p>Минимальный сервер на Flask и базовая работа с SQLite — две важные точки входа.</p>
+          </div>
+
+          <div class="code-grid">
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>Flask: минимальный сервер</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Привет, это Python-сервер!"
+
+if __name__ == "__main__":
+    app.run()</code></pre>
+            </div>
+
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>SQLite: базовая работа с данными</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>import sqlite3
+
+conn = sqlite3.connect("app.db")
+cursor = conn.cursor()
+
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)"
+)
+
+cursor.execute(
+    "INSERT INTO users (name) VALUES ('Айгерим')"
+)
+
+conn.commit()
+conn.close()</code></pre>
+            </div>
+          </div>
+
+          <p class="notice" role="note"><strong>Важно:</strong> примеры учебные, сервер в этом проекте не запускается. Код здесь можно только читать и копировать.</p>
+        </div>
+      </section>
+
+      <section class="section faq" aria-label="Словарь терминов">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Мини-словарь терминов</h2>
+            <p>Понятия, которые помогают увереннее читать материалы по веб-разработке.</p>
+          </div>
+
+          <details class="reveal">
+            <summary>Backend</summary>
+            <p>Серверная часть приложения, которая обрабатывает запросы, хранит данные и возвращает ответы.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>Frontend</summary>
+            <p>Клиентская часть сайта: интерфейс, кнопки, формы и всё, что пользователь видит в браузере.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>HTTP</summary>
+            <p>Протокол, по которому браузер и сервер обмениваются запросами и ответами.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>ORM</summary>
+            <p>Инструмент, который позволяет работать с базой данных через объекты и код вместо ручных SQL-запросов.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>API</summary>
+            <p>Интерфейс, через который одна программа может получать данные или функции от другой программы.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>SQLite</summary>
+            <p>Лёгкая база данных, которая часто используется для учебных и небольших проектов.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Практический чек-лист">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Практический чек-лист</h2>
+            <p>Что можно сделать после изучения этого раздела.</p>
+          </div>
+
+          <div class="panel reveal">
+            <ul class="check-list">
+              <li>Объяснить, чем сервер отличается от браузера.</li>
+              <li>Понять, зачем приложению нужна база данных.</li>
+              <li>Запустить простой сервер на Flask.</li>
+              <li>Создать один маршрут и вернуть текст.</li>
+              <li>Сделать таблицу в SQLite и добавить туда запись.</li>
+              <li>Сравнить, какие задачи лучше решать фреймворком, а не вручную.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sources-title">
+        <div class="container">
+          <div class="panel sources reveal">
+            <h2 id="sources-title">Источники</h2>
+            <p class="note">Проверено <time datetime="2026-10-28">28.10.2026</time>. Примеры рассчитаны на Python 3.12 и новее.</p>
+            <ul class="list">
+              <li><a href="https://developer.mozilla.org/ru/docs/Web/HTTP/Overview" rel="noopener">MDN: обзор протокола HTTP</a> — запрос, ответ, методы</li>
+              <li><a href="https://docs.python.org/3/library/sqlite3.html" rel="noopener">Python: модуль sqlite3</a> — работа с SQLite из стандартной библиотеки</li>
+              <li><a href="https://flask.palletsprojects.com/en/stable/quickstart/" rel="noopener">Flask 3.1: Quickstart</a> — минимальное приложение и маршруты</li>
+              <li><a href="https://docs.python.org/3/howto/" rel="noopener">Python HOWTO</a> — руководства по отдельным темам языка</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Дальше">
+        <div class="container">
+          <div class="cta-panel reveal">
+            <div>
+              <h2>Куда двигаться дальше?</h2>
+              <p class="lead cta-lead">
+                Когда основы понятны, следующий шаг — выбрать фреймворк: Django или Flask.
+              </p>
+            </div>
+            <div class="cta-actions">
+              <a class="btn btn-primary" href="frameworks.html">Сравнить Django и Flask</a>
+            </div>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

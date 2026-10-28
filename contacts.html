@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Контакты и авторы — PyWeb Guide</title>
+
+  <meta name="description" content="Авторы учебного ресурса PyWeb Guide и учебная форма обратной связи.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/contacts.html">
+  <meta name="theme-color" content="#0b0f16">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐍%3C/text%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon" aria-hidden="true">🐍</span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link active" href="contacts.html" aria-current="page">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+      <div class="container page-hero">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a>
+          <span aria-hidden="true">/</span>
+          <span>Контакты</span>
+        </nav>
+
+        <p class="eyebrow">Раздел 4</p>
+        <h1>Контакты</h1>
+        <p class="lead">
+          Это учебная форма обратной связи. Сообщение сохраняется только в вашем браузере
+          и никуда не отправляется.
+        </p>
+      </div>
+
+      <section class="section" aria-label="Форма и информация">
+        <div class="container">
+          <div class="contact-grid">
+
+            <div class="form-card reveal">
+              <div class="section-head">
+                <h2>Форма обратной связи</h2>
+                <p>Форма учебная: данные сохраняются только в вашем браузере через localStorage и никуда не передаются.</p>
+              </div>
+
+              <form id="contact-form" class="form-grid" novalidate>
+                <div class="field">
+                  <label for="name">Имя</label>
+                  <input id="name" name="name" type="text" autocomplete="name" placeholder="Ваше имя" required>
+                </div>
+
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+                </div>
+
+                <div class="field">
+                  <label for="message">Сообщение</label>
+                  <textarea id="message" name="message" rows="6" placeholder="Напишите ваш вопрос или предложение" required></textarea>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Сохранить сообщение</button>
+
+                <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+
+                <p class="note">
+                  Серверная отправка не реализована: сообщение остаётся в localStorage этого браузера,
+                  его никто не получает.
+                </p>
+              </form>
+            </div>
+
+            <aside class="info-card reveal" aria-label="Информация о проекте">
+              <div class="section-head">
+                <h2>Информация</h2>
+                <p>Краткие сведения о проекте и технологии.</p>
+              </div>
+
+              <div class="info-list">
+                <div class="info-item">
+                  <strong>Проект</strong>
+                  <p>PyWeb Guide — веб-ресурс о Python в веб-разработке</p>
+                </div>
+
+                <div class="info-item">
+                  <strong>Авторы</strong>
+                  <p>Жангужин Е. Е., Косяк Р. А., группа ИСУ(СОП)-25</p>
+                </div>
+
+                <div class="info-item">
+                  <strong>Разделы</strong>
+                  <p>Главная, О Python, Фреймворки, Первый проект, Контакты</p>
+                </div>
+
+                <div class="info-item">
+                  <strong>Технологии</strong>
+                  <p>HTML, CSS, JavaScript, адаптивная вёрстка, анимации</p>
+                </div>
+
+                <div class="info-item">
+                  <strong>Темы</strong>
+                  <p>Python, backend, Django, Flask, базы данных, практика</p>
+                </div>
+
+                <div class="info-item">
+                  <strong>Формат</strong>
+                  <p>Учебный проект без сервера: форма работает только локально</p>
+                </div>
+              </div>
+            </aside>
+
+          </div>
+
+          <div class="panel reveal stack-gap">
+            <h2>Сохранено в этом браузере</h2>
+            <p class="note">Последние сообщения, которые вы сохранили на этом устройстве.</p>
+            <ul id="saved-list" class="saved-list"></ul>
+            <button id="clear-saved" class="btn btn-secondary saved-clear" type="button" hidden>Очистить сохранённые сообщения</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="authors" aria-labelledby="authors-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="authors-title">Об авторах</h2>
+            <p>
+              Ресурс создан студентами в рамках дисциплины «Введение в веб-дизайн и разработку»
+              Северо-Казахстанского университета им. М. Козыбаева (Петропавловск).
+            </p>
+          </div>
+
+          <div class="card-grid">
+            <article class="card reveal">
+              <h3><span class="tag">ЕЖ</span>Жангужин Е. Е.</h3>
+              <p>Студент группы ИСУ(СОП)-25, соавтор проекта.</p>
+            </article>
+
+            <article class="card reveal">
+              <h3><span class="tag">РК</span>Косяк Р. А.</h3>
+              <p>Студент группы ИСУ(СОП)-25, соавтор проекта.</p>
+            </article>
+
+            <article class="card reveal">
+              <h3><span class="tag">📅</span>Обновления</h3>
+              <p>
+                Последнее обновление: <time datetime="2026-10-28">28.10.2026</time>.
+                Код открыт: <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">репозиторий на GitHub</a>.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Первый проект на Flask и Django — PyWeb Guide</title>
+
+  <meta name="description" content="Пошаговая инструкция: список задач на Flask 3.1 и на Django 6.1 — от установки до работающего приложения. Отмечайте пройденные шаги.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/project.html">
+  <meta name="theme-color" content="#0b0f16">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐍%3C/text%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon" aria-hidden="true">🐍</span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link active" href="project.html" aria-current="page">Первый проект</a></li>
+          <li><a class="nav-link" href="contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+      <div class="container page-hero">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a>
+          <span aria-hidden="true">/</span>
+          <span>Первый проект</span>
+        </nav>
+
+        <p class="eyebrow">Раздел 3</p>
+        <h1>Первый проект: список задач</h1>
+        <p class="lead">
+          Сделаем одно и то же приложение — список задач — двумя способами: на Flask и на Django.
+          Выберите один вариант и пройдите его до конца. На Flask уйдёт около 15 минут, на Django — около 30.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#flask">Вариант на Flask</a>
+          <a class="btn btn-secondary" href="#django">Вариант на Django</a>
+        </div>
+      </div>
+
+      <section class="section" aria-labelledby="prep-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="prep-title">Что понадобится</h2>
+            <p>Проверьте это до начала — так шаги пройдут без ошибок.</p>
+          </div>
+
+          <div class="panel reveal">
+            <ul class="check-list">
+              <li>Python 3.12 или новее: команда <code>python --version</code> в терминале.</li>
+              <li>Редактор кода, например VS Code.</li>
+              <li>Отдельная пустая папка для проекта, открытая в терминале.</li>
+              <li>Базовый Python: функции, списки, словари (шаг 1 <a href="index.html">дорожной карты</a>).</li>
+            </ul>
+          </div>
+
+          <p class="notice" role="note">
+            <strong>Команды для Windows.</strong> На macOS и Linux вместо <code>python</code> пишите <code>python3</code>,
+            а виртуальное окружение активируйте командой <code>source .venv/bin/activate</code>.
+            Отмеченные шаги сохраняются в этом браузере — можно вернуться позже и продолжить.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================= FLASK ============================= -->
+      <section class="section project-track" id="flask" aria-labelledby="flask-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="badge-inline">⚪ Flask 3.1 · ~15 минут</span>
+            <h2 id="flask-title">Вариант 1. Список задач на Flask</h2>
+            <p>Одно приложение в одном файле: страница со списком и форма добавления задачи.</p>
+          </div>
+
+          <div class="progress-box reveal" data-progress="project-flask">
+            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 4 шагов пройдено</p>
+            <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
+            <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Сбросить прогресс</button>
+          </div>
+
+          <ol class="project-steps" data-progress-list="project-flask">
+            <li class="project-step reveal">
+              <h3>Шаг 1. Создайте окружение и установите Flask</h3>
+              <p>Виртуальное окружение хранит библиотеки проекта отдельно от остальной системы.</p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>Терминал</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>python -m venv .venv
+.venv\Scripts\activate
+pip install flask</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="1"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 2. Напишите приложение</h3>
+              <p>Создайте файл <code>app.py</code>. Задачи пока хранятся в обычном списке — в памяти сервера.</p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>app.py</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>from flask import Flask, redirect, render_template_string, request, url_for
+
+app = Flask(__name__)
+tasks = []
+
+PAGE = """
+&lt;!doctype html&gt;
+&lt;title&gt;Мои задачи&lt;/title&gt;
+&lt;h1&gt;Мои задачи&lt;/h1&gt;
+&lt;form method="post"&gt;
+  &lt;input name="title" placeholder="Новая задача" required&gt;
+  &lt;button&gt;Добавить&lt;/button&gt;
+&lt;/form&gt;
+&lt;ul&gt;
+  {% for task in tasks %}&lt;li&gt;{{ task }}&lt;/li&gt;{% endfor %}
+&lt;/ul&gt;
+"""
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        tasks.append(request.form["title"])
+        return redirect(url_for("index"))
+    return render_template_string(PAGE, tasks=tasks)</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="2"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 3. Запустите сервер</h3>
+              <p>Флаг <code>--debug</code> перезапускает сервер при каждом сохранении файла и показывает понятные ошибки.</p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>Терминал</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>flask --app app run --debug</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="3"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 4. Проверьте результат</h3>
+              <p>
+                Откройте в браузере <code>http://127.0.0.1:5000/</code> и добавьте пару задач.
+                Обратите внимание: после перезапуска сервера список очищается — данные жили только в памяти.
+                Сохранять их между запусками умеет база данных, это следующий шаг.
+              </p>
+              <label class="step-check"><input type="checkbox" data-step="4"> Шаг пройден</label>
+            </li>
+          </ol>
+
+          <div class="panel reveal stack-gap">
+            <h3>Что дальше</h3>
+            <ul class="list">
+              <li>Вынесите HTML в шаблон <code>templates/index.html</code> и используйте <code>render_template</code>.</li>
+              <li>Сохраняйте задачи в SQLite — пример есть в разделе <a href="about.html">«О Python»</a>.</li>
+              <li>Добавьте кнопку удаления задачи — это отдельный маршрут.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================= DJANGO ============================= -->
+      <section class="section project-track" id="django" aria-labelledby="django-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="badge-inline">🟢 Django 6.1 · ~30 минут</span>
+            <h2 id="django-title">Вариант 2. Список задач на Django</h2>
+            <p>Задачи хранятся в базе данных SQLite, а добавлять их можно через встроенную админ-панель.</p>
+          </div>
+
+          <div class="progress-box reveal" data-progress="project-django">
+            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 6 шагов пройдено</p>
+            <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
+            <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Сбросить прогресс</button>
+          </div>
+
+          <ol class="project-steps" data-progress-list="project-django">
+            <li class="project-step reveal">
+              <h3>Шаг 1. Установите Django и создайте проект</h3>
+              <p>Точка в конце команды создаёт проект в текущей папке. Затем создаём приложение <code>tasks</code>.</p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>Терминал</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>python -m venv .venv
+.venv\Scripts\activate
+pip install django
+django-admin startproject mysite .
+python manage.py startapp tasks</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="1"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 2. Подключите приложение</h3>
+              <p>В файле <code>mysite/settings.py</code> добавьте <code>"tasks"</code> в конец списка <code>INSTALLED_APPS</code>.</p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>mysite/settings.py</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "tasks",
+]</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="2"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 3. Опишите модель и зарегистрируйте её в админке</h3>
+              <p>Модель — это таблица базы данных, описанная классом Python. ORM сама создаст для неё SQL.</p>
+              <div class="code-grid">
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>tasks/models.py</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>from django.db import models
+
+class Task(models.Model):
+    title = models.CharField(max_length=200)
+    done = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title</code></pre>
+                </div>
+
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>tasks/admin.py</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>from django.contrib import admin
+
+from .models import Task
+
+admin.site.register(Task)</code></pre>
+                </div>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="3"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 4. Создайте таблицы и администратора</h3>
+              <p>Миграции переносят модели в базу данных. Последняя команда спросит логин и пароль для входа в админку.</p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>Терминал</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="4"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 5. Сделайте страницу со списком</h3>
+              <p>
+                Представление получает задачи из базы, шаблон выводит их списком, маршрут связывает адрес с представлением.
+                Шаблон положите в папку <code>tasks/templates/tasks/</code> — Django найдёт его сам.
+              </p>
+              <div class="code-grid">
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>tasks/views.py</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>from django.shortcuts import render
+
+from .models import Task
+
+def index(request):
+    return render(request, "tasks/index.html", {"tasks": Task.objects.all()})</code></pre>
+                </div>
+
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>tasks/templates/tasks/index.html</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>&lt;h1&gt;Мои задачи&lt;/h1&gt;
+&lt;ul&gt;
+  {% for task in tasks %}
+    &lt;li&gt;{{ task.title }}{% if task.done %} ✓{% endif %}&lt;/li&gt;
+  {% empty %}
+    &lt;li&gt;Задач пока нет — добавьте их в админке.&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;</code></pre>
+                </div>
+
+                <div class="code-block">
+                  <div class="code-head">
+                    <span>mysite/urls.py</span>
+                    <button class="copy-btn" type="button">Копировать</button>
+                  </div>
+                  <pre><code>from django.contrib import admin
+from django.urls import path
+
+from tasks import views
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", views.index),
+]</code></pre>
+                </div>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="5"> Шаг пройден</label>
+            </li>
+
+            <li class="project-step reveal">
+              <h3>Шаг 6. Запустите и проверьте</h3>
+              <p>
+                Откройте <code>http://127.0.0.1:8000/admin/</code>, войдите и добавьте несколько задач.
+                Затем откройте <code>http://127.0.0.1:8000/</code> — задачи появятся в списке и сохранятся после перезапуска сервера.
+              </p>
+              <div class="code-block">
+                <div class="code-head">
+                  <span>Терминал</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>python manage.py runserver</code></pre>
+              </div>
+              <label class="step-check"><input type="checkbox" data-step="6"> Шаг пройден</label>
+            </li>
+          </ol>
+
+          <div class="panel reveal stack-gap">
+            <h3>Что дальше</h3>
+            <ul class="list">
+              <li>Добавьте форму на саму страницу, чтобы создавать задачи без админки (класс <code>ModelForm</code>).</li>
+              <li>Выведите отдельно невыполненные задачи: <code>Task.objects.filter(done=False)</code>.</li>
+              <li>Пройдите официальное руководство Django — оно продолжает эту же логику на примере опросов.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sources-title">
+        <div class="container">
+          <div class="panel sources reveal">
+            <h2 id="sources-title">Источники</h2>
+            <p class="note">Код рассчитан на Flask 3.1 и Django 6.1, источники проверены <time datetime="2026-10-28">28.10.2026</time>.</p>
+            <ul class="list">
+              <li><a href="https://flask.palletsprojects.com/en/stable/installation/" rel="noopener">Flask: установка и виртуальное окружение</a></li>
+              <li><a href="https://flask.palletsprojects.com/en/stable/quickstart/" rel="noopener">Flask: Quickstart — маршруты, формы, шаблоны</a></li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/intro/tutorial01/" rel="noopener">Django 6.1: официальное руководство, часть 1</a> — проект, приложение, маршруты</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/intro/tutorial02/" rel="noopener">Django 6.1: руководство, часть 2</a> — модели, миграции, админка</li>
+              <li><a href="https://docs.python.org/3/library/venv.html" rel="noopener">Python: модуль venv</a> — виртуальные окружения</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Дальше">
+        <div class="container">
+          <div class="cta-panel reveal">
+            <div>
+              <h2>Не получилось?</h2>
+              <p class="lead cta-lead">
+                Опишите, на каком шаге возникла ошибка, через форму обратной связи —
+                и сверьтесь с источниками выше.
+              </p>
+            </div>
+            <div class="cta-actions">
+              <a class="btn btn-primary" href="contacts.html">Задать вопрос</a>
+            </div>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1516,6 +1516,161 @@ main:focus {
   margin-top: 14px;
 }
 
+/* --- Доработка по итогам ЛР4 --- */
+code {
+  font-family: var(--mono);
+}
+
+:not(pre) > code {
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #dbe5ff;
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+}
+
+/* Прогресс обучения */
+.progress-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.progress-label {
+  margin: 0;
+  font-weight: 800;
+}
+
+.progress-track {
+  flex: 1 1 200px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  transition: width 0.3s ease;
+}
+
+.progress-reset {
+  min-height: 40px;
+  font-size: 0.9rem;
+}
+
+.step-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.step-check input {
+  width: 18px;
+  height: 18px;
+  min-height: auto;
+  padding: 0;
+  accent-color: var(--green);
+}
+
+.is-done .timeline-dot {
+  background: rgba(52, 211, 153, 0.18);
+  border-color: rgba(52, 211, 153, 0.5);
+  color: var(--green);
+}
+
+.is-done .step-check,
+.project-step.is-done h3 {
+  color: var(--success);
+}
+
+/* Первый проект */
+.project-steps {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-step {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)),
+    var(--surface);
+  box-shadow: var(--shadow);
+  min-width: 0;
+}
+
+.project-step.is-done {
+  border-color: rgba(52, 211, 153, 0.35);
+}
+
+.project-step h3 {
+  margin: 0 0 8px;
+  font-size: 1.08rem;
+}
+
+.project-step > p {
+  margin: 0 0 14px;
+  color: var(--muted);
+}
+
+.project-step .code-block {
+  box-shadow: none;
+  background: #0d1320;
+}
+
+.project-track .section-head .badge-inline {
+  margin-bottom: 10px;
+}
+
+#flask,
+#django,
+#authors {
+  scroll-margin-top: 96px;
+}
+
+.panel h3 {
+  margin: 0 0 8px;
+}
+
+/* Источники */
+.sources h2 {
+  margin: 0 0 6px;
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+}
+
+.sources .list {
+  margin-top: 10px;
+}
+
+/* Следующий шаг после мини-теста */
+.quiz-next {
+  margin-top: 6px;
+}
+
+.quiz-next .cta-actions {
+  margin-top: 10px;
+}
+
 /* Элементы сеток могут сжиматься уже своего содержимого */
 .hero-grid > *,
 .card-grid > *,

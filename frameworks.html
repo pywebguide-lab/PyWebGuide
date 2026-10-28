@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Django, Flask или FastAPI — PyWeb Guide</title>
+
+  <meta name="description" content="Сравнение Django 6.1, Flask 3.1 и FastAPI: таблицы по критериям, одна страница на разных фреймворках и мини-тест для выбора первого фреймворка.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/frameworks.html">
+  <meta name="theme-color" content="#0b0f16">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐍%3C/text%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon" aria-hidden="true">🐍</span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link active" href="frameworks.html" aria-current="page">Фреймворки</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+      <div class="container page-hero">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a>
+          <span aria-hidden="true">/</span>
+          <span>Фреймворки</span>
+        </nav>
+
+        <p class="eyebrow">Раздел 2</p>
+        <h1>Django или Flask: два подхода к одному языку</h1>
+        <p class="lead">
+          Оба фреймворка решают одну задачу — построение серверной части сайта,
+          но делают это по-разному: через готовую архитектуру или через гибкое минимальное ядро.
+          В конце страницы — коротко о третьем популярном варианте, FastAPI.
+        </p>
+        <p class="note">Сравнение актуально для Django 6.1 и Flask 3.1 (октябрь 2026).</p>
+      </div>
+
+      <section class="section" aria-labelledby="two-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="two-title">Два подхода</h2>
+            <p>Главное отличие — сколько готовых решений фреймворк даёт сразу.</p>
+          </div>
+
+          <div class="compare-grid">
+            <article class="compare-card django reveal">
+              <span class="badge-inline">🟢 Django</span>
+              <h3>Django</h3>
+              <p class="subtitle">«Batteries included» — фреймворк с полным набором инструментов.</p>
+              <ul class="list">
+                <li>Встроенная ORM для работы с базой данных</li>
+                <li>Готовая админ-панель для управления контентом</li>
+                <li>Строгая структура проекта и единый стиль кода</li>
+                <li>Хорошо подходит для средних и крупных приложений</li>
+                <li>Меньше ручных решений для типовых задач</li>
+              </ul>
+            </article>
+
+            <article class="compare-card flask reveal">
+              <span class="badge-inline">⚪ Flask</span>
+              <h3>Flask</h3>
+              <p class="subtitle">Микрофреймворк — минимальное ядро и максимум гибкости.</p>
+              <ul class="list">
+                <li>Минимум навязанной структуры</li>
+                <li>Расширения подключаются по мере необходимости</li>
+                <li>Проще разобраться с нуля и понять работу сервера</li>
+                <li>Хорош для небольших сервисов, учебных проектов и API</li>
+                <li>Больше контроля над архитектурой</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Таблица сравнения по критериям">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Сравнение по критериям</h2>
+            <p>Семь параметров, по которым чаще всего выбирают фреймворк.</p>
+          </div>
+
+          <div class="table-wrap reveal" tabindex="0" role="region" aria-label="Таблица сравнения Django и Flask">
+            <table>
+              <caption>Django и Flask: сравнение по критериям</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Критерий</th>
+                  <th scope="col">Django</th>
+                  <th scope="col">Flask</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Уровень фреймворка</strong></td>
+                  <td>Полнофункциональный («всё включено»)</td>
+                  <td>Микрофреймворк с минимальным ядром</td>
+                </tr>
+                <tr>
+                  <td><strong>Скорость старта</strong></td>
+                  <td>Нужно изучить структуру проекта, зато многое уже готово</td>
+                  <td>Первое приложение — за несколько строк</td>
+                </tr>
+                <tr>
+                  <td><strong>База данных</strong></td>
+                  <td>Встроенная ORM и миграции</td>
+                  <td>Подключается через расширения и библиотеки</td>
+                </tr>
+                <tr>
+                  <td><strong>Административная панель</strong></td>
+                  <td>Есть из коробки</td>
+                  <td>Нет, добавляется отдельно</td>
+                </tr>
+                <tr>
+                  <td><strong>Гибкость</strong></td>
+                  <td>Средняя: есть «правильный путь»</td>
+                  <td>Высокая: структуру выбираешь сам</td>
+                </tr>
+                <tr>
+                  <td><strong>Лучше подходит для</strong></td>
+                  <td>Крупных сайтов с пользователями и данными</td>
+                  <td>Небольших сервисов, прототипов и API</td>
+                </tr>
+                <tr>
+                  <td><strong>Пример использования</strong></td>
+                  <td>Интернет-магазин, новостной портал</td>
+                  <td>Сервис заметок, учебный API</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Что выбрать новичку">
+        <div class="container">
+          <div class="compare-grid">
+            <article class="panel reveal">
+              <h3>Что выбрать новичку</h3>
+              <p class="note note-gap">Короткая подсказка для первого проекта.</p>
+              <ul class="list">
+                <li>Хочешь быстро понять, как работает сервер, — начни с Flask: в нём мало «магии».</li>
+                <li>Нужен сайт с пользователями и админкой — бери Django.</li>
+                <li>Оба варианта хороши. Главное — довести первый учебный проект до конца.</li>
+              </ul>
+            </article>
+
+            <article class="panel reveal">
+              <h3>Типичные ошибки выбора</h3>
+              <p class="note note-gap">Чего лучше избегать.</p>
+              <ul class="list">
+                <li>Выбирать по моде, а не по задаче.</li>
+                <li>Брать Flask для большого проекта и вручную собирать то, что в Django уже есть.</li>
+                <li>Брать Django для совсем маленькой страницы.</li>
+                <li>Менять фреймворк, не закончив первый проект.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Когда что использовать">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Когда что использовать</h2>
+            <p>Короткая практическая таблица для выбора фреймворка под задачу.</p>
+          </div>
+
+          <div class="table-wrap reveal" tabindex="0" role="region" aria-label="Таблица рекомендаций по выбору фреймворка">
+            <table>
+              <caption>Рекомендации по выбору между Django и Flask</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Задача</th>
+                  <th scope="col">Рекомендация</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Учебный проект и первое знакомство с backend</td>
+                  <td>Flask — проще увидеть, как всё работает изнутри.</td>
+                </tr>
+                <tr>
+                  <td>Сайт с админкой и большим количеством моделей данных</td>
+                  <td>Django — админ-панель и ORM экономят время.</td>
+                </tr>
+                <tr>
+                  <td>Небольшой REST API</td>
+                  <td>Flask — минимум лишнего кода.</td>
+                </tr>
+                <tr>
+                  <td>Проект, который будет расти и поддерживаться командой</td>
+                  <td>Django — единая структура снижает хаос в коде.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Примеры кода на Django и Flask">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Одна и та же страница на двух фреймворках</h2>
+            <p>Код показывает разницу в объёме шаблонного кода для простейшего маршрута.</p>
+          </div>
+
+          <div class="code-grid">
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>Flask</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Главная страница"</code></pre>
+            </div>
+
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>Django: views.py</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Главная страница")</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="quiz" aria-label="Мини-тест">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Мини-тест: что тебе ближе?</h2>
+            <p>Ответь на пять вопросов и получи рекомендацию по выбору фреймворка. Правильных ответов здесь нет — тест подсказывает направление.</p>
+          </div>
+
+          <form id="quiz-form" class="quiz reveal" novalidate>
+            <h3>Выбери один вариант в каждом вопросе</h3>
+
+            <fieldset>
+              <legend>1. Что важнее на старте?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option">
+                  <input type="radio" name="q1" value="flask">
+                  <span>Понять, как сервер работает изнутри</span>
+                </label>
+                <label class="quiz-option">
+                  <input type="radio" name="q1" value="django">
+                  <span>Быстрее получить готовый результат</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>2. Нужна ли готовая админ-панель?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option">
+                  <input type="radio" name="q2" value="flask">
+                  <span>Нет, соберу нужные части сам</span>
+                </label>
+                <label class="quiz-option">
+                  <input type="radio" name="q2" value="django">
+                  <span>Да, это сильно экономит время</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>3. Какой проект ты хочешь сделать?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option">
+                  <input type="radio" name="q3" value="django">
+                  <span>Сайт с пользователями, контентом и базой данных</span>
+                </label>
+                <label class="quiz-option">
+                  <input type="radio" name="q3" value="flask">
+                  <span>Небольшой сервис, API или учебный пример</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>4. Как ты относишься к готовой структуре проекта?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option">
+                  <input type="radio" name="q4" value="django">
+                  <span>Хочу готовые правила и порядок</span>
+                </label>
+                <label class="quiz-option">
+                  <input type="radio" name="q4" value="flask">
+                  <span>Хочу сам решать, как всё устроить</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>5. Как ты будешь работать с данными?</legend>
+              <div class="quiz-options">
+                <label class="quiz-option">
+                  <input type="radio" name="q5" value="flask">
+                  <span>Подберу нужные библиотеки сам</span>
+                </label>
+                <label class="quiz-option">
+                  <input type="radio" name="q5" value="django">
+                  <span>Хочу встроенные средства для базы данных</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" type="submit">Показать результат</button>
+              <button class="btn btn-secondary" type="reset">Сбросить</button>
+            </div>
+
+            <p id="quiz-result" class="quiz-result" role="status" aria-live="polite"></p>
+
+            <div id="quiz-next" class="quiz-next" hidden>
+              <p class="note">Что делать дальше:</p>
+              <div class="cta-actions">
+                <a id="quiz-next-project" class="btn btn-primary" href="project.html">Сделать первый проект</a>
+                <a id="quiz-next-docs" class="btn btn-secondary" href="https://flask.palletsprojects.com/en/stable/" rel="noopener">Официальная документация</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="fastapi-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="fastapi-title">А как же FastAPI?</h2>
+            <p>
+              FastAPI — третий популярный Python-фреймворк. Он создан прежде всего для API:
+              сервер отдаёт данные в JSON, а интерфейс строится отдельно (сайт на JavaScript или мобильное приложение).
+            </p>
+          </div>
+
+          <div class="compare-grid">
+            <article class="panel reveal">
+              <h3>Чем отличается</h3>
+              <ul class="list">
+                <li>Проверка входных данных по аннотациям типов Python (библиотека Pydantic)</li>
+                <li>Автоматическая интерактивная документация API по адресу <code>/docs</code></li>
+                <li>Поддержка асинхронного кода (<code>async def</code>) из коробки</li>
+                <li>Нет встроенной ORM и админ-панели — как и во Flask, они подключаются отдельно</li>
+              </ul>
+            </article>
+
+            <div class="code-block reveal">
+              <div class="code-head">
+                <span>FastAPI: main.py</span>
+                <button class="copy-btn" type="button">Копировать</button>
+              </div>
+              <pre><code>from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"message": "Главная страница"}
+
+# Установка: pip install "fastapi[standard]"
+# Запуск:    fastapi dev main.py</code></pre>
+            </div>
+          </div>
+
+          <div class="table-wrap reveal stack-gap" tabindex="0" role="region" aria-label="Таблица: когда выбирать FastAPI">
+            <table>
+              <caption>Django, Flask и FastAPI: что выбрать под задачу</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Задача</th>
+                  <th scope="col">Django</th>
+                  <th scope="col">Flask</th>
+                  <th scope="col">FastAPI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Сайт с HTML-страницами и админкой</td>
+                  <td>Лучший выбор</td>
+                  <td>Подходит</td>
+                  <td>Не основное назначение</td>
+                </tr>
+                <tr>
+                  <td>JSON API для фронтенда или мобильного приложения</td>
+                  <td>Подходит (с Django REST framework)</td>
+                  <td>Подходит</td>
+                  <td>Лучший выбор</td>
+                </tr>
+                <tr>
+                  <td>Первое знакомство с backend</td>
+                  <td>Подходит</td>
+                  <td>Лучший выбор</td>
+                  <td>Подходит, если знакомы аннотации типов</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sources-title">
+        <div class="container">
+          <div class="panel sources reveal">
+            <h2 id="sources-title">Источники</h2>
+            <p class="note">Версии проверены по PyPI <time datetime="2026-10-28">28.10.2026</time>.</p>
+            <ul class="list">
+              <li><a href="https://docs.djangoproject.com/en/6.1/" rel="noopener">Документация Django 6.1</a> — актуальная версия 6.1.2, нужен Python 3.12+</li>
+              <li><a href="https://flask.palletsprojects.com/en/stable/" rel="noopener">Документация Flask 3.1</a> — актуальная версия 3.1.3</li>
+              <li><a href="https://fastapi.tiangolo.com/" rel="noopener">Документация FastAPI</a> — актуальная версия 0.162.0</li>
+              <li><a href="https://www.django-rest-framework.org/" rel="noopener">Django REST framework</a> — построение API на Django</li>
+              <li><a href="https://endoflife.date/django" rel="noopener">Сроки поддержки версий Django</a> — какие версии получают исправления</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section faq" aria-label="Частые вопросы">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Частые вопросы</h2>
+            <p>Короткие ответы на типовые вопросы новичков.</p>
+          </div>
+
+          <details class="reveal">
+            <summary>Что проще выучить первым?</summary>
+            <p>
+              Если хочется быстро понять, как работает сервер, лучше начать с Flask.
+              Если нужен проект с готовой админкой и базой данных — удобно начинать с Django.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>Нужно ли знать SQL?</summary>
+            <p>
+              Желательно. Даже при использовании ORM базовое понимание SQL помогает
+              лучше работать с данными и отлаживать запросы.
+            </p>
+          </details>
+
+          <details class="reveal">
+            <summary>Можно ли потом перейти с Flask на Django?</summary>
+            <p>
+              Да. Python остаётся тем же, поэтому переход возможен, но потребуется
+              изучить другую архитектуру проекта и встроенные инструменты Django.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Переход к контактам">
+        <div class="container">
+          <div class="cta-panel reveal">
+            <div>
+              <h2>Остались вопросы?</h2>
+              <p class="lead cta-lead">
+                Напишите через форму обратной связи — можно спросить про выбор фреймворка,
+                базу данных или первый проект.
+              </p>
+            </div>
+            <div class="cta-actions">
+              <a class="btn btn-primary" href="contacts.html">Перейти к контактам</a>
+            </div>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

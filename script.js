@@ -30,94 +30,8 @@
     });
   }
 
-  const routes = {
-    "/": {
-      title: "PyWeb Guide — Python в веб-разработке"
-    },
-    "/about": {
-      title: "О Python — PyWeb Guide"
-    },
-    "/frameworks": {
-      title: "Django и Flask — PyWeb Guide"
-    },
-    "/contacts": {
-      title: "Контакты — PyWeb Guide"
-    }
-  };
-
-  const pages = document.querySelectorAll(".page");
-  const navLinks = document.querySelectorAll(".nav-link");
+  // Каждый раздел — отдельная HTML-страница, активный пункт меню задан в разметке
   const mainEl = document.getElementById("content");
-  let pendingScroll = null;
-
-  function normalizeHash(hash) {
-    if (!hash || hash === "#") return "/";
-
-    try {
-      hash = decodeURIComponent(hash);
-    } catch (error) {
-      hash = "/";
-    }
-
-    hash = hash.replace(/^#/, "");
-
-    if (!hash.startsWith("/")) {
-      hash = "/" + hash;
-    }
-
-    if (hash.length > 1 && hash.endsWith("/")) {
-      hash = hash.slice(0, -1);
-    }
-
-    return hash || "/";
-  }
-
-  function render(moveFocus) {
-    let path = normalizeHash(window.location.hash);
-
-    if (!routes[path]) {
-      path = "/";
-    }
-
-    pages.forEach(function (page) {
-      page.hidden = page.dataset.route !== path;
-    });
-
-    navLinks.forEach(function (link) {
-      const isActive = normalizeHash(link.getAttribute("href") || "") === path;
-
-      link.classList.toggle("active", isActive);
-
-      if (isActive) {
-        link.setAttribute("aria-current", "page");
-      } else {
-        link.removeAttribute("aria-current");
-      }
-    });
-
-    document.title = routes[path].title;
-    closeMenu();
-
-    // При переходе между разделами фокус переносится в main,
-    // чтобы клавиатура и экранный диктор начинали с нового раздела
-    if (moveFocus && mainEl) {
-      mainEl.focus({ preventScroll: true });
-    }
-
-    const scrollTarget = pendingScroll ? document.getElementById(pendingScroll) : null;
-    pendingScroll = null;
-
-    if (scrollTarget) {
-      scrollTarget.scrollIntoView();
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }
-
-  window.addEventListener("hashchange", function () {
-    render(true);
-  });
-  render(false);
 
   /* Доступность и вспомогательные функции */
   const skipLink = document.querySelector(".skip-link");
@@ -136,21 +50,6 @@
       closeMenu();
       if (menuButton) menuButton.focus();
     }
-  });
-
-  // Ссылки с переходом к блоку внутри раздела (например, к мини-тесту)
-  document.querySelectorAll("a[data-scroll]").forEach(function (link) {
-    link.addEventListener("click", function (event) {
-      const id = link.dataset.scroll;
-
-      if (normalizeHash(window.location.hash) === normalizeHash(link.getAttribute("href"))) {
-        event.preventDefault();
-        const target = document.getElementById(id);
-        if (target) target.scrollIntoView();
-      } else {
-        pendingScroll = id;
-      }
-    });
   });
 
   function copyText(text) {
@@ -309,11 +208,43 @@
 
   if (quizForm) {
     const quizResult = document.getElementById("quiz-result");
+    const quizNext = document.getElementById("quiz-next");
+    const quizNextProject = document.getElementById("quiz-next-project");
+    const quizNextDocs = document.getElementById("quiz-next-docs");
     const QUIZ_COUNT = 5;
+
+    // Персональный следующий шаг после теста: практика и документация выбранного фреймворка
+    const nextSteps = {
+      django: {
+        project: "project.html#django",
+        projectText: "Сделать первый проект на Django",
+        docs: "https://docs.djangoproject.com/en/6.1/intro/tutorial01/",
+        docsText: "Руководство Django 6.1"
+      },
+      flask: {
+        project: "project.html#flask",
+        projectText: "Сделать первый проект на Flask",
+        docs: "https://flask.palletsprojects.com/en/stable/quickstart/",
+        docsText: "Flask 3.1: Quickstart"
+      }
+    };
 
     function showQuizResult(text, modifier) {
       quizResult.textContent = text;
       quizResult.className = "quiz-result" + (modifier ? " " + modifier : "");
+    }
+
+    function showNextStep(framework) {
+      if (!quizNext) return;
+
+      const step = framework ? nextSteps[framework] : null;
+      quizNext.hidden = !step;
+      if (!step) return;
+
+      quizNextProject.href = step.project;
+      quizNextProject.textContent = step.projectText;
+      quizNextDocs.href = step.docs;
+      quizNextDocs.textContent = step.docsText;
     }
 
     quizForm.addEventListener("submit", function (event) {
@@ -334,6 +265,7 @@
 
       if (answered < QUIZ_COUNT) {
         showQuizResult("Ответь на все вопросы: отвечено " + answered + " из " + QUIZ_COUNT + ".", "is-error");
+        showNextStep(null);
         return;
       }
 
@@ -342,15 +274,97 @@
 
       if (django > flask) {
         showQuizResult("Тебе лучше подойдёт Django: готовая структура, ORM и админ-панель." + score, "is-django");
+        showNextStep("django");
       } else {
         showQuizResult("Тебе лучше подойдёт Flask: минимализм, гибкость и понятный старт." + score, "");
+        showNextStep("flask");
       }
     });
 
     quizForm.addEventListener("reset", function () {
       showQuizResult("", "");
+      showNextStep(null);
     });
   }
+
+  /* Прогресс обучения: отмеченные шаги сохраняются в localStorage */
+  const PROGRESS_KEY = "pyweb_progress";
+
+  function readProgress() {
+    try {
+      const data = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");
+      return data !== null && typeof data === "object" && !Array.isArray(data) ? data : {};
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function writeProgress(data) {
+    try {
+      localStorage.setItem(PROGRESS_KEY, JSON.stringify(data));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  document.querySelectorAll("[data-progress]").forEach(function (box) {
+    const key = box.dataset.progress;
+    const list = document.querySelector('[data-progress-list="' + key + '"]');
+
+    if (!list) return;
+
+    const boxes = list.querySelectorAll("input[data-step]");
+    const count = box.querySelector("[data-progress-count]");
+    const fill = box.querySelector("[data-progress-fill]");
+    const reset = box.querySelector("[data-progress-reset]");
+
+    function update() {
+      const done = Array.prototype.filter.call(boxes, function (input) {
+        return input.checked;
+      });
+
+      count.textContent = done.length;
+      fill.style.width = (boxes.length ? done.length / boxes.length * 100 : 0) + "%";
+      if (reset) reset.hidden = done.length === 0;
+
+      boxes.forEach(function (input) {
+        input.closest(".timeline-item, .project-step").classList.toggle("is-done", input.checked);
+      });
+    }
+
+    function save() {
+      const data = readProgress();
+      data[key] = Array.prototype.filter.call(boxes, function (input) {
+        return input.checked;
+      }).map(function (input) {
+        return input.dataset.step;
+      });
+      writeProgress(data);
+    }
+
+    const saved = readProgress()[key];
+
+    boxes.forEach(function (input) {
+      input.checked = Array.isArray(saved) && saved.indexOf(input.dataset.step) !== -1;
+      input.addEventListener("change", function () {
+        save();
+        update();
+      });
+    });
+
+    if (reset) {
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (input) {
+          input.checked = false;
+        });
+        save();
+        update();
+      });
+    }
+
+    update();
+  });
 
   /* Contact form: проверка и локальное сохранение */
   const form = document.getElementById("contact-form");

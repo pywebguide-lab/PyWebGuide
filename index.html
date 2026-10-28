@@ -5,12 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PyWeb Guide — Python в веб-разработке</title>
 
-  <meta name="description" content="PyWeb Guide — современный веб-ресурс о Python в веб-разработке: backend, Django, Flask, базы данных, дорожная карта, практика и сравнение фреймворков.">
+  <meta name="description" content="PyWeb Guide — учебный ресурс о Python в веб-разработке: backend, Django и Flask, дорожная карта новичка с отметкой прогресса, первый проект по шагам.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/">
   <meta name="theme-color" content="#0b0f16">
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐍%3C/text%3E%3C/svg%3E">
 
   <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Старые адреса вида #/about (версия ЛР3) ведут на отдельные страницы
+    (function () {
+      var old = { "#/about": "about.html", "#/frameworks": "frameworks.html", "#/contacts": "contacts.html" };
+      var target = old[location.hash.replace(/\/$/, "")];
+      if (target) location.replace(target);
+    })();
+  </script>
 </head>
 
 <body id="top">
@@ -26,9 +36,9 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#/" aria-label="PyWeb Guide — на главную">
+      <a class="brand" href="index.html">
         <span class="brand-icon" aria-hidden="true">🐍</span>
-        <span class="brand-text">PyWeb<span>Guide</span></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
       </a>
 
       <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
@@ -39,19 +49,18 @@
 
       <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
         <ul class="nav-menu">
-          <li><a class="nav-link active" href="#/">Главная</a></li>
-          <li><a class="nav-link" href="#/about">О Python</a></li>
-          <li><a class="nav-link" href="#/frameworks">Фреймворки</a></li>
-          <li><a class="nav-link" href="#/contacts">Контакты</a></li>
+          <li><a class="nav-link active" href="index.html" aria-current="page">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="contacts.html">Контакты</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main id="content" tabindex="-1">
 
-    <!-- ============================= ГЛАВНАЯ ============================= -->
-    <section class="page" data-route="/" aria-label="Главная страница">
+  <main id="content" class="page" tabindex="-1">
       <div class="hero">
         <div class="container hero-grid">
           <div class="hero-copy">
@@ -68,9 +77,9 @@
             </p>
 
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#/about">Начать изучение</a>
-              <a class="btn btn-secondary" href="#/frameworks">Сравнить фреймворки</a>
-              <a class="btn btn-secondary" href="#/frameworks" data-scroll="quiz">Пройти мини-тест</a>
+              <a class="btn btn-primary" href="about.html">Начать изучение</a>
+              <a class="btn btn-secondary" href="frameworks.html">Сравнить фреймворки</a>
+              <a class="btn btn-secondary" href="frameworks.html#quiz">Пройти мини-тест</a>
             </div>
 
             <div class="hero-stats">
@@ -158,15 +167,22 @@ if __name__ == "__main__":
         <div class="container">
           <div class="section-head reveal">
             <h2>План изучения: дорожная карта новичка</h2>
-            <p>Пять шагов, которые помогают пройти путь от синтаксиса до первого веб-приложения.</p>
+            <p>Пять шагов, которые помогают пройти путь от синтаксиса до первого веб-приложения. Отмечайте пройденные шаги — прогресс сохранится в этом браузере.</p>
           </div>
 
-          <div class="timeline">
+          <div class="progress-box reveal" data-progress="roadmap">
+            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 5 шагов пройдено</p>
+            <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
+            <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Сбросить прогресс</button>
+          </div>
+
+          <div class="timeline" data-progress-list="roadmap">
             <div class="timeline-item reveal">
               <span class="timeline-dot">1</span>
               <div class="timeline-content">
                 <h3>Повтори основы Python</h3>
                 <p>Переменные, условия, функции, списки и словари — минимальная база для старта.</p>
+                <label class="step-check"><input type="checkbox" data-step="1"> Шаг пройден</label>
               </div>
             </div>
 
@@ -175,6 +191,7 @@ if __name__ == "__main__":
               <div class="timeline-content">
                 <h3>Пойми, как работает веб</h3>
                 <p>Браузер, сервер, HTTP-запрос, ответ, маршруты и страницы — основная логика веба.</p>
+                <label class="step-check"><input type="checkbox" data-step="2"> Шаг пройден</label>
               </div>
             </div>
 
@@ -183,6 +200,7 @@ if __name__ == "__main__":
               <div class="timeline-content">
                 <h3>Выбери первый фреймворк</h3>
                 <p>Flask — для простого старта, Django — для проектов с админкой и базой данных.</p>
+                <label class="step-check"><input type="checkbox" data-step="3"> Шаг пройден</label>
               </div>
             </div>
 
@@ -191,6 +209,7 @@ if __name__ == "__main__":
               <div class="timeline-content">
                 <h3>Подключи данные</h3>
                 <p>SQLite, ORM, модели и простые запросы — следующий шаг к реальному приложению.</p>
+                <label class="step-check"><input type="checkbox" data-step="4"> Шаг пройден</label>
               </div>
             </div>
 
@@ -198,7 +217,8 @@ if __name__ == "__main__":
               <span class="timeline-dot">5</span>
               <div class="timeline-content">
                 <h3>Сделай мини-проект</h3>
-                <p>Список задач, блог, портфолио или короткий сервис — практика закрепляет лучше теории.</p>
+                <p>Список задач, блог, портфолио или короткий сервис — практика закрепляет лучше теории. Начните с готовой инструкции: <a href="project.html">первый проект по шагам</a>.</p>
+                <label class="step-check"><input type="checkbox" data-step="5"> Шаг пройден</label>
               </div>
             </div>
           </div>
@@ -293,7 +313,7 @@ if __name__ == "__main__":
           <div class="card-grid">
             <article class="card reveal">
               <h3><span class="tag">✅</span>Todo-список</h3>
-              <p>Добавление, удаление и отметка задач — классика для первого CRUD-приложения.</p>
+              <p>Добавление, удаление и отметка задач — классика для первого CRUD-приложения. <a href="project.html">Пошаговая инструкция</a>.</p>
             </article>
 
             <article class="card reveal">
@@ -338,6 +358,21 @@ if __name__ == "__main__":
         </div>
       </section>
 
+      <section class="section" aria-labelledby="sources-title">
+        <div class="container">
+          <div class="panel sources reveal">
+            <h2 id="sources-title">Источники</h2>
+            <p class="note">Материалы сайта сверены с официальной документацией. Проверено <time datetime="2026-10-28">28.10.2026</time>.</p>
+            <ul class="list">
+              <li><a href="https://docs.python.org/3/" rel="noopener">Документация Python 3</a> — язык и стандартная библиотека</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/" rel="noopener">Документация Django 6.1</a> — актуальная версия 6.1.2</li>
+              <li><a href="https://flask.palletsprojects.com/en/stable/" rel="noopener">Документация Flask 3.1</a> — актуальная версия 3.1.3</li>
+              <li><a href="https://developer.mozilla.org/ru/docs/Web/HTTP/Overview" rel="noopener">MDN: обзор протокола HTTP</a> — как браузер общается с сервером</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section class="section" aria-label="Быстрый переход">
         <div class="container">
           <div class="cta-panel reveal">
@@ -348,748 +383,11 @@ if __name__ == "__main__":
               </p>
             </div>
             <div class="cta-actions">
-              <a class="btn btn-primary" href="#/frameworks">Открыть сравнение</a>
+              <a class="btn btn-primary" href="frameworks.html">Открыть сравнение</a>
             </div>
           </div>
         </div>
       </section>
-    </section>
-
-    <!-- ============================= О PYTHON ============================= -->
-    <section class="page" data-route="/about" hidden aria-label="Страница о Python">
-      <div class="container page-hero">
-        <nav class="breadcrumb" aria-label="Хлебные крошки">
-          <a href="#/">Главная</a>
-          <span aria-hidden="true">/</span>
-          <span>О Python</span>
-        </nav>
-
-        <p class="eyebrow">Раздел 1</p>
-        <h1>Python как язык серверной разработки</h1>
-        <p class="lead">
-          Простой синтаксис, мощная экосистема и зрелые фреймворки делают Python
-          удобным языком для входа в веб-разработку.
-        </p>
-      </div>
-
-      <section class="section" aria-label="Что такое backend">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Что такое backend-разработка</h2>
-            <p>
-              Backend — это часть приложения, которая работает на сервере:
-              принимает запросы, обрабатывает логику, обращается к базе данных и отправляет ответ.
-            </p>
-          </div>
-
-          <div class="card-grid">
-            <article class="card reveal">
-              <h3>🌐 Обработка запросов</h3>
-              <p>Фреймворк принимает HTTP-запрос и определяет, какой код должен его обработать.</p>
-            </article>
-
-            <article class="card reveal">
-              <h3>🗄️ База данных</h3>
-              <p>Приложение читает и сохраняет пользователей, товары, статьи и другие данные через ORM или SQL.</p>
-            </article>
-
-            <article class="card reveal">
-              <h3>📤 Формирование ответа</h3>
-              <p>Сервер возвращает HTML, JSON или файл — то, что в итоге видит пользователь.</p>
-            </article>
-
-            <article class="card reveal">
-              <h3>🔐 Логика и безопасность</h3>
-              <p>Проверка данных, права доступа, обработка ошибок и подготовка корректного ответа.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Задачи Python на сервере">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Какие задачи Python решает на сервере</h2>
-            <p>Сервер принимает запросы, работает с данными и возвращает ответы. Вот что для этого делает код на Python.</p>
-          </div>
-
-          <div class="panel reveal">
-            <ul class="check-list">
-              <li>Сопоставляет адрес страницы с нужной функцией (маршрутизация).</li>
-              <li>Проверяет данные, которые прислал пользователь, например из формы.</li>
-              <li>Читает и записывает данные в базу.</li>
-              <li>Проверяет права доступа и вход пользователей.</li>
-              <li>Собирает HTML-страницы из шаблонов.</li>
-              <li>Отдаёт данные в формате JSON для других программ.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Как проходит запрос">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Как проходит запрос пользователя</h2>
-            <p>Упрощённая цепочка от клика до ответа сервера.</p>
-          </div>
-
-          <div class="steps">
-            <article class="step reveal">
-              <strong>1</strong>
-              <h3>Браузер</h3>
-              <p>Пользователь открывает страницу или отправляет форму.</p>
-            </article>
-
-            <article class="step reveal">
-              <strong>2</strong>
-              <h3>HTTP-запрос</h3>
-              <p>Запрос уходит на сервер: метод, адрес и данные.</p>
-            </article>
-
-            <article class="step reveal">
-              <strong>3</strong>
-              <h3>Фреймворк</h3>
-              <p>Django или Flask находит нужный маршрут и обработчик.</p>
-            </article>
-
-            <article class="step reveal">
-              <strong>4</strong>
-              <h3>Логика и БД</h3>
-              <p>Код проверяет данные, читает или сохраняет информацию.</p>
-            </article>
-
-            <article class="step reveal">
-              <strong>5</strong>
-              <h3>Ответ</h3>
-              <p>Сервер возвращает страницу, JSON или ошибку.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Сильные стороны Python">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Сильные стороны Python в вебе</h2>
-            <p>Ключевые причины, по которым язык остаётся популярным выбором для серверной разработки.</p>
-          </div>
-
-          <div class="table-wrap reveal" tabindex="0" role="region" aria-label="Таблица: сильные стороны Python">
-            <table>
-              <caption>Почему Python хорошо подходит для старта в веб-разработке</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Особенность</th>
-                  <th scope="col">Почему это важно</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Читаемый синтаксис</td>
-                  <td>Код проще поддерживать и разбирать в команде, ниже порог входа для новичков.</td>
-                </tr>
-                <tr>
-                  <td>Готовые фреймворки</td>
-                  <td>Django и Flask закрывают большую часть типовых задач серверной разработки.</td>
-                </tr>
-                <tr>
-                  <td>Экосистема библиотек</td>
-                  <td>Легко подключить базу данных, аутентификацию, API-инструменты и аналитику.</td>
-                </tr>
-                <tr>
-                  <td>Связь с анализом данных</td>
-                  <td>Один язык можно использовать для веба, автоматизации и задач анализа данных.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Примеры кода">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Примеры кода</h2>
-            <p>Минимальный сервер на Flask и базовая работа с SQLite — две важные точки входа.</p>
-          </div>
-
-          <div class="code-grid">
-            <div class="code-block reveal">
-              <div class="code-head">
-                <span>Flask: минимальный сервер</span>
-                <button class="copy-btn" type="button">Копировать</button>
-              </div>
-              <pre><code>from flask import Flask
-
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return "Привет, это Python-сервер!"
-
-if __name__ == "__main__":
-    app.run()</code></pre>
-            </div>
-
-            <div class="code-block reveal">
-              <div class="code-head">
-                <span>SQLite: базовая работа с данными</span>
-                <button class="copy-btn" type="button">Копировать</button>
-              </div>
-              <pre><code>import sqlite3
-
-conn = sqlite3.connect("app.db")
-cursor = conn.cursor()
-
-cursor.execute(
-    "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)"
-)
-
-cursor.execute(
-    "INSERT INTO users (name) VALUES ('Айгерим')"
-)
-
-conn.commit()
-conn.close()</code></pre>
-            </div>
-          </div>
-
-          <p class="notice" role="note"><strong>Важно:</strong> примеры учебные, сервер в этом проекте не запускается. Код здесь можно только читать и копировать.</p>
-        </div>
-      </section>
-
-      <section class="section faq" aria-label="Словарь терминов">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Мини-словарь терминов</h2>
-            <p>Понятия, которые помогают увереннее читать материалы по веб-разработке.</p>
-          </div>
-
-          <details class="reveal">
-            <summary>Backend</summary>
-            <p>Серверная часть приложения, которая обрабатывает запросы, хранит данные и возвращает ответы.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>Frontend</summary>
-            <p>Клиентская часть сайта: интерфейс, кнопки, формы и всё, что пользователь видит в браузере.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>HTTP</summary>
-            <p>Протокол, по которому браузер и сервер обмениваются запросами и ответами.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>ORM</summary>
-            <p>Инструмент, который позволяет работать с базой данных через объекты и код вместо ручных SQL-запросов.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>API</summary>
-            <p>Интерфейс, через который одна программа может получать данные или функции от другой программы.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>SQLite</summary>
-            <p>Лёгкая база данных, которая часто используется для учебных и небольших проектов.</p>
-          </details>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Практический чек-лист">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Практический чек-лист</h2>
-            <p>Что можно сделать после изучения этого раздела.</p>
-          </div>
-
-          <div class="panel reveal">
-            <ul class="check-list">
-              <li>Объяснить, чем сервер отличается от браузера.</li>
-              <li>Понять, зачем приложению нужна база данных.</li>
-              <li>Запустить простой сервер на Flask.</li>
-              <li>Создать один маршрут и вернуть текст.</li>
-              <li>Сделать таблицу в SQLite и добавить туда запись.</li>
-              <li>Сравнить, какие задачи лучше решать фреймворком, а не вручную.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Дальше">
-        <div class="container">
-          <div class="cta-panel reveal">
-            <div>
-              <h2>Куда двигаться дальше?</h2>
-              <p class="lead cta-lead">
-                Когда основы понятны, следующий шаг — выбрать фреймворк: Django или Flask.
-              </p>
-            </div>
-            <div class="cta-actions">
-              <a class="btn btn-primary" href="#/frameworks">Сравнить Django и Flask</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </section>
-
-    <!-- ============================= ФРЕЙМВОРКИ ============================= -->
-    <section class="page" data-route="/frameworks" hidden aria-label="Страница фреймворков">
-      <div class="container page-hero">
-        <nav class="breadcrumb" aria-label="Хлебные крошки">
-          <a href="#/">Главная</a>
-          <span aria-hidden="true">/</span>
-          <span>Фреймворки</span>
-        </nav>
-
-        <p class="eyebrow">Раздел 2</p>
-        <h1>Django или Flask: два подхода к одному языку</h1>
-        <p class="lead">
-          Оба фреймворка решают одну задачу — построение серверной части сайта,
-          но делают это по-разному: через готовую архитектуру или через гибкое минимальное ядро.
-        </p>
-      </div>
-
-      <section class="section" aria-label="Сравнение Django и Flask">
-        <div class="container">
-          <div class="compare-grid">
-            <article class="compare-card django reveal">
-              <span class="badge-inline">🟢 Django</span>
-              <h3>Django</h3>
-              <p class="subtitle">«Batteries included» — фреймворк с полным набором инструментов.</p>
-              <ul class="list">
-                <li>Встроенная ORM для работы с базой данных</li>
-                <li>Готовая админ-панель для управления контентом</li>
-                <li>Строгая структура проекта и единый стиль кода</li>
-                <li>Хорошо подходит для средних и крупных приложений</li>
-                <li>Меньше ручных решений для типовых задач</li>
-              </ul>
-            </article>
-
-            <article class="compare-card flask reveal">
-              <span class="badge-inline">⚪ Flask</span>
-              <h3>Flask</h3>
-              <p class="subtitle">Микрофреймворк — минимальное ядро и максимум гибкости.</p>
-              <ul class="list">
-                <li>Минимум навязанной структуры</li>
-                <li>Расширения подключаются по мере необходимости</li>
-                <li>Проще разобраться с нуля и понять работу сервера</li>
-                <li>Хорош для небольших сервисов, учебных проектов и API</li>
-                <li>Больше контроля над архитектурой</li>
-              </ul>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Таблица сравнения по критериям">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Сравнение по критериям</h2>
-            <p>Семь параметров, по которым чаще всего выбирают фреймворк.</p>
-          </div>
-
-          <div class="table-wrap reveal" tabindex="0" role="region" aria-label="Таблица сравнения Django и Flask">
-            <table>
-              <caption>Django и Flask: сравнение по критериям</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Критерий</th>
-                  <th scope="col">Django</th>
-                  <th scope="col">Flask</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Уровень фреймворка</strong></td>
-                  <td>Полнофункциональный («всё включено»)</td>
-                  <td>Микрофреймворк с минимальным ядром</td>
-                </tr>
-                <tr>
-                  <td><strong>Скорость старта</strong></td>
-                  <td>Нужно изучить структуру проекта, зато многое уже готово</td>
-                  <td>Первое приложение — за несколько строк</td>
-                </tr>
-                <tr>
-                  <td><strong>База данных</strong></td>
-                  <td>Встроенная ORM и миграции</td>
-                  <td>Подключается через расширения и библиотеки</td>
-                </tr>
-                <tr>
-                  <td><strong>Административная панель</strong></td>
-                  <td>Есть из коробки</td>
-                  <td>Нет, добавляется отдельно</td>
-                </tr>
-                <tr>
-                  <td><strong>Гибкость</strong></td>
-                  <td>Средняя: есть «правильный путь»</td>
-                  <td>Высокая: структуру выбираешь сам</td>
-                </tr>
-                <tr>
-                  <td><strong>Лучше подходит для</strong></td>
-                  <td>Крупных сайтов с пользователями и данными</td>
-                  <td>Небольших сервисов, прототипов и API</td>
-                </tr>
-                <tr>
-                  <td><strong>Пример использования</strong></td>
-                  <td>Интернет-магазин, новостной портал</td>
-                  <td>Сервис заметок, учебный API</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Что выбрать новичку">
-        <div class="container">
-          <div class="compare-grid">
-            <article class="panel reveal">
-              <h3>Что выбрать новичку</h3>
-              <p class="note note-gap">Короткая подсказка для первого проекта.</p>
-              <ul class="list">
-                <li>Хочешь быстро понять, как работает сервер, — начни с Flask: в нём мало «магии».</li>
-                <li>Нужен сайт с пользователями и админкой — бери Django.</li>
-                <li>Оба варианта хороши. Главное — довести первый учебный проект до конца.</li>
-              </ul>
-            </article>
-
-            <article class="panel reveal">
-              <h3>Типичные ошибки выбора</h3>
-              <p class="note note-gap">Чего лучше избегать.</p>
-              <ul class="list">
-                <li>Выбирать по моде, а не по задаче.</li>
-                <li>Брать Flask для большого проекта и вручную собирать то, что в Django уже есть.</li>
-                <li>Брать Django для совсем маленькой страницы.</li>
-                <li>Менять фреймворк, не закончив первый проект.</li>
-              </ul>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Когда что использовать">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Когда что использовать</h2>
-            <p>Короткая практическая таблица для выбора фреймворка под задачу.</p>
-          </div>
-
-          <div class="table-wrap reveal" tabindex="0" role="region" aria-label="Таблица рекомендаций по выбору фреймворка">
-            <table>
-              <caption>Рекомендации по выбору между Django и Flask</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Задача</th>
-                  <th scope="col">Рекомендация</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Учебный проект и первое знакомство с backend</td>
-                  <td>Flask — проще увидеть, как всё работает изнутри.</td>
-                </tr>
-                <tr>
-                  <td>Сайт с админкой и большим количеством моделей данных</td>
-                  <td>Django — админ-панель и ORM экономят время.</td>
-                </tr>
-                <tr>
-                  <td>Небольшой REST API</td>
-                  <td>Flask — минимум лишнего кода.</td>
-                </tr>
-                <tr>
-                  <td>Проект, который будет расти и поддерживаться командой</td>
-                  <td>Django — единая структура снижает хаос в коде.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Примеры кода на Django и Flask">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Одна и та же страница на двух фреймворках</h2>
-            <p>Код показывает разницу в объёме шаблонного кода для простейшего маршрута.</p>
-          </div>
-
-          <div class="code-grid">
-            <div class="code-block reveal">
-              <div class="code-head">
-                <span>Flask</span>
-                <button class="copy-btn" type="button">Копировать</button>
-              </div>
-              <pre><code>from flask import Flask
-
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return "Главная страница"</code></pre>
-            </div>
-
-            <div class="code-block reveal">
-              <div class="code-head">
-                <span>Django: views.py</span>
-                <button class="copy-btn" type="button">Копировать</button>
-              </div>
-              <pre><code>from django.http import HttpResponse
-
-def home(request):
-    return HttpResponse("Главная страница")</code></pre>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="quiz" aria-label="Мини-тест">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Мини-тест: что тебе ближе?</h2>
-            <p>Ответь на пять вопросов и получи рекомендацию по выбору фреймворка. Правильных ответов здесь нет — тест подсказывает направление.</p>
-          </div>
-
-          <form id="quiz-form" class="quiz reveal" novalidate>
-            <h3>Выбери один вариант в каждом вопросе</h3>
-
-            <fieldset>
-              <legend>1. Что важнее на старте?</legend>
-              <div class="quiz-options">
-                <label class="quiz-option">
-                  <input type="radio" name="q1" value="flask">
-                  <span>Понять, как сервер работает изнутри</span>
-                </label>
-                <label class="quiz-option">
-                  <input type="radio" name="q1" value="django">
-                  <span>Быстрее получить готовый результат</span>
-                </label>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend>2. Нужна ли готовая админ-панель?</legend>
-              <div class="quiz-options">
-                <label class="quiz-option">
-                  <input type="radio" name="q2" value="flask">
-                  <span>Нет, соберу нужные части сам</span>
-                </label>
-                <label class="quiz-option">
-                  <input type="radio" name="q2" value="django">
-                  <span>Да, это сильно экономит время</span>
-                </label>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend>3. Какой проект ты хочешь сделать?</legend>
-              <div class="quiz-options">
-                <label class="quiz-option">
-                  <input type="radio" name="q3" value="django">
-                  <span>Сайт с пользователями, контентом и базой данных</span>
-                </label>
-                <label class="quiz-option">
-                  <input type="radio" name="q3" value="flask">
-                  <span>Небольшой сервис, API или учебный пример</span>
-                </label>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend>4. Как ты относишься к готовой структуре проекта?</legend>
-              <div class="quiz-options">
-                <label class="quiz-option">
-                  <input type="radio" name="q4" value="django">
-                  <span>Хочу готовые правила и порядок</span>
-                </label>
-                <label class="quiz-option">
-                  <input type="radio" name="q4" value="flask">
-                  <span>Хочу сам решать, как всё устроить</span>
-                </label>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend>5. Как ты будешь работать с данными?</legend>
-              <div class="quiz-options">
-                <label class="quiz-option">
-                  <input type="radio" name="q5" value="flask">
-                  <span>Подберу нужные библиотеки сам</span>
-                </label>
-                <label class="quiz-option">
-                  <input type="radio" name="q5" value="django">
-                  <span>Хочу встроенные средства для базы данных</span>
-                </label>
-              </div>
-            </fieldset>
-
-            <div class="hero-actions">
-              <button class="btn btn-primary" type="submit">Показать результат</button>
-              <button class="btn btn-secondary" type="reset">Сбросить</button>
-            </div>
-
-            <p id="quiz-result" class="quiz-result" role="status" aria-live="polite"></p>
-          </form>
-        </div>
-      </section>
-
-      <section class="section faq" aria-label="Частые вопросы">
-        <div class="container">
-          <div class="section-head reveal">
-            <h2>Частые вопросы</h2>
-            <p>Короткие ответы на типовые вопросы новичков.</p>
-          </div>
-
-          <details class="reveal">
-            <summary>Что проще выучить первым?</summary>
-            <p>
-              Если хочется быстро понять, как работает сервер, лучше начать с Flask.
-              Если нужен проект с готовой админкой и базой данных — удобно начинать с Django.
-            </p>
-          </details>
-
-          <details class="reveal">
-            <summary>Нужно ли знать SQL?</summary>
-            <p>
-              Желательно. Даже при использовании ORM базовое понимание SQL помогает
-              лучше работать с данными и отлаживать запросы.
-            </p>
-          </details>
-
-          <details class="reveal">
-            <summary>Можно ли потом перейти с Flask на Django?</summary>
-            <p>
-              Да. Python остаётся тем же, поэтому переход возможен, но потребуется
-              изучить другую архитектуру проекта и встроенные инструменты Django.
-            </p>
-          </details>
-        </div>
-      </section>
-
-      <section class="section" aria-label="Переход к контактам">
-        <div class="container">
-          <div class="cta-panel reveal">
-            <div>
-              <h2>Остались вопросы?</h2>
-              <p class="lead cta-lead">
-                Напишите через форму обратной связи — можно спросить про выбор фреймворка,
-                базу данных или первый проект.
-              </p>
-            </div>
-            <div class="cta-actions">
-              <a class="btn btn-primary" href="#/contacts">Перейти к контактам</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </section>
-
-    <!-- ============================= КОНТАКТЫ ============================= -->
-    <section class="page" data-route="/contacts" hidden aria-label="Страница контактов">
-      <div class="container page-hero">
-        <nav class="breadcrumb" aria-label="Хлебные крошки">
-          <a href="#/">Главная</a>
-          <span aria-hidden="true">/</span>
-          <span>Контакты</span>
-        </nav>
-
-        <p class="eyebrow">Раздел 3</p>
-        <h1>Контакты</h1>
-        <p class="lead">
-          Это учебная форма обратной связи. Сообщение сохраняется только в вашем браузере
-          и никуда не отправляется.
-        </p>
-      </div>
-
-      <section class="section" aria-label="Форма и информация">
-        <div class="container">
-          <div class="contact-grid">
-
-            <div class="form-card reveal">
-              <div class="section-head">
-                <h2>Форма обратной связи</h2>
-                <p>Форма учебная: данные сохраняются только в вашем браузере через localStorage и никуда не передаются.</p>
-              </div>
-
-              <form id="contact-form" class="form-grid" novalidate>
-                <div class="field">
-                  <label for="name">Имя</label>
-                  <input id="name" name="name" type="text" autocomplete="name" placeholder="Ваше имя" required>
-                </div>
-
-                <div class="field">
-                  <label for="email">Email</label>
-                  <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
-                </div>
-
-                <div class="field">
-                  <label for="message">Сообщение</label>
-                  <textarea id="message" name="message" rows="6" placeholder="Напишите ваш вопрос или предложение" required></textarea>
-                </div>
-
-                <button class="btn btn-primary" type="submit">Сохранить сообщение</button>
-
-                <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-
-                <p class="note">
-                  Серверная отправка не реализована: сообщение остаётся в localStorage этого браузера,
-                  его никто не получает.
-                </p>
-              </form>
-            </div>
-
-            <aside class="info-card reveal" aria-label="Информация о проекте">
-              <div class="section-head">
-                <h2>Информация</h2>
-                <p>Краткие сведения о проекте и технологии.</p>
-              </div>
-
-              <div class="info-list">
-                <div class="info-item">
-                  <strong>Проект</strong>
-                  <p>PyWeb Guide — веб-ресурс о Python в веб-разработке</p>
-                </div>
-
-                <div class="info-item">
-                  <strong>Авторы</strong>
-                  <p>Жангужин Е. Е., Косяк Р. А., группа ИСУ(СОП)-25</p>
-                </div>
-
-                <div class="info-item">
-                  <strong>Разделы</strong>
-                  <p>Главная, О Python, Фреймворки, Контакты</p>
-                </div>
-
-                <div class="info-item">
-                  <strong>Технологии</strong>
-                  <p>HTML, CSS, JavaScript, адаптивная вёрстка, анимации</p>
-                </div>
-
-                <div class="info-item">
-                  <strong>Темы</strong>
-                  <p>Python, backend, Django, Flask, базы данных, практика</p>
-                </div>
-
-                <div class="info-item">
-                  <strong>Формат</strong>
-                  <p>Учебный проект без сервера: форма работает только локально</p>
-                </div>
-              </div>
-            </aside>
-
-          </div>
-
-          <div class="panel reveal stack-gap">
-            <h2>Сохранено в этом браузере</h2>
-            <p class="note">Последние сообщения, которые вы сохранили на этом устройстве.</p>
-            <ul id="saved-list" class="saved-list"></ul>
-            <button id="clear-saved" class="btn btn-secondary saved-clear" type="button" hidden>Очистить сохранённые сообщения</button>
-          </div>
-        </div>
-      </section>
-    </section>
-
   </main>
 
   <footer class="footer">
@@ -1098,11 +396,18 @@ def home(request):
         © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
       </div>
       <div>
-        <a href="#/">Главная</a> •
-        <a href="#/about">О Python</a> •
-        <a href="#/frameworks">Фреймворки</a> •
-        <a href="#/contacts">Контакты</a>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="contacts.html">Контакты</a>
       </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
       <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
     </div>
   </footer>
