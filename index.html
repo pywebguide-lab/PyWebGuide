@@ -64,7 +64,7 @@
   </script>
 </head>
 
-<body id="top">
+<body id="top" data-no-toc>
   <div id="progress" aria-hidden="true"></div>
 
   <div class="bg-fx" aria-hidden="true">
@@ -96,7 +96,26 @@
           <li><a class="nav-link" href="databases.html">Базы данных</a></li>
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
           <li><a class="nav-link" href="deploy.html">Публикация</a></li>
-          <li><a class="nav-link" href="contacts.html">Контакты</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
         </ul>
       </nav>
 
@@ -115,7 +134,7 @@
 
             <h1>
               Python для веб-разработки
-              <span class="h1-sub" aria-hidden="true">от идеи до <span class="type-wrap"><span id="typed-text">Django</span><span class="cursor">|</span></span></span>
+              <span class="h1-sub">от идеи до первого проекта</span>
             </h1>
 
             <p class="lead">
@@ -126,30 +145,9 @@
             <div class="hero-actions">
               <a class="btn btn-primary" href="about.html">Начать изучение</a>
               <a class="btn btn-secondary" href="frameworks.html">Сравнить фреймворки</a>
-              <a class="btn btn-secondary" href="frameworks.html#quiz">Пройти мини-тест</a>
             </div>
+            <p class="hero-hint">Не знаете, что выбрать? <a href="frameworks.html#quiz">Пройдите мини-тест</a> · <a href="course.html">Весь курс</a> · <a href="practice.html">Задачи</a></p>
 
-            <div class="hero-stats">
-              <article class="stat reveal">
-                <strong>01</strong>
-                <span>Серверная логика</span>
-              </article>
-
-              <article class="stat reveal">
-                <strong>02</strong>
-                <span>Маршрутизация</span>
-              </article>
-
-              <article class="stat reveal">
-                <strong>03</strong>
-                <span>Базы данных</span>
-              </article>
-
-              <article class="stat reveal">
-                <strong>04</strong>
-                <span>Выбор фреймворка</span>
-              </article>
-            </div>
           </div>
 
           <div class="hero-visual reveal">
@@ -193,6 +191,30 @@ urlpatterns = [path("", views.home)]
             <p class="note hero-note">Одна и та же страница на двух фреймворках. Скопируйте код и запустите у себя командой из последней строки.</p>
           </div>
         </div>
+
+        <div class="container">
+        <div class="hero-stats">
+          <article class="stat reveal">
+            <strong>01</strong>
+            <span>Серверная логика</span>
+          </article>
+
+          <article class="stat reveal">
+            <strong>02</strong>
+            <span>Маршрутизация</span>
+          </article>
+
+          <article class="stat reveal">
+            <strong>03</strong>
+            <span>Базы данных</span>
+          </article>
+
+          <article class="stat reveal">
+            <strong>04</strong>
+            <span>Выбор фреймворка</span>
+          </article>
+        </div>
+        </div>
       </div>
 
       <section class="section" id="continue" aria-labelledby="continue-title" hidden>
@@ -205,6 +227,7 @@ urlpatterns = [path("", views.home)]
             <div class="continue-links">
               <a class="btn btn-primary" href="project.html#flask" data-track="project-flask" data-total="6" hidden>Flask: <span data-track-count></span></a>
               <a class="btn btn-primary" href="project.html#django" data-track="project-django" data-total="10" hidden>Django: <span data-track-count></span></a>
+              <a class="btn btn-primary" href="project2.html" data-track="project-blog" data-total="7" hidden>API блога: <span data-track-count></span></a>
             </div>
           </div>
         </div>
@@ -481,20 +504,26 @@ urlpatterns = [path("", views.home)]
         <a href="about.html">О Python</a> •
         <a href="frameworks.html">Фреймворки</a> •
         <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
         <a href="contacts.html">Контакты</a>
       </div>
       <p class="note footer-note">
         Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
-        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
         Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
         <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
       </p>
-      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
     </div>
   </footer>
 
   <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
 
   <script src="script.js"></script>
+  <script src="features.js"></script>
 </body>
 </html>

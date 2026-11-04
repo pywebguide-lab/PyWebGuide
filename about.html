@@ -72,7 +72,26 @@
           <li><a class="nav-link" href="databases.html">Базы данных</a></li>
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
           <li><a class="nav-link" href="deploy.html">Публикация</a></li>
-          <li><a class="nav-link" href="contacts.html">Контакты</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
         </ul>
       </nav>
 
@@ -190,6 +209,40 @@
               <h3>Ответ</h3>
               <p>Сервер возвращает страницу, JSON или ошибку.</p>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="flow" aria-labelledby="flow-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 id="flow-title">Путь запроса по шагам</h2>
+            <p>Что происходит за доли секунды после нажатия кнопки «Добавить задачу».</p>
+          </div>
+          <div class="panel reveal" data-flow>
+            <div class="flow-map" aria-hidden="true">
+              <span class="flow-dot"></span>
+              <div class="flow-node" data-node="browser">Браузер<small>HTML, CSS, JS</small></div>
+              <div class="flow-node" data-node="server">Веб-сервер<small>nginx, WSGI</small></div>
+              <div class="flow-node" data-node="app">Приложение<small>Flask, Django</small></div>
+              <div class="flow-node" data-node="db">База данных<small>SQLite, PostgreSQL</small></div>
+            </div>
+            <ol class="flow-steps">
+              <li data-flow-step="browser"><strong>Браузер отправляет запрос.</strong> Форма превращается в запрос <code>POST /tasks</code> с заголовками, cookie и данными формы.</li>
+              <li data-flow-step="server"><strong>Веб-сервер принимает его.</strong> Он завершает HTTPS-соединение, сам отдаёт статические файлы, а остальное передаёт приложению через WSGI.</li>
+              <li data-flow-step="app"><strong>Фреймворк находит маршрут.</strong> Адрес <code>/tasks</code> и метод POST указывают на вашу функцию, и она получает объект запроса.</li>
+              <li data-flow-step="app"><strong>Функция проверяет данные.</strong> Вошёл ли пользователь, есть ли токен CSRF, не пустое ли название. При ошибке сразу возвращается ответ 400 или 403.</li>
+              <li data-flow-step="db"><strong>База сохраняет запись.</strong> Выполняется <code>INSERT INTO tasks ...</code> с параметрами, база возвращает номер новой строки.</li>
+              <li data-flow-step="app"><strong>Приложение готовит ответ.</strong> Это редирект на список, HTML из шаблона или JSON для API.</li>
+              <li data-flow-step="server"><strong>Веб-сервер передаёт ответ.</strong> Код, заголовки и тело ответа уходят обратно по сети.</li>
+              <li data-flow-step="browser"><strong>Браузер показывает результат.</strong> Он выполняет редирект, строит страницу и догружает CSS, JavaScript и картинки.</li>
+            </ol>
+            <div class="flow-controls" hidden>
+              <button class="btn btn-primary" type="button" data-flow-play>▶ Показать весь путь</button>
+              <button class="btn btn-secondary" type="button" data-flow-prev>Назад</button>
+              <button class="btn btn-secondary" type="button" data-flow-next>Дальше</button>
+              <span class="flow-count" data-flow-count aria-live="polite"></span>
+            </div>
           </div>
         </div>
       </section>
@@ -443,20 +496,26 @@ conn.close()</code></pre>
         <a href="about.html">О Python</a> •
         <a href="frameworks.html">Фреймворки</a> •
         <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
         <a href="contacts.html">Контакты</a>
       </div>
       <p class="note footer-note">
         Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
-        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
         Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
         <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
       </p>
-      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
     </div>
   </footer>
 
   <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
 
   <script src="script.js"></script>
+  <script src="features.js"></script>
 </body>
 </html>

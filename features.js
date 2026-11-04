@@ -1,0 +1,818 @@
+/* Дополнения курса: меню «Ещё», поиск, оглавление, запуск Python, задачи, схема запроса, прогресс, экзамен */
+(function () {
+  "use strict";
+
+  const PYODIDE = "https://cdn.jsdelivr.net/pyodide/v0.29.0/full/";
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function el(tag, props, children) {
+    const node = document.createElement(tag);
+    Object.keys(props || {}).forEach(function (key) {
+      if (key === "class") node.className = props[key];
+      else if (key === "text") node.textContent = props[key];
+      else node.setAttribute(key, props[key]);
+    });
+    (children || []).forEach(function (child) { node.appendChild(child); });
+    return node;
+  }
+
+  function readJson(key, fallback) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key));
+      return value === null ? fallback : value;
+    } catch (error) {
+      return fallback;
+    }
+  }
+
+  function writeJson(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /* ---------- Меню «Ещё» ---------- */
+  const more = document.querySelector(".nav-more details");
+
+  if (more) {
+    document.addEventListener("click", function (event) {
+      if (more.open && !more.contains(event.target)) more.open = false;
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && more.open) {
+        more.open = false;
+        more.querySelector("summary").focus();
+      }
+    });
+  }
+
+  /* ---------- Поиск ---------- */
+  const themeToggle = document.querySelector(".theme-toggle");
+
+  function normalize(text) {
+    return text.toLowerCase().replace(/ё/g, "е");
+  }
+
+  function setupSearch() {
+    if (!themeToggle || typeof HTMLDialogElement === "undefined") return;
+
+    const open = el("button", { class: "search-toggle", type: "button", "aria-label": "Поиск по сайту", title: "Поиск ( / )" });
+    open.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>';
+    themeToggle.parentNode.insertBefore(open, themeToggle);
+
+    const input = el("input", { type: "search", class: "search-input", placeholder: "Например: миграции, JSON, venv", "aria-label": "Что искать", autocomplete: "off" });
+    const close = el("button", { type: "button", class: "search-close", "aria-label": "Закрыть поиск", text: "×" });
+    const status = el("p", { class: "search-status", role: "status" });
+    const list = el("ul", { class: "search-results" });
+    const dialog = el("dialog", { class: "search-dialog", "aria-label": "Поиск по сайту" }, [
+      el("div", { class: "search-bar" }, [input, close]), status, list
+    ]);
+    document.body.appendChild(dialog);
+
+    let index = null;
+
+    function loadIndex() {
+      if (index) return Promise.resolve(index);
+      return new Promise(function (resolve, reject) {
+        const script = el("script", { src: "assets/search-index.js" });
+        script.onload = function () {
+          index = (window.PYWEB_SEARCH || []).map(function (item) {
+            return Object.assign({ n: normalize(item.p + " " + item.h + " " + item.x), nh: normalize(item.p + " " + item.h) }, item);
+          });
+          resolve(index);
+        };
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    function snippet(text, word) {
+      const at = normalize(text).indexOf(word);
+      const start = Math.max(0, at - 50);
+      return (start > 0 ? "…" : "") + text.slice(start, start + 150) + (text.length > start + 150 ? "…" : "");
+    }
+
+    function render() {
+      const words = normalize(input.value).split(/\s+/).filter(Boolean);
+      list.textContent = "";
+
+      if (!words.length) {
+        status.textContent = "Начните вводить запрос.";
+        return;
+      }
+
+      const found = index.filter(function (item) {
+        return words.every(function (word) { return item.n.indexOf(word) !== -1; });
+      }).map(function (item) {
+        const score = words.reduce(function (sum, word) { return sum + (item.nh.indexOf(word) !== -1 ? 3 : 1); }, 0);
+        return { item: item, score: score };
+      }).sort(function (a, b) { return b.score - a.score; }).slice(0, 12);
+
+      status.textContent = found.length ? "Найдено: " + found.length : "Ничего не найдено. Попробуйте другое слово.";
+
+      found.forEach(function (entry) {
+        const link = el("a", { href: entry.item.u }, [
+          el("strong", { text: entry.item.h }),
+          el("small", { text: entry.item.p }),
+          el("span", { text: snippet(entry.item.x, words[0]) })
+        ]);
+        link.addEventListener("click", function () { dialog.close(); });
+        list.appendChild(el("li", {}, [link]));
+      });
+    }
+
+    function show() {
+      dialog.showModal();
+      input.focus();
+      status.textContent = "Загружаю индекс…";
+      loadIndex().then(render).catch(function () {
+        status.textContent = "Не удалось загрузить индекс поиска.";
+      });
+    }
+
+    open.addEventListener("click", show);
+    close.addEventListener("click", function () { dialog.close(); });
+    input.addEventListener("input", function () { if (index) render(); });
+    dialog.addEventListener("click", function (event) { if (event.target === dialog) dialog.close(); });
+
+    input.addEventListener("keydown", function (event) {
+      const links = Array.prototype.slice.call(list.querySelectorAll("a"));
+      if (event.key === "Enter" && links[0]) { event.preventDefault(); links[0].click(); }
+      if (event.key === "ArrowDown" && links[0]) { event.preventDefault(); links[0].focus(); }
+    });
+
+    list.addEventListener("keydown", function (event) {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+      event.preventDefault();
+      const links = Array.prototype.slice.call(list.querySelectorAll("a"));
+      const next = links.indexOf(document.activeElement) + (event.key === "ArrowDown" ? 1 : -1);
+      if (next < 0) input.focus();
+      else if (links[next]) links[next].focus();
+    });
+
+    document.addEventListener("keydown", function (event) {
+      const tag = (event.target.tagName || "").toLowerCase();
+      const typing = tag === "input" || tag === "textarea" || tag === "select" || event.target.isContentEditable;
+      if ((event.key === "/" && !typing) || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k")) {
+        event.preventDefault();
+        if (!dialog.open) show();
+      }
+    });
+  }
+
+  setupSearch();
+
+  /* ---------- Оглавление страницы ---------- */
+  function setupToc() {
+    const main = document.getElementById("content");
+    if (!main) return;
+
+    // Те же адреса sec-N использует индекс поиска (tools/build_search.py)
+    main.querySelectorAll("h2").forEach(function (heading, position) {
+      if (!heading.id) heading.id = "sec-" + (position + 1);
+    });
+
+    if (location.hash) {
+      const target = document.getElementById(location.hash.slice(1));
+      if (target) target.scrollIntoView();
+    }
+
+    if (document.body.hasAttribute("data-no-toc")) return;
+
+    const headings = Array.prototype.filter.call(main.querySelectorAll("h2, .project-step > h3"), function (heading) {
+      return !heading.closest("[hidden]") && !heading.closest(".cta-panel");
+    });
+
+    if (headings.length < 5) return;
+
+    headings.forEach(function (heading, position) {
+      if (!heading.id) heading.id = "toc-" + (position + 1);
+    });
+
+    const links = headings.map(function (heading) {
+      const link = el("a", { href: "#" + heading.id, text: heading.textContent.trim() });
+      if (heading.tagName === "H3") link.className = "toc-sub";
+      return link;
+    });
+
+    const list = el("ol", {}, links.map(function (link) { return el("li", {}, [link]); }));
+    const panel = el("nav", { class: "page-rail", "aria-label": "На этой странице", id: "page-rail" }, [
+      el("p", { class: "rail-title", text: "На этой странице" }), list
+    ]);
+    const toggle = el("button", { class: "rail-toggle", type: "button", "aria-expanded": "false", "aria-controls": "page-rail", "aria-label": "На этой странице" }, [
+      el("span", { "aria-hidden": "true", text: "☰" }), el("span", { class: "rail-label", "aria-hidden": "true", text: " На странице" })
+    ]);
+
+    document.body.appendChild(panel);
+    document.body.appendChild(toggle);
+
+    function setOpen(value) {
+      panel.classList.toggle("open", value);
+      toggle.setAttribute("aria-expanded", String(value));
+    }
+
+    toggle.addEventListener("click", function () { setOpen(!panel.classList.contains("open")); });
+    panel.addEventListener("click", function (event) { if (event.target.tagName === "A") setOpen(false); });
+    document.addEventListener("keydown", function (event) { if (event.key === "Escape") setOpen(false); });
+
+    if (!("IntersectionObserver" in window)) return;
+
+    const visible = new Set();
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
+      });
+
+      let current = -1;
+      headings.forEach(function (heading, position) {
+        if (visible.has(heading)) current = current === -1 ? position : current;
+      });
+
+      if (current === -1) return;
+
+      links.forEach(function (link, position) {
+        if (position === current) {
+          link.setAttribute("aria-current", "true");
+          if (panel.scrollHeight > panel.clientHeight) {
+            panel.scrollTop = link.offsetTop - panel.clientHeight / 2;
+          }
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    }, { rootMargin: "-80px 0px -55% 0px" });
+
+    headings.forEach(function (heading) { observer.observe(heading); });
+  }
+
+  setupToc();
+
+  /* ---------- Python в браузере (Pyodide в отдельном потоке) ---------- */
+  const WORKER_SOURCE = [
+    'importScripts("' + PYODIDE + 'pyodide.js");',
+    'let py = null; let hasFlask = false;',
+    'const ready = loadPyodide({ indexURL: "' + PYODIDE + '" }).then(function (m) { py = m; postMessage({ type: "ready" }); });',
+    'onmessage = async function (event) {',
+    '  const job = event.data;',
+    '  try {',
+    '    await ready;',
+    '    const quiet = { messageCallback: function () {}, errorCallback: function () {} };',
+    '    py.setStdout({ batched: function () {} });',
+    '    py.setStderr({ batched: function () {} });',
+    '    py.setStdin({ error: true });',
+    '    const all = job.code + "\\n" + (job.tests || "");',
+    '    if (/^\\s*(from|import)\\s+flask\\b/m.test(all) && !hasFlask) {',
+    '      postMessage({ type: "status", text: "Устанавливаю Flask…" });',
+    '      await py.loadPackage("micropip", quiet);',
+    '      await py.pyimport("micropip").install("flask");',
+    '      hasFlask = true;',
+    '    }',
+    '    await py.loadPackagesFromImports(all, quiet);',
+    '    py.setStdout({ batched: function (s) { postMessage({ type: "out", text: s }); } });',
+    '    py.setStderr({ batched: function (s) { postMessage({ type: "out", text: s }); } });',
+    '    postMessage({ type: "started" });',
+    '    const ns = py.globals.get("dict")();',
+    '    ns.set("__name__", "__main__");',
+    '    await py.runPythonAsync(job.code, { globals: ns });',
+    '    if (job.tests) await py.runPythonAsync(job.tests, { globals: ns });',
+    '    ns.destroy();',
+    '    postMessage({ type: "done", ok: true });',
+    '  } catch (error) {',
+    '    postMessage({ type: "done", ok: false, error: String(error && error.message || error) });',
+    '  }',
+    '};'
+  ].join("\n");
+
+  const Py = (function () {
+    let worker = null;
+    let loaded = false;
+    let busy = false;
+    const TIME_LIMIT = 10000;
+
+    function start() {
+      const url = URL.createObjectURL(new Blob([WORKER_SOURCE], { type: "text/javascript" }));
+      worker = new Worker(url);
+      loaded = false;
+    }
+
+    function cleanError(text) {
+      // Проверки задач: ученику важен только текст подсказки
+      const assertion = text.match(/AssertionError: ?([\s\S]*)$/);
+      if (assertion) return assertion[1].trim() || "Проверка не пройдена.";
+
+      // Внутренние строки Pyodide убираем: оставляем всё, начиная с первой строки кода ученика
+      const lines = text.split("\n");
+      const first = lines.findIndex(function (line) { return line.indexOf('File "<exec>"') !== -1; });
+      const shown = (first === -1 ? text : "Traceback (most recent call last):\n" + lines.slice(first).join("\n")).trim();
+
+      if (/EOFError|I\/O error/.test(shown)) {
+        return shown + "\n\nПодсказка: input() в браузере не работает. Задайте значение прямо в коде.";
+      }
+      return shown;
+    }
+
+    /* onEvent: status(текст), out(текст). Возвращает Promise<{ok, error}> */
+    function run(job, onEvent) {
+      if (busy) return Promise.resolve({ ok: false, error: "Дождитесь завершения предыдущего запуска." });
+      busy = true;
+      if (!worker) start();
+      if (!loaded) onEvent("status", "Загружаю Python: около 5 МБ, только при первом запуске…");
+
+      return new Promise(function (resolve) {
+        let timer = null;
+
+        function finish(result) {
+          clearTimeout(timer);
+          busy = false;
+          // После остановки по таймеру потока уже нет
+          if (worker) {
+            worker.onmessage = null;
+            worker.onerror = null;
+          }
+          resolve(result);
+        }
+
+        worker.onerror = function (event) {
+          worker.terminate();
+          worker = null;
+          finish({ ok: false, error: "Не удалось запустить Python: проверьте интернет. " + (event.message || "") });
+        };
+
+        worker.onmessage = function (event) {
+          const data = event.data;
+          if (data.type === "ready") loaded = true;
+          else if (data.type === "status") onEvent("status", data.text);
+          else if (data.type === "out") onEvent("out", data.text);
+          else if (data.type === "started") {
+            loaded = true;
+            onEvent("status", "Выполняется…");
+            timer = setTimeout(function () {
+              worker.terminate();
+              worker = null;
+              finish({ ok: false, error: "Код выполнялся дольше 10 секунд и был остановлен. Возможно, в нём бесконечный цикл." });
+            }, TIME_LIMIT);
+          } else if (data.type === "done") {
+            finish({ ok: data.ok, error: data.error ? cleanError(data.error) : "" });
+          }
+        };
+
+        worker.postMessage(job);
+      });
+    }
+
+    return { run: run };
+  })();
+
+  function outputBox() {
+    return el("div", { class: "run-output", role: "status", "aria-live": "polite", hidden: "" }, [
+      el("p", { class: "run-status" }), el("pre", { class: "run-text" })
+    ]);
+  }
+
+  function runInto(box, job, button) {
+    const status = box.querySelector(".run-status");
+    const text = box.querySelector(".run-text");
+    const label = button.textContent;
+
+    box.hidden = false;
+    box.classList.remove("is-error", "is-ok");
+    text.textContent = "";
+    button.disabled = true;
+    button.textContent = "Выполняется…";
+
+    return Py.run(job, function (type, value) {
+      if (type === "status") status.textContent = value;
+      else text.textContent += value + "\n";
+    }).then(function (result) {
+      button.disabled = false;
+      button.textContent = label;
+      status.textContent = result.ok ? (text.textContent ? "Готово." : "Готово, код ничего не вывел. Добавьте print().") : "Ошибка";
+      if (!result.ok) {
+        text.textContent += result.error + "\n";
+        box.classList.add("is-error");
+      }
+      return result;
+    });
+  }
+
+  function codeOf(block) {
+    const area = block.querySelector("textarea");
+    return area ? area.value : block.querySelector("pre code").textContent;
+  }
+
+  function tabInsert(area) {
+    area.addEventListener("keydown", function (event) {
+      if (event.key !== "Tab" || event.shiftKey) return;
+      event.preventDefault();
+      const start = area.selectionStart;
+      area.setRangeText("    ", start, area.selectionEnd, "end");
+    });
+  }
+
+  /* Примеры на страницах: кнопки «Запустить» и «Изменить» */
+  document.querySelectorAll(".code-block[data-run]").forEach(function (block) {
+    const head = block.querySelector(".code-head");
+    const copy = head.querySelector(".copy-btn");
+    const run = el("button", { class: "run-btn", type: "button", text: "▶ Запустить" });
+    const edit = el("button", { class: "copy-btn-plain", type: "button", text: "Изменить" });
+    const box = outputBox();
+
+    head.insertBefore(edit, copy);
+    head.insertBefore(run, edit);
+    block.appendChild(box);
+
+    edit.addEventListener("click", function () {
+      const pre = block.querySelector("pre");
+      const area = el("textarea", { class: "code-edit", spellcheck: "false", "aria-label": "Код примера" });
+      area.value = pre.querySelector("code").textContent;
+      area.rows = Math.min(24, area.value.split("\n").length + 1);
+      tabInsert(area);
+      pre.hidden = true;
+      pre.parentNode.insertBefore(area, pre.nextSibling);
+      edit.remove();
+      area.focus();
+    });
+
+    run.addEventListener("click", function () {
+      runInto(box, { code: codeOf(block) }, run);
+    });
+  });
+
+  /* Главная: запуск вкладки Flask в окне кода */
+  const heroWindow = document.querySelector(".hero .window");
+
+  if (heroWindow) {
+    const bar = heroWindow.querySelector(".window-bar");
+    const copy = bar.querySelector(".copy-btn");
+    const run = el("button", { class: "run-btn", type: "button", text: "▶ Запустить" });
+    const box = outputBox();
+
+    bar.insertBefore(run, copy);
+    heroWindow.appendChild(box);
+
+    function syncRun() {
+      const flask = document.getElementById("code-flask").classList.contains("is-active");
+      run.hidden = !flask;
+      if (!flask) box.hidden = true;
+    }
+
+    heroWindow.querySelectorAll(".window-tab").forEach(function (tab) {
+      tab.addEventListener("click", function () { setTimeout(syncRun); });
+    });
+
+    run.addEventListener("click", function () {
+      const code = document.querySelector("#code-flask code").textContent;
+      runInto(box, {
+        code: code + '\n\nprint("GET / →", app.test_client().get("/").text)'
+      }, run);
+    });
+
+    syncRun();
+  }
+
+  /* Песочница */
+  const playground = document.getElementById("playground");
+
+  if (playground) {
+    const area = playground.querySelector("textarea");
+    const select = playground.querySelector("select");
+    const run = playground.querySelector("[data-run-code]");
+    const reset = playground.querySelector("[data-reset-code]");
+    const out = playground.querySelector("[data-output]");
+    const box = outputBox();
+    const samples = {};
+
+    playground.querySelectorAll("template[data-sample]").forEach(function (item) {
+      samples[item.dataset.sample] = item.content.textContent.replace(/^\n/, "");
+      select.appendChild(el("option", { value: item.dataset.sample, text: item.dataset.title }));
+    });
+
+    out.appendChild(box);
+    tabInsert(area);
+
+    const saved = readJson("pyweb_playground", null);
+    area.value = typeof saved === "string" && saved ? saved : samples[select.options[0].value];
+
+    area.addEventListener("input", function () { writeJson("pyweb_playground", area.value); });
+    select.addEventListener("change", function () {
+      area.value = samples[select.value];
+      writeJson("pyweb_playground", area.value);
+    });
+    reset.addEventListener("click", function () {
+      area.value = samples[select.value];
+      writeJson("pyweb_playground", area.value);
+    });
+    run.addEventListener("click", function () { runInto(box, { code: area.value }, run); });
+    area.addEventListener("keydown", function (event) {
+      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") run.click();
+    });
+  }
+
+  /* Задачи с автопроверкой */
+  const taskNodes = document.querySelectorAll(".task[data-task]");
+
+  if (taskNodes.length) {
+    const solved = readJson("pyweb_tasks", {});
+    const counter = document.querySelector("[data-tasks-count]");
+    const fill = document.querySelector("[data-tasks-fill]");
+
+    function updateTasks() {
+      const count = Array.prototype.filter.call(taskNodes, function (node) { return solved[node.dataset.task]; }).length;
+      if (counter) counter.textContent = count;
+      if (fill) fill.style.width = count / taskNodes.length * 100 + "%";
+    }
+
+    taskNodes.forEach(function (node) {
+      const id = node.dataset.task;
+      const area = node.querySelector("textarea");
+      const check = node.querySelector("[data-check]");
+      const reset = node.querySelector("[data-reset]");
+      const tests = node.querySelector('template[data-kind="tests"]').content.textContent;
+      const starter = area.value;
+      const draftKey = "pyweb_task_" + id;
+      const box = outputBox();
+      const draft = readJson(draftKey, null);
+
+      node.querySelector("[data-output]").appendChild(box);
+      tabInsert(area);
+      if (typeof draft === "string") area.value = draft;
+      node.classList.toggle("is-solved", Boolean(solved[id]));
+
+      area.addEventListener("input", function () { writeJson(draftKey, area.value); });
+
+      reset.addEventListener("click", function () {
+        area.value = starter;
+        try { localStorage.removeItem(draftKey); } catch (error) { /* черновик просто останется */ }
+      });
+
+      check.addEventListener("click", function () {
+        runInto(box, { code: area.value, tests: tests }, check).then(function (result) {
+          const status = box.querySelector(".run-status");
+          if (result.ok) {
+            status.textContent = "Верно! Все проверки пройдены.";
+            box.classList.add("is-ok");
+            solved[id] = true;
+            writeJson("pyweb_tasks", solved);
+            node.classList.add("is-solved");
+            updateTasks();
+          } else {
+            status.textContent = "Пока не получилось";
+          }
+        });
+      });
+    });
+
+    updateTasks();
+  }
+
+  /* ---------- Схема пути запроса ---------- */
+  document.querySelectorAll("[data-flow]").forEach(function (flow) {
+    const steps = Array.prototype.slice.call(flow.querySelectorAll("[data-flow-step]"));
+    const nodes = Array.prototype.slice.call(flow.querySelectorAll("[data-node]"));
+    const prev = flow.querySelector("[data-flow-prev]");
+    const next = flow.querySelector("[data-flow-next]");
+    const play = flow.querySelector("[data-flow-play]");
+    const counter = flow.querySelector("[data-flow-count]");
+    const dot = flow.querySelector(".flow-dot");
+    const controls = flow.querySelector(".flow-controls");
+    let current = 0;
+    let timer = null;
+
+    flow.classList.add("is-live");
+    controls.hidden = false;
+
+    function show(position) {
+      current = position;
+      const step = steps[position];
+      const active = step.dataset.flowStep;
+
+      steps.forEach(function (item, i) { item.hidden = i !== position; });
+      nodes.forEach(function (node) { node.classList.toggle("is-active", node.dataset.node === active); });
+
+      const target = nodes.filter(function (node) { return node.dataset.node === active; })[0];
+      if (target && dot) {
+        dot.style.left = target.offsetLeft + target.offsetWidth / 2 + "px";
+        dot.style.top = target.offsetTop + "px";
+      }
+
+      counter.textContent = "Шаг " + (position + 1) + " из " + steps.length;
+      prev.disabled = position === 0;
+      next.disabled = position === steps.length - 1;
+    }
+
+    function stop() {
+      clearInterval(timer);
+      timer = null;
+      play.textContent = "▶ Показать весь путь";
+    }
+
+    prev.addEventListener("click", function () { stop(); show(current - 1); });
+    next.addEventListener("click", function () { stop(); show(current + 1); });
+
+    play.addEventListener("click", function () {
+      if (timer) { stop(); return; }
+      if (current === steps.length - 1) show(0);
+      play.textContent = "❚❚ Пауза";
+      timer = setInterval(function () {
+        if (current >= steps.length - 1) { stop(); return; }
+        show(current + 1);
+      }, reduced ? 3500 : 2400);
+    });
+
+    window.addEventListener("resize", function () { show(current); });
+    show(0);
+  });
+
+  /* ---------- Мой прогресс: сводка, экспорт, импорт ---------- */
+  const dash = document.getElementById("progress-dash");
+
+  if (dash) {
+    const TRACKS = {
+      "roadmap": { name: "Дорожная карта", total: 5, url: "index.html" },
+      "project-flask": { name: "Первый проект: Flask", total: 6, url: "project.html#flask" },
+      "project-django": { name: "Первый проект: Django", total: 10, url: "project.html#django" },
+      "project-blog": { name: "Второй проект: API блога", total: 7, url: "project2.html" }
+    };
+    const body = dash.querySelector("[data-dash-rows]");
+    const message = dash.querySelector("[data-dash-message]");
+    const file = dash.querySelector("[data-dash-file]");
+    const TASK_TOTAL = Number(dash.dataset.tasks) || 0;
+
+    function row(name, url, done, total) {
+      const fill = el("div", { class: "progress-fill" });
+      fill.style.width = (total ? done / total * 100 : 0) + "%";
+      return el("div", { class: "dash-row" }, [
+        el("a", { href: url, text: name }),
+        el("span", { class: "dash-count", text: done + " из " + total }),
+        el("div", { class: "progress-track", "aria-hidden": "true" }, [fill])
+      ]);
+    }
+
+    function render() {
+      const progress = readJson("pyweb_progress", {});
+      const tasks = readJson("pyweb_tasks", {});
+      const exam = readJson("pyweb_exam", null);
+
+      body.textContent = "";
+      Object.keys(TRACKS).forEach(function (key) {
+        const steps = Array.isArray(progress[key]) ? progress[key].length : 0;
+        body.appendChild(row(TRACKS[key].name, TRACKS[key].url, steps, TRACKS[key].total));
+      });
+      body.appendChild(row("Задачи с автопроверкой", "practice.html", Object.keys(tasks).length, TASK_TOTAL));
+      body.appendChild(el("p", {
+        class: "note",
+        text: exam && typeof exam.best === "number" ? "Лучший результат финального теста: " + exam.best + " из 15." : "Финальный тест пока не пройден."
+      }));
+    }
+
+    function validBackup(data) {
+      if (data === null || typeof data !== "object" || data.format !== "pyweb-progress-1") return false;
+      const progressOk = data.progress !== null && typeof data.progress === "object" && !Array.isArray(data.progress) &&
+        Object.keys(data.progress).every(function (key) {
+          return Array.isArray(data.progress[key]) && data.progress[key].every(function (step) { return typeof step === "string"; });
+        });
+      const tasksOk = data.tasks !== null && typeof data.tasks === "object" && !Array.isArray(data.tasks);
+      const examOk = data.exam === null || (typeof data.exam === "object" && typeof data.exam.best === "number");
+      return progressOk && tasksOk && examOk;
+    }
+
+    dash.querySelector("[data-dash-export]").addEventListener("click", function () {
+      const backup = {
+        format: "pyweb-progress-1",
+        exported: new Date().toISOString(),
+        progress: readJson("pyweb_progress", {}),
+        tasks: readJson("pyweb_tasks", {}),
+        exam: readJson("pyweb_exam", null)
+      };
+      const url = URL.createObjectURL(new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" }));
+      const link = el("a", { href: url, download: "pyweb-progress.json" });
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      message.textContent = "Файл pyweb-progress.json сохранён. Откройте эту страницу на другом устройстве и загрузите его.";
+    });
+
+    file.addEventListener("change", function () {
+      const chosen = file.files[0];
+      if (!chosen) return;
+
+      chosen.text().then(function (text) {
+        const data = JSON.parse(text);
+        if (!validBackup(data)) throw new Error("format");
+        writeJson("pyweb_progress", data.progress);
+        writeJson("pyweb_tasks", data.tasks);
+        if (data.exam) writeJson("pyweb_exam", data.exam);
+        render();
+        message.textContent = "Прогресс загружен.";
+      }).catch(function () {
+        message.textContent = "Это не файл прогресса PyWeb Guide. Текущий прогресс не изменён.";
+      }).finally(function () {
+        file.value = "";
+      });
+    });
+
+    render();
+  }
+
+  /* ---------- Финальный тест и сертификат ---------- */
+  const examForm = document.getElementById("exam-form");
+
+  if (examForm) {
+    const PASS = 12;
+    const certificate = document.getElementById("certificate");
+    const nameInput = document.getElementById("cert-name");
+    const canvas = document.getElementById("cert-canvas");
+    const download = document.getElementById("cert-download");
+    let score = 0;
+
+    function draw() {
+      const ctx = canvas.getContext("2d");
+      const name = nameInput.value.trim() || "Ваше имя";
+      const date = new Date().toLocaleDateString("ru-RU");
+      const w = canvas.width;
+      const h = canvas.height;
+
+      ctx.fillStyle = "#0b0f16";
+      ctx.fillRect(0, 0, w, h);
+      ctx.strokeStyle = "#4c8dff";
+      ctx.lineWidth = 6;
+      ctx.strokeRect(40, 40, w - 80, h - 80);
+      ctx.textAlign = "center";
+
+      ctx.fillStyle = "#7dd3fc";
+      ctx.font = "700 34px Manrope, Arial, sans-serif";
+      ctx.fillText("PyWeb Guide", w / 2, 130);
+
+      ctx.fillStyle = "#f4f7fb";
+      ctx.font = "800 64px Manrope, Arial, sans-serif";
+      ctx.fillText("Сертификат о прохождении", w / 2, 235);
+
+      let size = 56;
+      ctx.font = "700 " + size + "px Manrope, Arial, sans-serif";
+      while (ctx.measureText(name).width > w - 200 && size > 24) {
+        size -= 2;
+        ctx.font = "700 " + size + "px Manrope, Arial, sans-serif";
+      }
+      ctx.fillStyle = "#34d399";
+      ctx.fillText(name, w / 2, 345);
+
+      ctx.fillStyle = "#f4f7fb";
+      ctx.font = "500 30px Manrope, Arial, sans-serif";
+      ctx.fillText("прошёл(ла) финальный тест курса «Python для веб-разработки»", w / 2, 425);
+      ctx.fillText("Результат: " + score + " из 15 · " + date, w / 2, 475);
+
+      ctx.fillStyle = "rgba(244, 247, 251, 0.72)";
+      ctx.font = "400 22px Manrope, Arial, sans-serif";
+      ctx.fillText("Учебный сертификат для самопроверки. Не является официальным документом.", w / 2, 565);
+    }
+
+    examForm.addEventListener("submit", function () {
+      const groups = examForm.querySelectorAll("fieldset[data-answer]");
+      let right = 0;
+      let answered = 0;
+
+      groups.forEach(function (group) {
+        const chosen = group.querySelector("input:checked");
+        if (!chosen) return;
+        answered++;
+        if (chosen.value === group.dataset.answer) right++;
+      });
+
+      if (answered < groups.length) {
+        certificate.hidden = true;
+        return;
+      }
+
+      score = right;
+      const previous = readJson("pyweb_exam", null);
+      if (!previous || typeof previous.best !== "number" || right > previous.best) {
+        writeJson("pyweb_exam", { best: right, date: new Date().toISOString() });
+      }
+
+      certificate.hidden = right < PASS;
+      if (right >= PASS) {
+        (document.fonts ? document.fonts.load("700 56px Manrope").catch(function () {}) : Promise.resolve()).then(draw);
+      }
+    });
+
+    examForm.addEventListener("reset", function () { certificate.hidden = true; });
+    nameInput.addEventListener("input", draw);
+
+    download.addEventListener("click", function () {
+      draw();
+      canvas.toBlob(function (blob) {
+        const url = URL.createObjectURL(blob);
+        const link = el("a", { href: url, download: "pyweb-certificate.png" });
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      });
+    });
+  }
+})();

@@ -86,6 +86,8 @@
       element.classList.add("visible");
     });
   } else {
+    document.documentElement.classList.add("js-reveal");
+
     const revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -100,43 +102,6 @@
     revealElements.forEach(function (element) {
       revealObserver.observe(element);
     });
-  }
-
-  /* Typing effect */
-  const typedElement = document.getElementById("typed-text");
-
-  if (typedElement && !prefersReducedMotion) {
-    const words = ["Django", "Flask", "backend", "базы данных", "практики"];
-    let wordIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-
-    function typeLoop() {
-      const currentWord = words[wordIndex];
-
-      if (!deleting) {
-        charIndex++;
-        typedElement.textContent = currentWord.slice(0, charIndex);
-
-        if (charIndex === currentWord.length) {
-          deleting = true;
-          setTimeout(typeLoop, 1300);
-          return;
-        }
-      } else {
-        charIndex--;
-        typedElement.textContent = currentWord.slice(0, charIndex);
-
-        if (charIndex === 0) {
-          deleting = false;
-          wordIndex = (wordIndex + 1) % words.length;
-        }
-      }
-
-      setTimeout(typeLoop, deleting ? 45 : 85);
-    }
-
-    setTimeout(typeLoop, 500);
   }
 
   /* Progress + toTop */
@@ -408,11 +373,18 @@
     const savedList = document.getElementById("saved-list");
     const clearButton = document.getElementById("clear-saved");
     const formCard = form.closest(".form-card");
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const ISSUE_URL = "https://github.com/pywebguide-lab/PyWebGuide/issues/new";
 
     function setStatus(message, type) {
       status.textContent = message;
       status.className = "form-status " + type;
+    }
+
+    // Адрес новой записи в Issues с уже заполненным заголовком и текстом
+    function issueLink(name, message) {
+      return ISSUE_URL +
+        "?title=" + encodeURIComponent("Вопрос с сайта: " + name) +
+        "&body=" + encodeURIComponent(message + "\n\n— " + name);
     }
 
     function shakeForm() {
@@ -503,7 +475,7 @@
         const date = new Date(item.date);
 
         name.textContent = item.name;
-        meta.textContent = " · " + item.email + (isNaN(date) ? "" : " · " + date.toLocaleString("ru-RU"));
+        meta.textContent = (item.email ? " · " + item.email : "") + (isNaN(date) ? "" : " · " + date.toLocaleString("ru-RU"));
         text.textContent = item.message;
 
         li.appendChild(name);
@@ -518,47 +490,43 @@
 
       const fields = form.elements;
       const name = fields.namedItem("name").value.trim();
-      const email = fields.namedItem("email").value.trim();
       const message = fields.namedItem("message").value.trim();
 
-      if (!name || !email || !message) {
-        setStatus("Заполните все поля: имя, email и сообщение.", "error");
+      if (!name || !message) {
+        setStatus("Заполните оба поля: имя и сообщение.", "error");
         shakeForm();
         return;
       }
 
-      if (!emailPattern.test(email)) {
-        setStatus("Проверьте корректность email, например name@example.com.", "error");
-        shakeForm();
-        return;
-      }
-
+      const url = issueLink(name, message);
       const result = readMessages();
 
-      if (!result.ok) {
-        setStatus(result.reason === "corrupted"
-          ? "Не удалось сохранить: сохранённые ранее данные повреждены."
-          : "Не удалось сохранить: localStorage недоступен (например, в приватном режиме).", "error");
-        shakeForm();
-        return;
+      // Копия в браузере необязательна: без localStorage сообщение всё равно можно отправить
+      if (result.ok) {
+        try {
+          localStorage.setItem(STORE_KEY, JSON.stringify(result.items.concat({
+            name: name,
+            email: "",
+            message: message,
+            date: new Date().toISOString()
+          }).slice(-50)));
+        } catch (error) {
+          // Копия просто не сохранится
+        }
       }
 
-      const saved = result.items.concat({
-        name: name,
-        email: email,
-        message: message,
-        date: new Date().toISOString()
-      }).slice(-50);
+      window.open(url, "_blank", "noopener");
 
-      try {
-        localStorage.setItem("pyweb_messages", JSON.stringify(saved));
-      } catch (error) {
-        status.textContent = "Не удалось сохранить сообщение.";
-        status.className = "form-status error";
-        return;
-      }
+      // Ссылка нужна, если браузер заблокировал новую вкладку
+      const link = document.createElement("a");
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = "Открыть GitHub ещё раз";
 
-      setStatus("Сообщение сохранено локально в этом браузере. Оно никуда не отправлено.", "success");
+      setStatus("Сообщение ещё не отправлено: на вкладке GitHub нажмите кнопку создания. ", "success");
+      status.appendChild(link);
+
       form.reset();
       renderSaved();
     });

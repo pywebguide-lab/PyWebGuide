@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>REST API на Flask и Django для начинающих — PyWeb Guide</title>
+
+  <meta name="description" content="Что такое REST API, какие бывают методы и коды ответа HTTP, как сделать JSON API на Flask и Django и вызвать его из браузера.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/api.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="REST API на Flask и Django для начинающих — PyWeb Guide">
+  <meta property="og:description" content="Что такое REST API, какие бывают методы и коды ответа HTTP, как сделать JSON API на Flask и Django и вызвать его из браузера.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/api.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html" aria-current="page">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="container page-hero">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>REST API</span>
+</nav>
+<p class="eyebrow">Раздел 8</p>
+<h1>REST API: сервер, который отдаёт данные</h1>
+<p class="lead">API нужен, когда сервер отвечает не страницей, а данными: сайту на JavaScript, мобильному приложению или другой программе.</p>
+</div>
+<section class="section" id="rest" aria-labelledby="rest-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="rest-title">Основные правила REST</h2>
+<p>Адрес обозначает данные, а метод HTTP — действие с ними.</p>
+</div>
+<div class="table-wrap reveal" tabindex="0" role="region" aria-label="Методы HTTP">
+<table>
+<caption>Методы HTTP для списка задач</caption>
+<thead><tr><th scope="col">Запрос</th><th scope="col">Что делает</th><th scope="col">Успешный ответ</th></tr></thead>
+<tbody>
+<tr><td><code>GET /tasks</code></td><td>Возвращает список</td><td>200 OK</td></tr>
+<tr><td><code>POST /tasks</code></td><td>Создаёт задачу</td><td>201 Created</td></tr>
+<tr><td><code>GET /tasks/5</code></td><td>Возвращает одну задачу</td><td>200 OK</td></tr>
+<tr><td><code>PATCH /tasks/5</code></td><td>Меняет часть полей</td><td>200 OK</td></tr>
+<tr><td><code>DELETE /tasks/5</code></td><td>Удаляет</td><td>204 No Content</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section class="section" id="status" aria-labelledby="status-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="status-title">Коды ответа</h2>
+<p>Клиент сначала смотрит на код и только потом читает тело ответа.</p>
+</div>
+<div class="compare-grid">
+<article class="panel reveal">
+<h3>Всё хорошо или ошибка клиента</h3>
+<ul class="list">
+<li><code>200</code> — успешно</li>
+<li><code>201</code> — создано</li>
+<li><code>204</code> — успешно, тела ответа нет</li>
+<li><code>400</code> — неверные данные</li>
+<li><code>401</code> — нужно войти</li>
+<li><code>403</code> — нет прав</li>
+<li><code>404</code> — не найдено</li>
+</ul>
+</article>
+<article class="panel reveal">
+<h3>Ошибка сервера</h3>
+<ul class="list">
+<li><code>500</code> — ошибка в коде приложения</li>
+<li><code>502</code> — веб-сервер не получил ответа от приложения</li>
+<li><code>503</code> — сервис временно недоступен</li>
+</ul>
+<p class="note">Ошибка 5xx означает, что причину нужно искать на сервере, а не в запросе.</p>
+</article>
+</div>
+</div>
+</section>
+<section class="section" id="flask" aria-labelledby="flask-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="flask-title">API на Flask</h2>
+<p>Flask сам превращает словарь в JSON. Список лучше передать через <code>jsonify</code>.</p>
+</div>
+<div class="code-block reveal" data-run="python">
+  <div class="code-head">
+    <span>Flask: JSON API со списком задач</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+tasks = {}
+next_id = 1
+
+@app.get("/tasks")
+def list_tasks():
+    return jsonify(list(tasks.values()))
+
+@app.post("/tasks")
+def create_task():
+    global next_id
+    data = request.get_json(silent=True) or {}
+    title = str(data.get("title", "")).strip()
+    if not title:
+        return {"error": "Поле title обязательно"}, 400
+    task = {"id": next_id, "title": title, "done": False}
+    tasks[next_id] = task
+    next_id += 1
+    return task, 201
+
+@app.patch("/tasks/&lt;int:task_id&gt;")
+def update_task(task_id):
+    task = tasks.get(task_id)
+    if task is None:
+        return {"error": "Задача не найдена"}, 404
+    data = request.get_json(silent=True) or {}
+    if "done" in data:
+        task["done"] = bool(data["done"])
+    return task
+
+@app.delete("/tasks/&lt;int:task_id&gt;")
+def delete_task(task_id):
+    if tasks.pop(task_id, None) is None:
+        return {"error": "Задача не найдена"}, 404
+    return "", 204
+
+client = app.test_client()
+print(client.post("/tasks", json={}).status_code, "пустая задача")
+created = client.post("/tasks", json={"title": "Написать API"})
+print(created.status_code, created.json)
+print(client.patch("/tasks/1", json={"done": True}).json)
+print(client.get("/tasks").json)
+print(client.delete("/tasks/1").status_code, "удалена")
+print(client.delete("/tasks/1").status_code, "повторное удаление")</code></pre>
+</div>
+</div>
+</section>
+<section class="section" id="django" aria-labelledby="django-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="django-title">API на Django</h2>
+<p>Простой JSON-ответ можно отдать встроенными средствами. Для большого API обычно берут <a href="https://www.django-rest-framework.org/" rel="noopener">Django REST framework</a>.</p>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>tasks/views.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>import json
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+
+from .models import Task
+
+@csrf_exempt  # только для учебного примера: настоящему API нужна авторизация
+@require_http_methods(["GET", "POST"])
+def tasks(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            title = str(data.get("title", "")).strip()
+        except (json.JSONDecodeError, AttributeError):
+            return JsonResponse({"error": "Неверный JSON"}, status=400)
+        if not title:
+            return JsonResponse({"error": "Поле title обязательно"}, status=400)
+        task = Task.objects.create(title=title)
+        return JsonResponse({"id": task.id, "title": task.title}, status=201)
+    return JsonResponse(list(Task.objects.values("id", "title")), safe=False)</code></pre>
+</div>
+<p class="note stack-gap">Параметр <code>safe=False</code> нужен, потому что по умолчанию <code>JsonResponse</code> принимает только словарь.</p>
+</div>
+</section>
+<section class="section" id="client" aria-labelledby="client-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="client-title">Как вызвать API из браузера</h2>
+<p>На странице это делает функция <code>fetch</code>. Проверяйте код ответа: <code>fetch</code> не считает 404 ошибкой.</p>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>JavaScript</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>async function addTask(title) {
+  const response = await fetch("/tasks", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title }),
+  });
+
+  if (!response.ok) {
+    const problem = await response.json();
+    throw new Error(problem.error);
+  }
+
+  return response.json();
+}</code></pre>
+</div>
+<p class="note stack-gap">Если сайт и API находятся на разных адресах, браузер заблокирует ответ, пока сервер не разрешит это заголовками CORS. Во Flask для этого есть расширение Flask-CORS.</p>
+</div>
+</section>
+<section class="section" id="fastapi" aria-labelledby="fastapi-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="fastapi-title">Где здесь FastAPI</h2>
+<p>Если проект — только API, посмотрите на <a href="frameworks.html">FastAPI</a>: он проверяет данные по подсказкам типов и сам создаёт документацию. Принципы REST при этом те же.</p>
+</div>
+</div>
+</section>
+<section class="section" aria-labelledby="sources-title">
+<div class="container">
+<div class="panel sources reveal">
+<h2 id="sources-title">Источники</h2>
+<p class="note">Ссылки проверены <time datetime="2026-11-04">04.11.2026</time>.</p>
+<ul class="list">
+<li><a href="https://developer.mozilla.org/ru/docs/Web/HTTP/Methods" rel="noopener">MDN: методы HTTP</a></li>
+<li><a href="https://developer.mozilla.org/ru/docs/Web/HTTP/Status" rel="noopener">MDN: коды ответа HTTP</a></li>
+<li><a href="https://flask.palletsprojects.com/en/stable/patterns/javascript/" rel="noopener">Flask: JSON и JavaScript</a></li>
+<li><a href="https://docs.djangoproject.com/en/6.1/ref/request-response/#jsonresponse-objects" rel="noopener">Django 6.1: JsonResponse</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section class="section" aria-label="Дальше">
+<div class="container">
+<div class="cta-panel reveal">
+<div>
+<h2>Дальше: второй проект</h2>
+<p class="lead cta-lead">Соберите API блога с настоящей базой данных.</p>
+</div>
+<div class="cta-actions"><a class="btn btn-primary" href="project2.html">Открыть раздел</a></div>
+</div>
+</div>
+</section>
+
+
+</main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

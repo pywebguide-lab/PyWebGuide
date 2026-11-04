@@ -61,7 +61,26 @@
           <li><a class="nav-link" href="databases.html">Базы данных</a></li>
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
           <li><a class="nav-link" href="deploy.html">Публикация</a></li>
-          <li><a class="nav-link" href="contacts.html">Контакты</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
         </ul>
       </nav>
 
@@ -99,20 +118,26 @@
         <a href="about.html">О Python</a> •
         <a href="frameworks.html">Фреймворки</a> •
         <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
         <a href="contacts.html">Контакты</a>
       </div>
       <p class="note footer-note">
         Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
-        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
         Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
         <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
       </p>
-      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
     </div>
   </footer>
 
   <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
 
   <script src="script.js"></script>
+  <script src="features.js"></script>
 </body>
 </html>

@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Финальный тест по Python в веб-разработке — PyWeb Guide</title>
+
+  <meta name="description" content="15 вопросов по всему курсу с объяснениями. Если ответить верно на 12 и больше, можно скачать учебный сертификат.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/exam.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Финальный тест по Python в веб-разработке — PyWeb Guide">
+  <meta property="og:description" content="15 вопросов по всему курсу с объяснениями. Если ответить верно на 12 и больше, можно скачать учебный сертификат.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/exam.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top" data-no-toc>
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html" aria-current="page">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="container page-hero">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>Финальный тест</span>
+</nav>
+<p class="eyebrow">Итог курса</p>
+<h1>Финальный тест</h1>
+<p class="lead">15 вопросов по всему курсу. Ответьте верно на 12 или больше, и можно будет скачать учебный сертификат. Количество попыток не ограничено.</p>
+</div>
+<section class="section" id="test" aria-labelledby="test-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="test-title">Вопросы</h2>
+<p>После проверки под каждым вопросом появится объяснение.</p>
+</div>
+<form class="quiz knowledge-check reveal" novalidate id="exam-form">
+<fieldset data-answer="b">
+<legend>1. Где выполняется код серверной части сайта?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex1" value="a"> <span>В браузере пользователя</span></label>
+<label class="quiz-option"><input type="radio" name="ex1" value="b"> <span>На сервере</span></label>
+<label class="quiz-option"><input type="radio" name="ex1" value="c"> <span>В базе данных</span></label>
+</div>
+<p class="check-explain" hidden>Backend работает на сервере: принимает запрос, выполняет логику и возвращает ответ.</p>
+</fieldset>
+<fieldset data-answer="c">
+<legend>2. Что делает маршрутизация?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex2" value="a"> <span>Ускоряет загрузку страниц</span></label>
+<label class="quiz-option"><input type="radio" name="ex2" value="b"> <span>Сохраняет данные в базу</span></label>
+<label class="quiz-option"><input type="radio" name="ex2" value="c"> <span>Связывает адрес с функцией, которая его обрабатывает</span></label>
+</div>
+<p class="check-explain" hidden>Во Flask это декоратор <code>@app.route</code>, в Django — список <code>urlpatterns</code>.</p>
+</fieldset>
+<fieldset data-answer="a">
+<legend>3. Зачем нужно виртуальное окружение?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex3" value="a"> <span>Чтобы хранить библиотеки проекта отдельно от остальной системы</span></label>
+<label class="quiz-option"><input type="radio" name="ex3" value="b"> <span>Чтобы код работал быстрее</span></label>
+<label class="quiz-option"><input type="radio" name="ex3" value="c"> <span>Чтобы защитить сайт от взлома</span></label>
+</div>
+<p class="check-explain" hidden>У каждого проекта могут быть свои версии библиотек, и они не будут мешать друг другу.</p>
+</fieldset>
+<fieldset data-answer="b">
+<legend>4. Какой фреймворк из коробки даёт ORM и админ-панель?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex4" value="a"> <span>Flask</span></label>
+<label class="quiz-option"><input type="radio" name="ex4" value="b"> <span>Django</span></label>
+<label class="quiz-option"><input type="radio" name="ex4" value="c"> <span>Jinja</span></label>
+</div>
+<p class="check-explain" hidden>Django идёт с ORM и админкой. Flask минималистичен, а Jinja — это язык шаблонов.</p>
+</fieldset>
+<fieldset data-answer="c">
+<legend>5. Что такое миграция в Django?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex5" value="a"> <span>Перенос сайта на другой хостинг</span></label>
+<label class="quiz-option"><input type="radio" name="ex5" value="b"> <span>Обновление самого Django</span></label>
+<label class="quiz-option"><input type="radio" name="ex5" value="c"> <span>Файл с описанием изменения структуры базы данных</span></label>
+</div>
+<p class="check-explain" hidden>Команда <code>makemigrations</code> создаёт такой файл, а <code>migrate</code> применяет его к базе.</p>
+</fieldset>
+<fieldset data-answer="a">
+<legend>6. Как правильно передать в SQL значение от пользователя?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex6" value="a"> <span>Через параметр: <code>execute("... WHERE id = ?", (user_id,))</code></span></label>
+<label class="quiz-option"><input type="radio" name="ex6" value="b"> <span>Через f-строку: <code>execute(f"... WHERE id = {user_id}")</code></span></label>
+<label class="quiz-option"><input type="radio" name="ex6" value="c"> <span>Склеить строки через плюс</span></label>
+</div>
+<p class="check-explain" hidden>Параметры защищают от SQL-инъекций. Подстановка в строку позволяет изменить сам запрос.</p>
+</fieldset>
+<fieldset data-answer="b">
+<legend>7. Что делает <code>{{ name }}</code> в шаблоне Jinja?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex7" value="a"> <span>Выводит значение как готовый HTML</span></label>
+<label class="quiz-option"><input type="radio" name="ex7" value="b"> <span>Выводит значение и экранирует опасные символы</span></label>
+<label class="quiz-option"><input type="radio" name="ex7" value="c"> <span>Сохраняет значение в базу</span></label>
+</div>
+<p class="check-explain" hidden>Автоэкранирование защищает от XSS. Его отключает фильтр <code>|safe</code>.</p>
+</fieldset>
+<fieldset data-answer="c">
+<legend>8. Зачем после успешной отправки формы делать редирект?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex8" value="a"> <span>Чтобы страница загружалась быстрее</span></label>
+<label class="quiz-option"><input type="radio" name="ex8" value="b"> <span>Этого требует HTML</span></label>
+<label class="quiz-option"><input type="radio" name="ex8" value="c"> <span>Чтобы при обновлении страницы форма не отправилась повторно</span></label>
+</div>
+<p class="check-explain" hidden>Этот приём называется Post/Redirect/Get.</p>
+</fieldset>
+<fieldset data-answer="a">
+<legend>9. Как хранить пароли пользователей?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex9" value="a"> <span>Как хеш с солью, специальной функцией</span></label>
+<label class="quiz-option"><input type="radio" name="ex9" value="b"> <span>Как обычный текст в защищённой таблице</span></label>
+<label class="quiz-option"><input type="radio" name="ex9" value="c"> <span>Как обычный md5</span></label>
+</div>
+<p class="check-explain" hidden>Хеш необратим, а соль и замедление усложняют подбор. Быстрые хеши вроде md5 для паролей не подходят.</p>
+</fieldset>
+<fieldset data-answer="b">
+<legend>10. От чего защищает CSRF-токен в форме?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex10" value="a"> <span>От подбора пароля</span></label>
+<label class="quiz-option"><input type="radio" name="ex10" value="b"> <span>От отправки формы с чужого сайта от имени пользователя</span></label>
+<label class="quiz-option"><input type="radio" name="ex10" value="c"> <span>От SQL-инъекций</span></label>
+</div>
+<p class="check-explain" hidden>Чужой сайт не знает секретный токен, поэтому его запрос будет отклонён.</p>
+</fieldset>
+<fieldset data-answer="b">
+<legend>11. Какой код ответа подходит после успешного создания записи?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex11" value="a"> <span>200</span></label>
+<label class="quiz-option"><input type="radio" name="ex11" value="b"> <span>201</span></label>
+<label class="quiz-option"><input type="radio" name="ex11" value="c"> <span>404</span></label>
+</div>
+<p class="check-explain" hidden>201 Created означает, что новый ресурс создан.</p>
+</fieldset>
+<fieldset data-answer="c">
+<legend>12. Какой метод HTTP обычно удаляет запись в REST API?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex12" value="a"> <span>GET</span></label>
+<label class="quiz-option"><input type="radio" name="ex12" value="b"> <span>POST</span></label>
+<label class="quiz-option"><input type="radio" name="ex12" value="c"> <span>DELETE</span></label>
+</div>
+<p class="check-explain" hidden>GET только читает данные и не должен ничего менять.</p>
+</fieldset>
+<fieldset data-answer="a">
+<legend>13. Что делает <code>app.test_client()</code> во Flask?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex13" value="a"> <span>Отправляет запросы приложению без настоящего сервера</span></label>
+<label class="quiz-option"><input type="radio" name="ex13" value="b"> <span>Открывает сайт в браузере</span></label>
+<label class="quiz-option"><input type="radio" name="ex13" value="c"> <span>Публикует сайт в интернете</span></label>
+</div>
+<p class="check-explain" hidden>Поэтому тесты работают быстро и не требуют запуска сервера.</p>
+</fieldset>
+<fieldset data-answer="c">
+<legend>14. Что делает команда <code>git commit</code>?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex14" value="a"> <span>Отправляет код на GitHub</span></label>
+<label class="quiz-option"><input type="radio" name="ex14" value="b"> <span>Скачивает изменения с GitHub</span></label>
+<label class="quiz-option"><input type="radio" name="ex14" value="c"> <span>Сохраняет снимок подготовленных изменений в локальную историю</span></label>
+</div>
+<p class="check-explain" hidden>На GitHub код отправляет <code>git push</code>.</p>
+</fieldset>
+<fieldset data-answer="b">
+<legend>15. Что нельзя оставлять на публичном сервере?</legend>
+<div class="quiz-options">
+<label class="quiz-option"><input type="radio" name="ex15" value="a"> <span>Файл <code>requirements.txt</code></span></label>
+<label class="quiz-option"><input type="radio" name="ex15" value="b"> <span><code>DEBUG = True</code> и секретный ключ в открытом репозитории</span></label>
+<label class="quiz-option"><input type="radio" name="ex15" value="c"> <span>Папку со статическими файлами</span></label>
+</div>
+<p class="check-explain" hidden>При отладке посетители увидят настройки и куски кода, а раскрытый ключ позволяет подделывать сессии.</p>
+</fieldset>
+<div class="quiz-actions tool-row">
+<button class="btn btn-primary" type="submit">Проверить ответы</button>
+<button class="btn btn-secondary" type="reset">Начать заново</button>
+</div>
+<p class="check-score" role="status" aria-live="polite"></p>
+</form>
+<div class="panel stack-gap" id="certificate" hidden>
+<h3>Поздравляем! Тест пройден</h3>
+<label class="cert-field" for="cert-name">Имя для сертификата
+<input id="cert-name" type="text" maxlength="60" autocomplete="name" placeholder="Ваше имя"></label>
+<canvas class="cert-canvas" id="cert-canvas" width="1200" height="630" role="img" aria-label="Предпросмотр сертификата"></canvas>
+<button class="btn btn-primary" type="button" id="cert-download">Скачать PNG</button>
+<p class="note stack-gap">Сертификат создаётся прямо в браузере, а имя никуда не отправляется и не сохраняется. Это учебный сертификат для самопроверки, а не официальный документ.</p>
+</div>
+</div>
+</section>
+
+
+</main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

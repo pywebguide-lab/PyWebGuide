@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Песочница Python в браузере — PyWeb Guide</title>
+
+  <meta name="description" content="Запускайте Python прямо в браузере без установки: основы языка, SQLite и приложение Flask с тестовым клиентом.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/playground.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Песочница Python в браузере — PyWeb Guide">
+  <meta property="og:description" content="Запускайте Python прямо в браузере без установки: основы языка, SQLite и приложение Flask с тестовым клиентом.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/playground.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top" data-no-toc>
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html" aria-current="page">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="container page-hero">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>Песочница</span>
+</nav>
+<p class="eyebrow">Инструменты</p>
+<h1>Песочница: Python прямо в браузере</h1>
+<p class="lead">Пишите код и нажимайте «Запустить». Ничего устанавливать не нужно: код выполняется на вашем устройстве и никуда не отправляется.</p>
+</div>
+<section class="section" id="editor" aria-labelledby="editor-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="editor-title">Редактор</h2>
+<p>Сочетание Ctrl+Enter запускает код. Черновик сохраняется в этом браузере.</p>
+</div>
+<div id="playground" class="reveal">
+<div class="tool-row">
+<label for="sample">Пример:</label>
+<select id="sample"></select>
+<button class="btn btn-primary" type="button" data-run-code>▶ Запустить</button>
+<button class="btn btn-secondary" type="button" data-reset-code>Сбросить к примеру</button>
+</div>
+<textarea class="editor-area" rows="16" spellcheck="false" aria-label="Код на Python"></textarea>
+<div class="code-block stack-gap" data-output></div>
+<template data-sample="basics" data-title="Основы: функции и списки">
+def greet(name):
+    return f"Привет, {name}!"
+
+for name in ["Ернар", "Руслан", "мир"]:
+    print(greet(name))
+
+squares = [n * n for n in range(1, 6)]
+print("Квадраты:", squares)
+print("Сумма:", sum(squares))</template>
+<template data-sample="dict" data-title="Словари: подсчёт слов">
+text = "python для веба python для всех"
+
+counts = {}
+for word in text.split():
+    counts[word] = counts.get(word, 0) + 1
+
+for word, count in sorted(counts.items(), key=lambda item: -item[1]):
+    print(word, count)</template>
+<template data-sample="sql" data-title="SQLite: база данных в памяти">
+import sqlite3
+
+db = sqlite3.connect(":memory:")
+db.execute("CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, done INTEGER)")
+db.executemany(
+    "INSERT INTO tasks (title, done) VALUES (?, ?)",
+    [("Выучить SQL", 1), ("Сделать API", 0), ("Написать тесты", 0)],
+)
+
+for row in db.execute("SELECT title FROM tasks WHERE done = 0 ORDER BY title"):
+    print(row[0])</template>
+<template data-sample="flask" data-title="Flask: приложение и тестовый клиент">
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.get("/hello/&lt;name&gt;")
+def hello(name):
+    return {"message": f"Привет, {name}!", "lang": request.args.get("lang", "ru")}
+
+client = app.test_client()
+response = client.get("/hello/Python?lang=kk")
+print(response.status_code)
+print(response.json)
+print(client.get("/nope").status_code)</template>
+<template data-sample="error" data-title="Ошибка: как читать сообщение">
+def divide(a, b):
+    return a / b
+
+print(divide(10, 2))
+print(divide(1, 0))</template>
+</div>
+</div>
+</section>
+<section class="section" id="limits" aria-labelledby="limits-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="limits-title">Что важно знать</h2>
+<p>Песочница работает на Pyodide: это Python, собранный для браузера.</p>
+</div>
+<div class="panel reveal stack-gap">
+<ul class="list">
+<li>При первом запуске браузер скачает около 5 МБ с сервиса jsDelivr. Для примера с Flask дополнительно загружаются пакеты с PyPI.</li>
+<li>Настоящий сервер здесь не запустить. Вместо него приложение Flask получает запросы через <code>test_client()</code>.</li>
+<li><code>input()</code> в браузере не работает. Задавайте значения прямо в коде.</li>
+<li>Код останавливается через 10 секунд, поэтому бесконечный цикл не повесит страницу.</li>
+</ul>
+</div>
+</div>
+</section>
+<section class="section" aria-labelledby="sources-title">
+<div class="container">
+<div class="panel sources reveal">
+<h2 id="sources-title">Источники</h2>
+<p class="note">Ссылки проверены <time datetime="2026-11-04">04.11.2026</time>.</p>
+<ul class="list">
+<li><a href="https://pyodide.org/en/stable/" rel="noopener">Документация Pyodide</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+
+</main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

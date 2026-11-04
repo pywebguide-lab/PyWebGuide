@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Задачи по Python и веб-разработке с автопроверкой — PyWeb Guide</title>
+
+  <meta name="description" content="Десять задач по Python, HTTP, SQL и Flask с мгновенной автопроверкой прямо в браузере, без установки.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/practice.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Задачи по Python и веб-разработке с автопроверкой — PyWeb Guide">
+  <meta property="og:description" content="Десять задач по Python, HTTP, SQL и Flask с мгновенной автопроверкой прямо в браузере, без установки.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/practice.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html" aria-current="page">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="container page-hero">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>Задачи</span>
+</nav>
+<p class="eyebrow">Практика</p>
+<h1>Задачи с автопроверкой</h1>
+<p class="lead">Напишите решение и нажмите «Проверить». Код выполнится в браузере и пройдёт скрытые тесты. Решённые задачи запоминаются в этом браузере.</p>
+</div>
+<section class="section" id="result" aria-labelledby="result-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="result-title">Ваш результат</h2>
+<p>Первая проверка загрузит Python: около 5 МБ, это занимает несколько секунд.</p>
+</div>
+<div class="progress-box reveal">
+<p class="progress-label" role="status"><span data-tasks-count>0</span> из 10 задач решено</p>
+<div class="progress-track" aria-hidden="true"><div class="progress-fill" data-tasks-fill></div></div>
+</div>
+</div>
+</section>
+<section class="section" id="basics" aria-labelledby="basics-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="basics-title">Основы Python</h2>
+<p>Функции, строки и словари: на них держится любой обработчик запросов.</p>
+</div>
+<article class="task reveal" data-task="greet">
+<h3>1. Приветствие</h3>
+<p>Напишите функцию <code>greet(name)</code>, которая возвращает строку <code>Привет, Имя!</code>. Лишние пробелы вокруг имени нужно убрать. Если имя пустое, верните <code>Привет, гость!</code>.</p>
+<textarea class="editor-area" rows="6" spellcheck="false" aria-label="Решение: 1. Приветствие">def greet(name):
+    # ваш код
+    pass</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>def greet(name):
+    name = name.strip()
+    return f"Привет, {name or 'гость'}!"</code></pre></details>
+<template data-kind="tests">assert greet("Анна") == "Привет, Анна!", 'greet("Анна") должна вернуть "Привет, Анна!"'
+assert greet("  Ерлан ") == "Привет, Ерлан!", "Уберите пробелы вокруг имени: подойдёт .strip()"
+assert greet("") == "Привет, гость!", 'Для пустого имени нужен ответ "Привет, гость!"'
+assert greet("   ") == "Привет, гость!", "Имя из одних пробелов тоже считается пустым"</template>
+</article>
+<article class="task reveal" data-task="words">
+<h3>2. Подсчёт слов</h3>
+<p>Напишите <code>count_words(text)</code>: верните словарь, где ключ — слово в нижнем регистре, а значение — сколько раз оно встретилось.</p>
+<textarea class="editor-area" rows="6" spellcheck="false" aria-label="Решение: 2. Подсчёт слов">def count_words(text):
+    # ваш код
+    pass</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>def count_words(text):
+    counts = {}
+    for word in text.lower().split():
+        counts[word] = counts.get(word, 0) + 1
+    return counts</code></pre></details>
+<template data-kind="tests">assert count_words("") == {}, "Для пустой строки нужен пустой словарь"
+assert count_words("Да да нет") == {"да": 2, "нет": 1}, 'Ожидается {"да": 2, "нет": 1}: приведите слова к нижнему регистру'
+assert count_words("a  b\nb") == {"a": 1, "b": 2}, "Разделяйте через .split() без аргументов"</template>
+</article>
+</div>
+</section>
+<section class="section" id="http" aria-labelledby="http-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="http-title">HTTP и маршруты</h2>
+<p>То, что фреймворк делает за вас, легко написать в простом виде.</p>
+</div>
+<article class="task reveal" data-task="query">
+<h3>3. Разбор адреса</h3>
+<p>Напишите <code>parse_query(query)</code>. Она превращает строку <code>a=1&amp;b=2</code> в словарь <code>{"a": "1", "b": "2"}</code>. Части без знака <code>=</code> пропускайте. Значение может содержать <code>=</code>.</p>
+<textarea class="editor-area" rows="6" spellcheck="false" aria-label="Решение: 3. Разбор адреса">def parse_query(query):
+    # ваш код
+    pass</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>def parse_query(query):
+    result = {}
+    for part in query.split("&amp;"):
+        if "=" in part:
+            key, value = part.split("=", 1)
+            result[key] = value
+    return result</code></pre></details>
+<template data-kind="tests">assert parse_query("") == {}, "Для пустой строки нужен пустой словарь"
+assert parse_query("a=1&amp;b=2") == {"a": "1", "b": "2"}, 'Ожидается {"a": "1", "b": "2"}'
+assert parse_query("flag&amp;x=1") == {"x": "1"}, "Часть без = нужно пропустить"
+assert parse_query("token=a=b") == {"token": "a=b"}, "Делите только по первому =: split('=', 1) или partition"</template>
+</article>
+<article class="task reveal" data-task="router">
+<h3>4. Простой маршрутизатор</h3>
+<p>Допишите <code>handle(method, path)</code>. Она ищет обработчик в словаре <code>ROUTES</code> и возвращает пару «код, текст». Если адреса нет, верните <code>(404, "Not Found")</code>. Если адрес есть, но метод не подходит, верните <code>(405, "Method Not Allowed")</code>.</p>
+<textarea class="editor-area" rows="11" spellcheck="false" aria-label="Решение: 4. Простой маршрутизатор">ROUTES = {
+    "/": {"GET": "Главная"},
+    "/tasks": {"GET": "Список задач", "POST": "Задача создана"},
+}
+
+def handle(method, path):
+    # ваш код
+    pass</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>ROUTES = {
+    "/": {"GET": "Главная"},
+    "/tasks": {"GET": "Список задач", "POST": "Задача создана"},
+}
+
+def handle(method, path):
+    if path not in ROUTES:
+        return 404, "Not Found"
+    if method not in ROUTES[path]:
+        return 405, "Method Not Allowed"
+    return 200, ROUTES[path][method]</code></pre></details>
+<template data-kind="tests">assert handle("GET", "/") == (200, "Главная"), 'GET / должен вернуть (200, "Главная")'
+assert handle("POST", "/tasks") == (200, "Задача создана"), 'POST /tasks должен вернуть (200, "Задача создана")'
+assert handle("GET", "/nope") == (404, "Not Found"), "Для неизвестного адреса нужен код 404"
+assert handle("DELETE", "/") == (405, "Method Not Allowed"), "Для неподходящего метода нужен код 405"</template>
+</article>
+<article class="task reveal" data-task="validate">
+<h3>5. Проверка данных формы</h3>
+<p>Напишите <code>validate_user(data)</code>. Функция принимает словарь и возвращает список ошибок. Поле <code>name</code> обязательно, поле <code>age</code> должно быть целым числом от 1 до 120. Тексты ошибок: <code>"name"</code> и <code>"age"</code>. Если всё верно, верните пустой список.</p>
+<textarea class="editor-area" rows="7" spellcheck="false" aria-label="Решение: 5. Проверка данных формы">def validate_user(data):
+    errors = []
+    # ваш код
+    return errors</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>def validate_user(data):
+    errors = []
+    if not str(data.get("name", "")).strip():
+        errors.append("name")
+    age = data.get("age")
+    if not isinstance(age, int) or isinstance(age, bool) or not 1 &lt;= age &lt;= 120:
+        errors.append("age")
+    return errors</code></pre></details>
+<template data-kind="tests">assert validate_user({"name": "Аружан", "age": 20}) == [], "Верные данные не должны давать ошибок"
+assert validate_user({"age": 20}) == ["name"], "Без имени должна быть ошибка name"
+assert validate_user({"name": "  ", "age": 20}) == ["name"], "Имя из пробелов считается пустым"
+assert validate_user({"name": "A", "age": 0}) == ["age"], "Возраст 0 не подходит"
+assert validate_user({"name": "A", "age": "20"}) == ["age"], "Строка не считается числом"
+assert validate_user({"name": "A", "age": True}) == ["age"], "True в Python тоже int: проверьте это отдельно"
+assert validate_user({}) == ["name", "age"], "Нужно вернуть обе ошибки по порядку"</template>
+</article>
+<article class="task reveal" data-task="json">
+<h3>6. Ответ в JSON</h3>
+<p>Напишите <code>tasks_json(tasks)</code>. Функция получает список словарей и возвращает строку JSON только с задачами, у которых <code>done</code> равно <code>False</code>. Кириллица должна остаться читаемой. Импорт уже есть.</p>
+<textarea class="editor-area" rows="8" spellcheck="false" aria-label="Решение: 6. Ответ в JSON">import json
+
+def tasks_json(tasks):
+    # ваш код
+    pass</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>import json
+
+def tasks_json(tasks):
+    active = [task for task in tasks if not task["done"]]
+    return json.dumps(active, ensure_ascii=False)</code></pre></details>
+<template data-kind="tests">data = [{"title": "Код", "done": False}, {"title": "Сон", "done": True}]
+assert isinstance(tasks_json(data), str), "Нужно вернуть строку, а не список"
+assert json.loads(tasks_json(data)) == [{"title": "Код", "done": False}], "В ответе должны остаться только невыполненные задачи"
+assert "Код" in tasks_json(data), "Добавьте ensure_ascii=False, иначе кириллица превратится в коды"
+assert tasks_json([]) == "[]", "Для пустого списка нужна строка []"</template>
+</article>
+</div>
+</section>
+<section class="section" id="sql" aria-labelledby="sql-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="sql-title">SQL</h2>
+<p>Настоящая база SQLite работает прямо в браузере.</p>
+</div>
+<article class="task reveal" data-task="add_task">
+<h3>7. Безопасная вставка</h3>
+<p>Напишите <code>add_task(db, title)</code>: она добавляет строку в таблицу <code>tasks</code> и возвращает её <code>id</code>. Используйте параметр <code>?</code>: текст с кавычкой не должен ломать запрос.</p>
+<textarea class="editor-area" rows="11" spellcheck="false" aria-label="Решение: 7. Безопасная вставка">import sqlite3
+
+db = sqlite3.connect(":memory:")
+db.execute("CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT)")
+
+def add_task(db, title):
+    # ваш код
+    pass</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>import sqlite3
+
+db = sqlite3.connect(":memory:")
+db.execute("CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT)")
+
+def add_task(db, title):
+    cursor = db.execute("INSERT INTO tasks (title) VALUES (?)", (title,))
+    db.commit()
+    return cursor.lastrowid</code></pre></details>
+<template data-kind="tests">first = add_task(db, "Первая")
+second = add_task(db, "Вторая")
+assert isinstance(first, int) and second == first + 1, "Верните cursor.lastrowid"
+evil = "x'); DROP TABLE tasks; --"
+add_task(db, evil)
+assert db.execute("SELECT title FROM tasks WHERE title = ?", (evil,)).fetchone() == (evil,), "Текст с кавычкой должен сохраниться как есть: используйте ?"</template>
+</article>
+<article class="task reveal" data-task="select">
+<h3>8. Выборка с условием</h3>
+<p>Напишите <code>active_titles(db)</code>: верните список заголовков, у которых <code>done = 0</code>, отсортированный по алфавиту.</p>
+<textarea class="editor-area" rows="12" spellcheck="false" aria-label="Решение: 8. Выборка с условием">import sqlite3
+
+db = sqlite3.connect(":memory:")
+db.execute("CREATE TABLE tasks (title TEXT, done INTEGER)")
+db.executemany("INSERT INTO tasks VALUES (?, ?)", [("Б", 0), ("А", 0), ("В", 1)])
+
+def active_titles(db):
+    # ваш код
+    pass</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>import sqlite3
+
+db = sqlite3.connect(":memory:")
+db.execute("CREATE TABLE tasks (title TEXT, done INTEGER)")
+db.executemany("INSERT INTO tasks VALUES (?, ?)", [("Б", 0), ("А", 0), ("В", 1)])
+
+def active_titles(db):
+    rows = db.execute("SELECT title FROM tasks WHERE done = 0 ORDER BY title")
+    return [row[0] for row in rows]</code></pre></details>
+<template data-kind="tests">assert active_titles(db) == ["А", "Б"], 'Ожидается ["А", "Б"]: добавьте WHERE и ORDER BY и верните список строк'
+db.execute("UPDATE tasks SET done = 1")
+assert active_titles(db) == [], "Если подходящих строк нет, верните пустой список"</template>
+</article>
+</div>
+</section>
+<section class="section" id="flask" aria-labelledby="flask-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="flask-title">Flask</h2>
+<p>Настоящий Flask. Первая проверка дополнительно загрузит пакет с PyPI.</p>
+</div>
+<article class="task reveal" data-task="route">
+<h3>9. Первый маршрут</h3>
+<p>Добавьте маршрут <code>GET /hello/&lt;name&gt;</code>, который возвращает JSON <code>{"message": "Привет, имя!"}</code>.</p>
+<textarea class="editor-area" rows="8" spellcheck="false" aria-label="Решение: 9. Первый маршрут">from flask import Flask
+
+app = Flask(__name__)
+
+# ваш маршрут</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.get("/hello/&lt;name&gt;")
+def hello(name):
+    return {"message": f"Привет, {name}!"}</code></pre></details>
+<template data-kind="tests">client = app.test_client()
+response = client.get("/hello/Python")
+assert response.status_code == 200, "Адрес /hello/Python должен открываться с кодом 200"
+assert response.json == {"message": "Привет, Python!"}, 'Верните словарь {"message": "Привет, Python!"}'</template>
+</article>
+<article class="task reveal" data-task="post">
+<h3>10. Создание записи</h3>
+<p>Сделайте <code>POST /items</code>. Он читает JSON с полем <code>title</code>. Если поля нет или оно пустое, верните <code>{"error": "title"}</code> с кодом 400. Иначе добавьте заголовок в список <code>items</code> и верните <code>{"title": ...}</code> с кодом 201.</p>
+<textarea class="editor-area" rows="9" spellcheck="false" aria-label="Решение: 10. Создание записи">from flask import Flask, request
+
+app = Flask(__name__)
+items = []
+
+# ваш маршрут</textarea>
+<div class="tool-row"><button class="btn btn-primary" type="button" data-check>Проверить</button><button class="btn btn-secondary" type="button" data-reset>Сбросить</button></div>
+<div data-output></div>
+<details><summary>Показать решение</summary><pre><code>from flask import Flask, request
+
+app = Flask(__name__)
+items = []
+
+@app.post("/items")
+def create_item():
+    data = request.get_json(silent=True) or {}
+    title = str(data.get("title", "")).strip()
+    if not title:
+        return {"error": "title"}, 400
+    items.append(title)
+    return {"title": title}, 201</code></pre></details>
+<template data-kind="tests">client = app.test_client()
+assert client.post("/items", json={}).status_code == 400, "Без title нужен код 400"
+assert client.post("/items", json={"title": "  "}).status_code == 400, "Пустой title тоже даёт 400"
+assert client.post("/items", data="не json").status_code == 400, "Неверный JSON не должен приводить к падению: get_json(silent=True)"
+good = client.post("/items", json={"title": "Книга"})
+assert good.status_code == 201, "При успехе нужен код 201: return {...}, 201"
+assert good.json == {"title": "Книга"}, 'Верните {"title": "Книга"}'
+assert items == ["Книга"], "Заголовок должен попасть в список items"</template>
+</article>
+</div>
+</section>
+<section class="section" aria-label="Дальше">
+<div class="container">
+<div class="cta-panel reveal">
+<div>
+<h2>Готовы к большему?</h2>
+<p class="lead cta-lead">Соберите API блога с базой данных и тестами.</p>
+</div>
+<div class="cta-actions"><a class="btn btn-primary" href="project2.html">Открыть раздел</a></div>
+</div>
+</div>
+</section>
+
+
+</main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

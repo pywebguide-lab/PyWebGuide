@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Git и GitHub для начинающих веб-разработчиков — PyWeb Guide</title>
+
+  <meta name="description" content="Основы Git: коммиты, ветки, слияние, отмена изменений и работа с GitHub. Команды с объяснениями и частые ошибки.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/git.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Git и GitHub для начинающих веб-разработчиков — PyWeb Guide">
+  <meta property="og:description" content="Основы Git: коммиты, ветки, слияние, отмена изменений и работа с GitHub. Команды с объяснениями и частые ошибки.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/git.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html" aria-current="page">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="container page-hero">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>Git</span>
+</nav>
+<p class="eyebrow">Раздел 10</p>
+<h1>Git: история вашего проекта</h1>
+<p class="lead">Git запоминает версии кода, позволяет вернуться к рабочему состоянию и работать вместе. GitHub — сайт, где хранят копии таких проектов.</p>
+</div>
+<section class="section" id="start" aria-labelledby="start-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="start-title">Первый коммит</h2>
+<p>Коммит — сохранённый снимок проекта с понятным описанием.</p>
+</div>
+<div class="code-grid">
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>Терминал: один раз на компьютере</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>git config --global user.name "Ваше Имя"
+git config --global user.email "you@example.com"
+git config --global init.defaultBranch main</code></pre>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>Терминал: в папке проекта</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>git init
+git status
+git add app.py
+git commit -m "Добавить главную страницу"
+git log --oneline</code></pre>
+</div>
+</div>
+<div class="panel reveal stack-gap">
+<h3>Три состояния файла</h3>
+<ol class="list">
+<li><strong>Изменён:</strong> вы поправили файл, но Git его ещё не сохранил.</li>
+<li><strong>Подготовлен:</strong> команда <code>git add</code> добавила его в будущий коммит.</li>
+<li><strong>Сохранён:</strong> команда <code>git commit</code> записала снимок в историю.</li>
+</ol>
+</div>
+</div>
+</section>
+<section class="section" id="ignore" aria-labelledby="ignore-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="ignore-title">Что не нужно хранить в Git</h2>
+<p>Файл <code>.gitignore</code> перечисляет то, что Git не должен отслеживать.</p>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>.gitignore</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>.venv/
+__pycache__/
+*.db
+db.sqlite3
+.env</code></pre>
+</div>
+<p class="note stack-gap">Если пароль или ключ уже попал в коммит на GitHub, простого удаления файла мало: он останется в истории. Считайте ключ раскрытым и замените его на новый.</p>
+</div>
+</section>
+<section class="section" id="branches" aria-labelledby="branches-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="branches-title">Ветки</h2>
+<p>Ветка позволяет сделать новую функцию отдельно и не ломать рабочую версию.</p>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>Терминал</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>git switch -c search-form
+git add .
+git commit -m "Добавить форму поиска"
+git switch main
+git merge search-form
+git branch -d search-form</code></pre>
+</div>
+<div class="panel reveal stack-gap">
+<h3>Если возник конфликт</h3>
+<p>Конфликт значит, что две ветки изменили одну и ту же строку. Откройте файл, оставьте нужный вариант, удалите метки <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code> и <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>, затем выполните <code>git add</code> и <code>git commit</code>.</p>
+</div>
+</div>
+</section>
+<section class="section" id="github" aria-labelledby="github-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="github-title">Работа с GitHub</h2>
+<p>Сначала создайте пустой репозиторий на github.com.</p>
+</div>
+<div class="code-grid">
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>Терминал: первая отправка</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>git remote add origin https://github.com/USER/REPO.git
+git push -u origin main</code></pre>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>Терминал: обычный день</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>git pull
+git add .
+git commit -m "Исправить форму входа"
+git push</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="undo" aria-labelledby="undo-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="undo-title">Как отменить изменения</h2>
+<p>Перед отменой посмотрите на текущее состояние через <code>git status</code>.</p>
+</div>
+<div class="table-wrap reveal" tabindex="0" role="region" aria-label="Команды отмены">
+<table>
+<caption>Что делать в разных ситуациях</caption>
+<thead><tr><th scope="col">Ситуация</th><th scope="col">Команда</th><th scope="col">Важно</th></tr></thead>
+<tbody>
+<tr><td>Убрать файл из подготовленных</td><td><code>git restore --staged app.py</code></td><td>Правки в файле останутся</td></tr>
+<tr><td>Отменить правки в файле</td><td><code>git restore app.py</code></td><td>Несохранённые правки пропадут навсегда</td></tr>
+<tr><td>Отменить уже отправленный коммит</td><td><code>git revert abc1234</code></td><td>Создаёт новый коммит, история не ломается</td></tr>
+<tr><td>Исправить текст последнего коммита</td><td><code>git commit --amend</code></td><td>Только если коммит ещё не отправлен</td></tr>
+</tbody>
+</table>
+</div>
+<p class="note stack-gap">Команды <code>git reset --hard</code> и <code>git push --force</code> могут безвозвратно удалить работу. Новичку лучше обойтись без них.</p>
+</div>
+</section>
+<section class="section" id="messages" aria-labelledby="messages-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="messages-title">Хороший текст коммита</h2>
+<p>Описывайте, что изменилось и зачем. Через месяц вы будете читать историю как дневник проекта.</p>
+</div>
+<div class="compare-grid">
+<article class="panel reveal"><h3>Понятно</h3><ul class="list"><li>Добавить проверку пустой задачи</li><li>Исправить вход с неверным паролем</li></ul></article>
+<article class="panel reveal"><h3>Непонятно</h3><ul class="list"><li>правки</li><li>fix</li><li>ещё раз</li></ul></article>
+</div>
+</div>
+</section>
+<section class="section" aria-labelledby="sources-title">
+<div class="container">
+<div class="panel sources reveal">
+<h2 id="sources-title">Источники</h2>
+<p class="note">Ссылки проверены <time datetime="2026-11-04">04.11.2026</time>.</p>
+<ul class="list">
+<li><a href="https://git-scm.com/book/ru/v2" rel="noopener">Книга Pro Git на русском</a></li>
+<li><a href="https://docs.github.com/ru/get-started" rel="noopener">GitHub: начало работы</a></li>
+<li><a href="https://docs.github.com/ru/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository" rel="noopener">GitHub: удаление секретов из репозитория</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section class="section" aria-label="Дальше">
+<div class="container">
+<div class="cta-panel reveal">
+<div>
+<h2>Дальше: публикация</h2>
+<p class="lead cta-lead">Код на GitHub готов. Осталось выложить сайт в интернет.</p>
+</div>
+<div class="cta-actions"><a class="btn btn-primary" href="deploy.html">Открыть раздел</a></div>
+</div>
+</div>
+</section>
+
+
+</main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

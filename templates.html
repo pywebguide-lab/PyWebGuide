@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Шаблоны Jinja и формы во Flask и Django — PyWeb Guide</title>
+
+  <meta name="description" content="Как отделить HTML от кода: шаблоны Jinja, наследование, формы, проверка данных и защита от CSRF во Flask и Django.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/templates.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Шаблоны Jinja и формы во Flask и Django — PyWeb Guide">
+  <meta property="og:description" content="Как отделить HTML от кода: шаблоны Jinja, наследование, формы, проверка данных и защита от CSRF во Flask и Django.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/templates.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html" aria-current="page">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="container page-hero">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>Шаблоны и формы</span>
+</nav>
+<p class="eyebrow">Раздел 6</p>
+<h1>Шаблоны и формы: как сервер строит страницы</h1>
+<p class="lead">Шаблон — это HTML с местами для данных. Форма — способ получить данные от пользователя. Разберём оба механизма; примеры с кнопкой «Запустить» выполняются прямо в браузере.</p>
+</div>
+<section class="section" id="jinja" aria-labelledby="jinja-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="jinja-title">Шаблоны Jinja</h2>
+<p>Flask использует Jinja, а язык шаблонов Django очень на него похож.</p>
+</div>
+<div class="panel reveal stack-gap">
+<ul class="list">
+<li><code>{{ значение }}</code> выводит данные и автоматически экранирует HTML.</li>
+<li><code>{% if %}</code> и <code>{% for %}</code> добавляют условия и циклы.</li>
+<li><code>{% extends %}</code> и <code>{% block %}</code> дают общий каркас для всех страниц.</li>
+</ul>
+</div>
+<div class="code-block reveal" data-run="python">
+  <div class="code-head">
+    <span>Flask: цикл и условие в шаблоне</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from flask import Flask, render_template_string
+
+app = Flask(__name__)
+
+PAGE = """
+&lt;h1&gt;Задачи: {{ tasks|length }}&lt;/h1&gt;
+{% for task in tasks %}
+  &lt;p&gt;{{ loop.index }}. {{ task.title }}{% if task.done %} (готово){% endif %}&lt;/p&gt;
+{% else %}
+  &lt;p&gt;Задач пока нет&lt;/p&gt;
+{% endfor %}
+"""
+
+@app.route("/")
+def index():
+    tasks = [
+        {"title": "Купить ракетку", "done": True},
+        {"title": "Прочитать про шаблоны", "done": False},
+    ]
+    return render_template_string(PAGE, tasks=tasks)
+
+print(app.test_client().get("/").text)</code></pre>
+</div>
+<p class="note stack-gap"><code>test_client()</code> отправляет запрос приложению без настоящего сервера. Этим же способом пишут тесты.</p>
+</div>
+</section>
+<section class="section" id="inherit" aria-labelledby="inherit-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="inherit-title">Наследование шаблонов</h2>
+<p>Шапка и подвал описываются один раз, а страницы заменяют только свой блок.</p>
+</div>
+<div class="code-grid">
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>templates/base.html</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>&lt;!doctype html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;&lt;title&gt;{% block title %}Сайт{% endblock %}&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;nav&gt;&lt;a href="/"&gt;Главная&lt;/a&gt;&lt;/nav&gt;
+  {% block content %}{% endblock %}
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>templates/index.html</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>{% extends "base.html" %}
+
+{% block title %}Задачи{% endblock %}
+
+{% block content %}
+  &lt;h1&gt;Мои задачи&lt;/h1&gt;
+{% endblock %}</code></pre>
+</div>
+</div>
+<p class="note stack-gap">Во Flask файлы лежат в папке <code>templates</code>, а страницу возвращает <code>render_template("index.html")</code>. В Django то же самое делает <code>render(request, "index.html")</code>.</p>
+</div>
+</section>
+<section class="section" id="escape" aria-labelledby="escape-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="escape-title">Почему экранирование важно</h2>
+<p>Если вывести текст пользователя как есть, он сможет вставить на страницу свой скрипт. Это называется XSS.</p>
+</div>
+<div class="code-block reveal" data-run="python">
+  <div class="code-head">
+    <span>Экранирование и опасный фильтр safe</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from flask import Flask, render_template_string, request
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    name = request.args.get("name", "гость")
+    safe = render_template_string("&lt;p&gt;{{ name }}&lt;/p&gt;", name=name)
+    danger = render_template_string("&lt;p&gt;{{ name|safe }}&lt;/p&gt;", name=name)
+    return f"Правильно: {safe}\nОпасно:    {danger}"
+
+response = app.test_client().get("/", query_string={"name": "&lt;script&gt;alert(1)&lt;/script&gt;"})
+print(response.text)</code></pre>
+</div>
+<p class="note stack-gap">Фильтр <code>|safe</code> отключает защиту. Используйте его только для HTML, который написали сами.</p>
+</div>
+</section>
+<section class="section" id="forms" aria-labelledby="forms-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="forms-title">Формы во Flask</h2>
+<p>Данные формы лежат в <code>request.form</code>. Сервер обязан проверять их сам: проверки в браузере легко обойти.</p>
+</div>
+<div class="code-block reveal" data-run="python">
+  <div class="code-head">
+    <span>Flask: проверка данных формы</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from flask import Flask, redirect, render_template_string, request, url_for
+
+app = Flask(__name__)
+tasks = []
+
+PAGE = """
+{% if error %}&lt;p&gt;{{ error }}&lt;/p&gt;{% endif %}
+&lt;form method="post"&gt;&lt;input name="title"&gt;&lt;button&gt;Добавить&lt;/button&gt;&lt;/form&gt;
+&lt;ul&gt;{% for task in tasks %}&lt;li&gt;{{ task }}&lt;/li&gt;{% endfor %}&lt;/ul&gt;
+"""
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    error = None
+    if request.method == "POST":
+        title = request.form.get("title", "").strip()
+        if not title:
+            error = "Введите название"
+        elif len(title) &gt; 100:
+            error = "Слишком длинное название"
+        else:
+            tasks.append(title)
+            return redirect(url_for("index"))
+    return render_template_string(PAGE, tasks=tasks, error=error)
+
+client = app.test_client()
+print("Пустая форма:", "Введите название" in client.post("/", data={"title": " "}).text)
+response = client.post("/", data={"title": "Первая задача"})
+print("После добавления статус:", response.status_code, "переход на", response.location)
+print("Задачи:", tasks)</code></pre>
+</div>
+<p class="note stack-gap">После успешного POST отправляйте редирект. Иначе при обновлении страницы браузер повторит отправку и задача добавится ещё раз.</p>
+</div>
+</section>
+<section class="section" id="csrf" aria-labelledby="csrf-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="csrf-title">Защита от CSRF</h2>
+<p>Чужой сайт может незаметно отправить форму от имени вошедшего пользователя. Защита — секретный токен в каждой форме.</p>
+</div>
+<div class="compare-grid">
+<article class="panel reveal">
+<h3>Django</h3>
+<p>Защита включена по умолчанию. В каждую форму с POST нужно добавить тег <code>{% csrf_token %}</code>, иначе сервер ответит ошибкой 403.</p>
+</article>
+<article class="panel reveal">
+<h3>Flask</h3>
+<p>Встроенной защиты нет. Обычно подключают расширение <a href="https://flask-wtf.readthedocs.io/en/latest/csrf/" rel="noopener">Flask-WTF</a>: <code>CSRFProtect(app)</code> и скрытое поле с токеном в форме.</p>
+</article>
+</div>
+</div>
+</section>
+<section class="section" id="djforms" aria-labelledby="djforms-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="djforms-title">Формы в Django</h2>
+<p>Класс формы описывает поля, проверяет данные и умеет выводить себя в HTML.</p>
+</div>
+<div class="code-grid">
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>tasks/forms.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from django import forms
+
+class TaskForm(forms.Form):
+    title = forms.CharField(label="Задача", max_length=100)</code></pre>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>tasks/views.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from django.shortcuts import redirect, render
+
+from .forms import TaskForm
+from .models import Task
+
+def index(request):
+    form = TaskForm(request.POST or None)
+    if form.is_valid():
+        Task.objects.create(title=form.cleaned_data["title"])
+        return redirect("index")
+    return render(request, "index.html", {"form": form, "tasks": Task.objects.all()})</code></pre>
+</div>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>templates/index.html</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>&lt;form method="post"&gt;
+  {% csrf_token %}
+  {{ form.as_p }}
+  &lt;button&gt;Добавить&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</div>
+</section>
+<section class="section" aria-labelledby="sources-title">
+<div class="container">
+<div class="panel sources reveal">
+<h2 id="sources-title">Источники</h2>
+<p class="note">Ссылки проверены <time datetime="2026-11-04">04.11.2026</time>.</p>
+<ul class="list">
+<li><a href="https://jinja.palletsprojects.com/en/stable/templates/" rel="noopener">Jinja: документация по шаблонам</a></li>
+<li><a href="https://flask.palletsprojects.com/en/stable/templating/" rel="noopener">Flask: шаблоны</a></li>
+<li><a href="https://docs.djangoproject.com/en/6.1/topics/forms/" rel="noopener">Django 6.1: формы</a></li>
+<li><a href="https://docs.djangoproject.com/en/6.1/ref/csrf/" rel="noopener">Django 6.1: защита от CSRF</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section class="section" aria-label="Дальше">
+<div class="container">
+<div class="cta-panel reveal">
+<div>
+<h2>Дальше: авторизация</h2>
+<p class="lead cta-lead">Формы есть, теперь научимся узнавать пользователя.</p>
+</div>
+<div class="cta-actions"><a class="btn btn-primary" href="auth.html">Открыть раздел</a></div>
+</div>
+</div>
+</section>
+
+
+</main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

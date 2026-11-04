@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Контакты и авторы — PyWeb Guide</title>
 
-  <meta name="description" content="Авторы учебного ресурса PyWeb Guide и учебная форма обратной связи.">
+  <meta name="description" content="Авторы учебного ресурса PyWeb Guide и форма обратной связи.">
   <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/contacts.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:site_name" content="PyWeb Guide">
   <meta property="og:title" content="Контакты и авторы — PyWeb Guide">
-  <meta property="og:description" content="Авторы учебного ресурса PyWeb Guide и учебная форма обратной связи.">
+  <meta property="og:description" content="Авторы учебного ресурса PyWeb Guide и форма обратной связи.">
   <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/contacts.html">
   <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -72,7 +72,26 @@
           <li><a class="nav-link" href="databases.html">Базы данных</a></li>
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
           <li><a class="nav-link" href="deploy.html">Публикация</a></li>
-          <li><a class="nav-link active" href="contacts.html" aria-current="page">Контакты</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html" aria-current="page">Контакты</a></li>
+          </ul>
+        </details></li>
         </ul>
       </nav>
 
@@ -94,8 +113,8 @@
         <p class="eyebrow">Раздел 6</p>
         <h1>Контакты</h1>
         <p class="lead">
-          Это учебная форма обратной связи. Сообщение сохраняется только в вашем браузере
-          и никуда не отправляется.
+          Задайте вопрос авторам или предложите улучшение. Сообщение отправляется
+          через GitHub и видно всем, поэтому не пишите в нём личные данные.
         </p>
       </div>
 
@@ -106,32 +125,27 @@
             <div class="form-card reveal">
               <div class="section-head">
                 <h2>Форма обратной связи</h2>
-                <p>Форма учебная: данные сохраняются только в вашем браузере через localStorage и никуда не передаются.</p>
+                <p>Нужен бесплатный аккаунт GitHub: форма откроет новую запись в Issues, останется нажать кнопку создания.</p>
               </div>
 
               <form id="contact-form" class="form-grid" novalidate>
                 <div class="field">
                   <label for="name">Имя</label>
-                  <input id="name" name="name" type="text" autocomplete="name" placeholder="Ваше имя" required>
-                </div>
-
-                <div class="field">
-                  <label for="email">Email</label>
-                  <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+                  <input id="name" name="name" type="text" autocomplete="name" maxlength="60" placeholder="Имя или псевдоним" required>
                 </div>
 
                 <div class="field">
                   <label for="message">Сообщение</label>
-                  <textarea id="message" name="message" rows="6" placeholder="Напишите ваш вопрос или предложение" required></textarea>
+                  <textarea id="message" name="message" rows="6" maxlength="1000" placeholder="Напишите ваш вопрос или предложение" required></textarea>
                 </div>
 
-                <button class="btn btn-primary" type="submit">Сохранить сообщение</button>
+                <button class="btn btn-primary" type="submit">Отправить через GitHub</button>
 
                 <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
 
                 <p class="note">
-                  Серверная отправка не реализована: сообщение остаётся в localStorage этого браузера,
-                  его никто не получает.
+                  Копия сообщения сохраняется в этом браузере. Подробнее — в
+                  <a href="privacy.html">политике конфиденциальности</a>.
                 </p>
               </form>
             </div>
@@ -170,7 +184,7 @@
 
                 <div class="info-item">
                   <strong>Формат</strong>
-                  <p>Учебный проект без сервера: форма работает только локально</p>
+                  <p>Учебный проект без своего сервера: сообщения принимает GitHub Issues</p>
                 </div>
               </div>
             </aside>
@@ -210,7 +224,7 @@
             <article class="card reveal">
               <h3><span class="tag">📅</span>Обновления</h3>
               <p>
-                Последнее обновление: <time datetime="2026-10-28">28.10.2026</time>.
+                Последнее обновление: <time datetime="2026-11-04">04.11.2026</time>.
                 Код открыт: <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">репозиторий на GitHub</a>.
               </p>
             </article>
@@ -229,20 +243,26 @@
         <a href="about.html">О Python</a> •
         <a href="frameworks.html">Фреймворки</a> •
         <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
         <a href="contacts.html">Контакты</a>
       </div>
       <p class="note footer-note">
         Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
-        Обновлено: <time datetime="2026-10-28">28.10.2026</time> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
         Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
         <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
       </p>
-      <p class="note footer-note">Сайт учебный. Серверная отправка не реализована: сообщения формы сохраняются только локально в вашем браузере.</p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
     </div>
   </footer>
 
   <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
 
   <script src="script.js"></script>
+  <script src="features.js"></script>
 </body>
 </html>

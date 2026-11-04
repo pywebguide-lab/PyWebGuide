@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Авторизация во Flask и Django: пароли и сессии — PyWeb Guide</title>
+
+  <meta name="description" content="Как безопасно хранить пароли, что такое сессия и как ограничить доступ к страницам во Flask и Django.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/auth.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Авторизация во Flask и Django: пароли и сессии — PyWeb Guide">
+  <meta property="og:description" content="Как безопасно хранить пароли, что такое сессия и как ограничить доступ к страницам во Flask и Django.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/auth.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html" aria-current="page">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="container page-hero">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>Авторизация</span>
+</nav>
+<p class="eyebrow">Раздел 7</p>
+<h1>Авторизация: как сайт узнаёт пользователя</h1>
+<p class="lead">Аутентификация отвечает на вопрос «кто это?», авторизация — «что ему можно?». Разберём хранение паролей, сессии и закрытые страницы.</p>
+</div>
+<section class="section" id="passwords" aria-labelledby="passwords-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="passwords-title">Пароли хранят только как хеш</h2>
+<p>Хеш — необратимый отпечаток. Если базу украдут, настоящих паролей в ней не будет.</p>
+</div>
+<div class="code-block reveal" data-run="python">
+  <div class="code-head">
+    <span>Хеширование пароля</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from werkzeug.security import check_password_hash, generate_password_hash
+
+stored = generate_password_hash("секрет123", method="pbkdf2:sha256")
+
+print("В базе лежит:", stored[:40] + "...")
+print("Верный пароль:", check_password_hash(stored, "секрет123"))
+print("Неверный пароль:", check_password_hash(stored, "qwerty"))
+print("Два хеша разные:", stored != generate_password_hash("секрет123", method="pbkdf2:sha256"))</code></pre>
+</div>
+<p class="note stack-gap">Хеши одного пароля различаются из-за случайной «соли». Поэтому одинаковые пароли в базе не выглядят одинаково. Обычный <code>md5</code> или <code>sha256</code> без соли и замедления для паролей не подходит. В реальном приложении метод можно не указывать: библиотека выберет надёжный вариант по умолчанию.</p>
+</div>
+</section>
+<section class="section" id="session" aria-labelledby="session-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="session-title">Сессия: как сайт помнит вход</h2>
+<p>HTTP не помнит прошлых запросов. После входа сервер выдаёт браузеру cookie, и браузер прикладывает её к следующим запросам.</p>
+</div>
+<div class="code-block reveal" data-run="python">
+  <div class="code-head">
+    <span>Flask: вход, закрытая страница и выход</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from functools import wraps
+
+from flask import Flask, abort, redirect, request, session, url_for
+from werkzeug.security import check_password_hash, generate_password_hash
+
+app = Flask(__name__)
+app.secret_key = "только-для-примера"  # в реальном проекте берите из переменной окружения
+
+USERS = {"ernar": generate_password_hash("секрет123", method="pbkdf2:sha256")}
+
+def login_required(view):
+    @wraps(view)
+    def wrapper(*args, **kwargs):
+        if "user" not in session:
+            return redirect(url_for("login"))
+        return view(*args, **kwargs)
+    return wrapper
+
+@app.route("/login", methods=["POST"])
+def login():
+    name = request.form.get("name", "")
+    stored = USERS.get(name)
+    if stored is None or not check_password_hash(stored, request.form.get("password", "")):
+        abort(401)
+    session["user"] = name
+    return redirect(url_for("profile"))
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
+@app.route("/profile")
+@login_required
+def profile():
+    return f"Привет, {session['user']}!"
+
+client = app.test_client()
+print("Без входа:", client.get("/profile").status_code)
+print("Неверный пароль:", client.post("/login", data={"name": "ernar", "password": "x"}).status_code)
+client.post("/login", data={"name": "ernar", "password": "секрет123"})
+print("После входа:", client.get("/profile").text)
+client.post("/logout")
+print("После выхода:", client.get("/profile").status_code)</code></pre>
+</div>
+<div class="panel reveal stack-gap">
+<h3>На что обратить внимание</h3>
+<ul class="list">
+<li>Сессия Flask подписана ключом <code>secret_key</code>, но не зашифрована: не храните в ней секреты.</li>
+<li>При неверном логине и при неверном пароле ответ одинаковый, чтобы нельзя было подобрать существующие логины.</li>
+<li>Выход выполняется через POST, чтобы его нельзя было вызвать простой ссылкой с чужого сайта.</li>
+<li>На настоящем сайте вход должен работать только по HTTPS, а число попыток стоит ограничить.</li>
+</ul>
+</div>
+</div>
+</section>
+<section class="section" id="django" aria-labelledby="django-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="django-title">Авторизация в Django</h2>
+<p>В Django уже есть пользователи, хеширование паролей, сессии и готовые страницы входа.</p>
+</div>
+<div class="code-grid">
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>mysite/urls.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("accounts/", include("django.contrib.auth.urls")),
+]</code></pre>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>tasks/views.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
+@login_required
+def profile(request):
+    return render(request, "profile.html", {"user": request.user})</code></pre>
+</div>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>mysite/settings.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "profile"
+LOGOUT_REDIRECT_URL = "login"</code></pre>
+</div>
+<p class="note stack-gap">Шаблон входа нужно создать самому: <code>templates/registration/login.html</code>. Выход в современных версиях Django работает только через POST, поэтому делайте его формой с кнопкой, а не ссылкой.</p>
+</div>
+</section>
+<section class="section" id="roles" aria-labelledby="roles-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="roles-title">Права доступа</h2>
+<p>После входа важно проверять, что пользователь работает именно со своими данными.</p>
+</div>
+<div class="panel reveal stack-gap">
+<p>Частая ошибка — проверить только сам вход. Если адрес <code>/tasks/5/delete</code> доступен любому вошедшему, чужую задачу можно удалить, просто подставив номер. Всегда проверяйте владельца на сервере:</p>
+</div>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>Django: только свои задачи</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.http import require_POST
+
+from .models import Task
+
+@login_required
+@require_POST
+def delete_task(request, pk):
+    task = get_object_or_404(Task, pk=pk, owner=request.user)
+    task.delete()
+    return redirect("index")</code></pre>
+</div>
+</div>
+</section>
+<section class="section" aria-labelledby="sources-title">
+<div class="container">
+<div class="panel sources reveal">
+<h2 id="sources-title">Источники</h2>
+<p class="note">Ссылки проверены <time datetime="2026-11-04">04.11.2026</time>.</p>
+<ul class="list">
+<li><a href="https://flask.palletsprojects.com/en/stable/quickstart/#sessions" rel="noopener">Flask: сессии</a></li>
+<li><a href="https://werkzeug.palletsprojects.com/en/stable/utils/#module-werkzeug.security" rel="noopener">Werkzeug: хеширование паролей</a></li>
+<li><a href="https://docs.djangoproject.com/en/6.1/topics/auth/default/" rel="noopener">Django 6.1: система пользователей</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html" rel="noopener">OWASP: хранение паролей</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section class="section" aria-label="Дальше">
+<div class="container">
+<div class="cta-panel reveal">
+<div>
+<h2>Дальше: REST API</h2>
+<p class="lead cta-lead">Сервер может отдавать не только страницы, но и данные.</p>
+</div>
+<div class="cta-actions"><a class="btn btn-primary" href="api.html">Открыть раздел</a></div>
+</div>
+</div>
+</section>
+
+
+</main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

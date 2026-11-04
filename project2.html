@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Второй проект: API блога на Flask и SQLite — PyWeb Guide</title>
+
+  <meta name="description" content="Пошаговый проект для тех, кто прошёл основы: REST API блога на Flask с базой SQLite, проверкой данных, тестами и страницей на JavaScript.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/project2.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Второй проект: API блога на Flask и SQLite — PyWeb Guide">
+  <meta property="og:description" content="Пошаговый проект для тех, кто прошёл основы: REST API блога на Flask с базой SQLite, проверкой данных, тестами и страницей на JavaScript.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/project2.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html" aria-current="page">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="container page-hero">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>Второй проект</span>
+</nav>
+<p class="eyebrow">Раздел 11</p>
+<h1>Второй проект: API блога</h1>
+<p class="lead">Соберём API для блога на Flask и SQLite: с проверкой данных, тестами и простой страницей на JavaScript. Понадобятся знания из разделов про базы данных и REST API. Времени уйдёт около часа.</p>
+</div>
+<section class="section" id="plan" aria-labelledby="plan-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="plan-title">Что получится</h2>
+<p>Весь код поместится в одном файле <code>app.py</code>. Последний пример можно запустить прямо на этой странице.</p>
+</div>
+<div class="progress-box reveal" data-progress="project-blog">
+<p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 7 шагов пройдено</p>
+<div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
+<button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Сбросить прогресс</button>
+</div>
+</div>
+</section>
+<section class="section" id="steps" aria-labelledby="steps-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="steps-title">Шаги проекта</h2>
+<p>Отмечайте пройденное: прогресс сохранится в браузере.</p>
+</div>
+<ol class="project-steps" data-progress-list="project-blog">
+<li class="project-step reveal">
+<h3>Шаг 1. Создайте проект</h3>
+<p>Новая папка и своё окружение, как в первом проекте.</p>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>Терминал</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>mkdir blog-api
+cd blog-api
+python -m venv .venv
+.venv\Scripts\activate
+pip install flask pytest</code></pre>
+</div>
+<p class="note">На macOS и Linux окружение включает команда <code>source .venv/bin/activate</code>.</p>
+<label class="step-check"><input type="checkbox" data-step="1"> Шаг пройден</label>
+</li>
+<li class="project-step reveal">
+<h3>Шаг 2. Подключите базу данных</h3>
+<p>Соединение открывается на время запроса и закрывается в конце. Таблица создаётся при первом запуске, если её ещё нет. Функция <code>create_app</code> позволит тестам использовать отдельную базу.</p>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>app.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>import sqlite3
+
+from flask import Flask, g, jsonify, request
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    body TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
+"""
+
+def create_app(database="blog.db"):
+    app = Flask(__name__)
+
+    def db():
+        if "db" not in g:
+            g.db = sqlite3.connect(database)
+            g.db.row_factory = sqlite3.Row
+            g.db.execute(SCHEMA)
+        return g.db
+
+    @app.teardown_appcontext
+    def close_db(error):
+        connection = g.pop("db", None)
+        if connection is not None:
+            connection.close()
+
+    # маршруты из следующих шагов идут здесь
+
+    return app</code></pre>
+</div>
+<label class="step-check"><input type="checkbox" data-step="2"> Шаг пройден</label>
+</li>
+<li class="project-step reveal">
+<h3>Шаг 3. Добавьте проверку данных</h3>
+<p>Функция возвращает либо чистые данные, либо текст ошибки. Вынесите её над <code>create_app</code>, тогда её легко проверить отдельно.</p>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>app.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>def validate_post(data):
+    if not isinstance(data, dict):
+        return None, "Нужен JSON-объект"
+    title = str(data.get("title", "")).strip()
+    body = str(data.get("body", "")).strip()
+    if not title or len(title) &gt; 120:
+        return None, "Заголовок обязателен, не длиннее 120 символов"
+    if not body:
+        return None, "Текст обязателен"
+    return {"title": title, "body": body}, None</code></pre>
+</div>
+<label class="step-check"><input type="checkbox" data-step="3"> Шаг пройден</label>
+</li>
+<li class="project-step reveal">
+<h3>Шаг 4. Сделайте список и создание записи</h3>
+<p>Значения передаются через знаки <code>?</code>. Так база сама защищает запрос от SQL-инъекций. Никогда не вставляйте данные пользователя в SQL через f-строку.</p>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>app.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>    @app.get("/posts")
+    def list_posts():
+        rows = db().execute("SELECT * FROM posts ORDER BY id DESC").fetchall()
+        return jsonify([dict(row) for row in rows])
+
+    @app.post("/posts")
+    def create_post():
+        post, error = validate_post(request.get_json(silent=True))
+        if error:
+            return {"error": error}, 400
+        cursor = db().execute(
+            "INSERT INTO posts (title, body) VALUES (?, ?)",
+            (post["title"], post["body"]),
+        )
+        db().commit()
+        row = db().execute("SELECT * FROM posts WHERE id = ?", (cursor.lastrowid,)).fetchone()
+        return dict(row), 201</code></pre>
+</div>
+<label class="step-check"><input type="checkbox" data-step="4"> Шаг пройден</label>
+</li>
+<li class="project-step reveal">
+<h3>Шаг 5. Сделайте чтение, изменение и удаление</h3>
+<p>Если записи нет, возвращаем ошибку 404, а не падаем.</p>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>app.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>    @app.get("/posts/&lt;int:post_id&gt;")
+    def get_post(post_id):
+        row = db().execute("SELECT * FROM posts WHERE id = ?", (post_id,)).fetchone()
+        if row is None:
+            return {"error": "Запись не найдена"}, 404
+        return dict(row)
+
+    @app.put("/posts/&lt;int:post_id&gt;")
+    def update_post(post_id):
+        post, error = validate_post(request.get_json(silent=True))
+        if error:
+            return {"error": error}, 400
+        cursor = db().execute(
+            "UPDATE posts SET title = ?, body = ? WHERE id = ?",
+            (post["title"], post["body"], post_id),
+        )
+        db().commit()
+        if cursor.rowcount == 0:
+            return {"error": "Запись не найдена"}, 404
+        return get_post(post_id)
+
+    @app.delete("/posts/&lt;int:post_id&gt;")
+    def delete_post(post_id):
+        cursor = db().execute("DELETE FROM posts WHERE id = ?", (post_id,))
+        db().commit()
+        if cursor.rowcount == 0:
+            return {"error": "Запись не найдена"}, 404
+        return "", 204</code></pre>
+</div>
+<p>Запуск на своём компьютере: <code>flask --app "app:create_app()" run --debug</code>.</p>
+<label class="step-check"><input type="checkbox" data-step="5"> Шаг пройден</label>
+</li>
+<li class="project-step reveal">
+<h3>Шаг 6. Напишите тесты</h3>
+<p>Запустите командой <code>pytest</code>. Фикстура <code>tmp_path</code> даёт временную папку, поэтому тесты не трогают настоящую базу.</p>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>test_app.py</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>import pytest
+
+from app import create_app
+
+@pytest.fixture
+def client(tmp_path):
+    return create_app(tmp_path / "test.db").test_client()
+
+def test_create_and_read(client):
+    created = client.post("/posts", json={"title": "Привет", "body": "Текст"})
+    assert created.status_code == 201
+    post_id = created.json["id"]
+    assert client.get(f"/posts/{post_id}").json["title"] == "Привет"
+
+def test_empty_title_rejected(client):
+    assert client.post("/posts", json={"title": " ", "body": "Текст"}).status_code == 400
+
+def test_delete(client):
+    post_id = client.post("/posts", json={"title": "А", "body": "Б"}).json["id"]
+    assert client.delete(f"/posts/{post_id}").status_code == 204
+    assert client.get(f"/posts/{post_id}").status_code == 404</code></pre>
+</div>
+<label class="step-check"><input type="checkbox" data-step="6"> Шаг пройден</label>
+</li>
+<li class="project-step reveal">
+<h3>Шаг 7. Добавьте страницу</h3>
+<p>Файл положите в папку <code>static</code>, он откроется по адресу <code>/static/index.html</code>. Текст записи выводится через <code>textContent</code>, поэтому вставить чужой скрипт через него нельзя.</p>
+<div class="code-block reveal">
+  <div class="code-head">
+    <span>static/index.html</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>&lt;!doctype html&gt;
+&lt;html lang="ru"&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;title&gt;Блог&lt;/title&gt;
+&lt;h1&gt;Блог&lt;/h1&gt;
+&lt;form id="form"&gt;
+  &lt;input name="title" placeholder="Заголовок" required&gt;
+  &lt;textarea name="body" placeholder="Текст" required&gt;&lt;/textarea&gt;
+  &lt;button&gt;Опубликовать&lt;/button&gt;
+&lt;/form&gt;
+&lt;div id="posts"&gt;&lt;/div&gt;
+&lt;script&gt;
+  const posts = document.getElementById("posts");
+  const form = document.getElementById("form");
+
+  async function load() {
+    const items = await (await fetch("/posts")).json();
+    posts.replaceChildren(...items.map((post) =&gt; {
+      const article = document.createElement("article");
+      const title = document.createElement("h2");
+      const body = document.createElement("p");
+      title.textContent = post.title;
+      body.textContent = post.body;
+      article.append(title, body);
+      return article;
+    }));
+  }
+
+  form.addEventListener("submit", async (event) =&gt; {
+    event.preventDefault();
+    const response = await fetch("/posts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.fromEntries(new FormData(form))),
+    });
+    if (response.ok) {
+      form.reset();
+      load();
+    }
+  });
+
+  load();
+&lt;/script&gt;
+&lt;/html&gt;</code></pre>
+</div>
+<label class="step-check"><input type="checkbox" data-step="7"> Шаг пройден</label>
+</li>
+</ol>
+</div>
+</section>
+<section class="section" id="whole" aria-labelledby="whole-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="whole-title">Весь код и запуск</h2>
+<p>Здесь весь файл <code>app.py</code> и короткая проверка в конце. База создаётся во временном файле.</p>
+</div>
+<div class="code-block reveal" data-run="python">
+  <div class="code-head">
+    <span>app.py целиком</span>
+    <button class="copy-btn" type="button">Копировать</button>
+  </div>
+  <pre><code>import sqlite3
+import tempfile
+from pathlib import Path
+
+from flask import Flask, g, jsonify, request
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    body TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
+"""
+
+def validate_post(data):
+    if not isinstance(data, dict):
+        return None, "Нужен JSON-объект"
+    title = str(data.get("title", "")).strip()
+    body = str(data.get("body", "")).strip()
+    if not title or len(title) &gt; 120:
+        return None, "Заголовок обязателен, не длиннее 120 символов"
+    if not body:
+        return None, "Текст обязателен"
+    return {"title": title, "body": body}, None
+
+def create_app(database="blog.db"):
+    app = Flask(__name__)
+
+    def db():
+        if "db" not in g:
+            g.db = sqlite3.connect(database)
+            g.db.row_factory = sqlite3.Row
+            g.db.execute(SCHEMA)
+        return g.db
+
+    @app.teardown_appcontext
+    def close_db(error):
+        connection = g.pop("db", None)
+        if connection is not None:
+            connection.close()
+
+    @app.get("/posts")
+    def list_posts():
+        rows = db().execute("SELECT * FROM posts ORDER BY id DESC").fetchall()
+        return jsonify([dict(row) for row in rows])
+
+    @app.post("/posts")
+    def create_post():
+        post, error = validate_post(request.get_json(silent=True))
+        if error:
+            return {"error": error}, 400
+        cursor = db().execute(
+            "INSERT INTO posts (title, body) VALUES (?, ?)",
+            (post["title"], post["body"]),
+        )
+        db().commit()
+        row = db().execute("SELECT * FROM posts WHERE id = ?", (cursor.lastrowid,)).fetchone()
+        return dict(row), 201
+
+    @app.get("/posts/&lt;int:post_id&gt;")
+    def get_post(post_id):
+        row = db().execute("SELECT * FROM posts WHERE id = ?", (post_id,)).fetchone()
+        if row is None:
+            return {"error": "Запись не найдена"}, 404
+        return dict(row)
+
+    @app.put("/posts/&lt;int:post_id&gt;")
+    def update_post(post_id):
+        post, error = validate_post(request.get_json(silent=True))
+        if error:
+            return {"error": error}, 400
+        cursor = db().execute(
+            "UPDATE posts SET title = ?, body = ? WHERE id = ?",
+            (post["title"], post["body"], post_id),
+        )
+        db().commit()
+        if cursor.rowcount == 0:
+            return {"error": "Запись не найдена"}, 404
+        return get_post(post_id)
+
+    @app.delete("/posts/&lt;int:post_id&gt;")
+    def delete_post(post_id):
+        cursor = db().execute("DELETE FROM posts WHERE id = ?", (post_id,))
+        db().commit()
+        if cursor.rowcount == 0:
+            return {"error": "Запись не найдена"}, 404
+        return "", 204
+
+    return app
+
+# Проверка без настоящего сервера
+with tempfile.TemporaryDirectory() as folder:
+    client = create_app(Path(folder) / "blog.db").test_client()
+    print("Пустой заголовок:", client.post("/posts", json={"title": "", "body": "x"}).status_code)
+    created = client.post("/posts", json={"title": "Первая запись", "body": "Привет!"})
+    print("Создана:", created.status_code, created.json["title"])
+    post_id = created.json["id"]
+    print("Изменена:", client.put(f"/posts/{post_id}", json={"title": "Новая", "body": "Текст"}).json["title"])
+    print("Список:", [post["title"] for post in client.get("/posts").json])
+    print("Удалена:", client.delete(f"/posts/{post_id}").status_code)
+    print("Снова читаем:", client.get(f"/posts/{post_id}").status_code)</code></pre>
+</div>
+</div>
+</section>
+<section class="section" id="further" aria-labelledby="further-title">
+<div class="container">
+<div class="section-head reveal">
+<h2 id="further-title">Что добавить самостоятельно</h2>
+<p>Эти идеи закрепят материал из других разделов.</p>
+</div>
+<div class="panel reveal stack-gap">
+<ul class="list">
+<li>Постраничный вывод: параметры <code>?limit=10&amp;offset=20</code> и SQL <code>LIMIT ? OFFSET ?</code>.</li>
+<li>Вход автора: создавать и удалять записи можно только после <a href="auth.html">авторизации</a>.</li>
+<li>Поиск по заголовку через <code>LIKE ?</code>.</li>
+<li><a href="deploy.html">Публикация</a> на PythonAnywhere: укажите в WSGI-файле <code>application = create_app("/home/username/blog-api/blog.db")</code>.</li>
+</ul>
+</div>
+</div>
+</section>
+<section class="section" aria-labelledby="sources-title">
+<div class="container">
+<div class="panel sources reveal">
+<h2 id="sources-title">Источники</h2>
+<p class="note">Ссылки проверены <time datetime="2026-11-04">04.11.2026</time>.</p>
+<ul class="list">
+<li><a href="https://flask.palletsprojects.com/en/stable/patterns/sqlite3/" rel="noopener">Flask: SQLite</a></li>
+<li><a href="https://flask.palletsprojects.com/en/stable/patterns/appfactories/" rel="noopener">Flask: фабрика приложений</a></li>
+<li><a href="https://docs.python.org/3/library/sqlite3.html#sqlite3-placeholders" rel="noopener">Python: параметры запросов sqlite3</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section class="section" aria-label="Дальше">
+<div class="container">
+<div class="cta-panel reveal">
+<div>
+<h2>Проверьте себя</h2>
+<p class="lead cta-lead">Пройдите финальный тест и получите учебный сертификат.</p>
+</div>
+<div class="cta-actions"><a class="btn btn-primary" href="exam.html">Открыть раздел</a></div>
+</div>
+</div>
+</section>
+
+
+</main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

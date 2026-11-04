@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Условия использования — PyWeb Guide</title>
+
+  <meta name="description" content="Условия использования учебного сайта PyWeb Guide: материалы, примеры кода, ответственность и внешние ссылки.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/terms.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Условия использования — PyWeb Guide">
+  <meta property="og:description" content="Условия использования учебного сайта PyWeb Guide: материалы, примеры кода, ответственность и внешние ссылки.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/terms.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0f16">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body id="top">
+  <div id="progress" aria-hidden="true"></div>
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
+        <span class="brand-text">PyWeb <span>Guide</span></span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="index.html">Главная</a></li>
+          <li><a class="nav-link" href="about.html">О Python</a></li>
+          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
+          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <ul class="nav-more-list">
+            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="playground.html">Песочница</a></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+      <div class="container page-hero">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a>
+          <span aria-hidden="true">/</span>
+          <span>Условия использования</span>
+        </nav>
+
+        <p class="eyebrow">Документы</p>
+        <h1>Условия использования</h1>
+        <p class="lead">PyWeb Guide — бесплатный учебный ресурс. Пользуясь сайтом, вы соглашаетесь с этими условиями.</p>
+      </div>
+
+      <section class="section" aria-label="Условия использования">
+        <div class="container">
+          <div class="panel reveal stack-gap">
+            <h2>Назначение сайта</h2>
+            <p>Материалы сайта предназначены для обучения основам веб-разработки на Python. Они не заменяют официальную документацию и профессиональную консультацию.</p>
+          </div>
+
+          <div class="panel reveal stack-gap">
+            <h2>Материалы и примеры кода</h2>
+            <p>Права на тексты и оформление сайта принадлежат авторам, если не указано иное. Примеры кода можно свободно использовать в своих учебных и личных проектах. Цитируя тексты, указывайте ссылку на источник.</p>
+          </div>
+
+          <div class="panel reveal stack-gap">
+            <h2>Без гарантий</h2>
+            <p>Материалы предоставляются «как есть». Мы проверяем примеры на версиях, указанных на сайте, но не гарантируем, что они подойдут для вашей задачи или будут работать в других версиях. Прежде чем использовать код в рабочем проекте, проверьте его и его безопасность самостоятельно.</p>
+          </div>
+
+          <div class="panel reveal stack-gap">
+            <h2>Внешние ссылки</h2>
+            <p>Авторы не отвечают за содержание сторонних сайтов, на которые ведут ссылки.</p>
+          </div>
+
+          <div class="panel reveal stack-gap">
+            <h2>Данные пользователей</h2>
+            <p>О том, какие данные обрабатываются при использовании сайта, рассказано в <a href="privacy.html">политике конфиденциальности</a>.</p>
+          </div>
+
+          <div class="panel reveal stack-gap">
+            <h2>Изменения и обратная связь</h2>
+            <p>Условия могут меняться: актуальная версия всегда находится на этой странице. Вопросы можно задать в <a href="https://github.com/pywebguide-lab/PyWebGuide/issues" rel="noopener">разделе Issues на GitHub</a>.</p>
+          </div>
+
+          <p class="note stack-gap">Действует с <time datetime="2026-11-03">3 ноября 2026 года</time>.</p>
+        </div>
+      </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+      </div>
+      <div>
+        <a href="index.html">Главная</a> •
+        <a href="about.html">О Python</a> •
+        <a href="frameworks.html">Фреймворки</a> •
+        <a href="project.html">Первый проект</a> •
+        <a href="course.html">Весь курс</a> •
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <p class="note footer-note">
+        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
+        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
+        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
+        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
+      </p>
+      <p class="note footer-note">
+        <a href="privacy.html">Политика конфиденциальности</a> ·
+        <a href="terms.html">Условия использования</a>
+      </p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>
