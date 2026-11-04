@@ -203,7 +203,7 @@
       el("p", { class: "rail-title", text: "На этой странице" }), list
     ]);
     const toggle = el("button", { class: "rail-toggle", type: "button", "aria-expanded": "false", "aria-controls": "page-rail", "aria-label": "На этой странице" }, [
-      el("span", { "aria-hidden": "true", text: "☰" }), el("span", { class: "rail-label", "aria-hidden": "true", text: " На странице" })
+      el("span", { class: "rail-label", "aria-hidden": "true", text: "На странице" })
     ]);
 
     document.body.appendChild(panel);
@@ -417,7 +417,7 @@
   document.querySelectorAll(".code-block[data-run]").forEach(function (block) {
     const head = block.querySelector(".code-head");
     const copy = head.querySelector(".copy-btn");
-    const run = el("button", { class: "run-btn", type: "button", text: "▶ Запустить" });
+    const run = el("button", { class: "run-btn", type: "button", text: "Запустить" });
     const edit = el("button", { class: "copy-btn-plain", type: "button", text: "Изменить" });
     const box = outputBox();
 
@@ -448,7 +448,7 @@
   if (heroWindow) {
     const bar = heroWindow.querySelector(".window-bar");
     const copy = bar.querySelector(".copy-btn");
-    const run = el("button", { class: "run-btn", type: "button", text: "▶ Запустить" });
+    const run = el("button", { class: "run-btn", type: "button", text: "Запустить" });
     const box = outputBox();
 
     bar.insertBefore(run, copy);
@@ -523,7 +523,7 @@
     function updateTasks() {
       const count = Array.prototype.filter.call(taskNodes, function (node) { return solved[node.dataset.task]; }).length;
       if (counter) counter.textContent = count;
-      if (fill) fill.style.width = count / taskNodes.length * 100 + "%";
+      if (fill) fill.style.transform = "scaleX(" + count / taskNodes.length + ")";
     }
 
     taskNodes.forEach(function (node) {
@@ -595,8 +595,7 @@
 
       const target = nodes.filter(function (node) { return node.dataset.node === active; })[0];
       if (target && dot) {
-        dot.style.left = target.offsetLeft + target.offsetWidth / 2 + "px";
-        dot.style.top = target.offsetTop + "px";
+        dot.style.transform = "translate(" + (target.offsetLeft + target.offsetWidth / 2) + "px, " + target.offsetTop + "px)";
       }
 
       counter.textContent = "Шаг " + (position + 1) + " из " + steps.length;
@@ -607,7 +606,7 @@
     function stop() {
       clearInterval(timer);
       timer = null;
-      play.textContent = "▶ Показать весь путь";
+      play.textContent = "Показать весь путь";
     }
 
     prev.addEventListener("click", function () { stop(); show(current - 1); });
@@ -616,7 +615,7 @@
     play.addEventListener("click", function () {
       if (timer) { stop(); return; }
       if (current === steps.length - 1) show(0);
-      play.textContent = "❚❚ Пауза";
+      play.textContent = "Пауза";
       timer = setInterval(function () {
         if (current >= steps.length - 1) { stop(); return; }
         show(current + 1);
@@ -644,7 +643,7 @@
 
     function row(name, url, done, total) {
       const fill = el("div", { class: "progress-fill" });
-      fill.style.width = (total ? done / total * 100 : 0) + "%";
+      fill.style.transform = "scaleX(" + (total ? done / total : 0) + ")";
       return el("div", { class: "dash-row" }, [
         el("a", { href: url, text: name }),
         el("span", { class: "dash-count", text: done + " из " + total }),

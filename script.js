@@ -100,6 +100,11 @@
     });
 
     revealElements.forEach(function (element) {
+      // Соседние блоки появляются друг за другом, а не все сразу
+      const siblings = Array.prototype.filter.call(element.parentElement.children, function (node) {
+        return node.classList.contains("reveal");
+      });
+      element.style.setProperty("--i", Math.min(siblings.indexOf(element), 5));
       revealObserver.observe(element);
     });
   }
@@ -323,7 +328,7 @@
       });
 
       count.textContent = done.length;
-      fill.style.width = (boxes.length ? done.length / boxes.length * 100 : 0) + "%";
+      fill.style.transform = "scaleX(" + (boxes.length ? done.length / boxes.length : 0) + ")";
       if (reset) reset.hidden = done.length === 0;
 
       boxes.forEach(function (input) {

@@ -18,7 +18,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#0b0f16">
+  <meta name="theme-color" content="#10161d">
 
 
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
@@ -63,19 +63,12 @@
 <body id="top">
   <div id="progress" aria-hidden="true"></div>
 
-  <div class="bg-fx" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
-
   <a class="skip-link" href="#content">Перейти к содержанию</a>
 
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html">
-        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
-        <span class="brand-text">PyWeb <span>Guide</span></span>
+        <span class="brand-text">PyWeb Guide</span>
       </a>
 
       <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
@@ -93,7 +86,7 @@
           <li><a class="nav-link active" href="project.html" aria-current="page">Первый проект</a></li>
           <li><a class="nav-link" href="deploy.html">Публикация</a></li>
           <li class="nav-more"><details>
-          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true"></span></summary>
           <ul class="nav-more-list">
             <li><a href="course.html">Весь курс и прогресс</a></li>
             <li class="sep" role="presentation"></li>
@@ -129,8 +122,6 @@
           <span aria-hidden="true">/</span>
           <span>Первый проект</span>
         </nav>
-
-        <p class="eyebrow">Раздел 4</p>
         <h1>Первый проект: список задач</h1>
         <p class="lead">
           Сделаем одно и то же приложение — список задач — двумя способами: на Flask и на Django.
@@ -181,9 +172,8 @@
       <section class="section project-track" id="flask" aria-labelledby="flask-title">
         <div class="container">
           <div class="section-head reveal">
-            <span class="badge-inline">⚪ Flask 3.1 · ~30 минут</span>
             <h2 id="flask-title">Вариант 1. Список задач на Flask</h2>
-            <p>Одно приложение в одном файле: страница со списком и форма добавления задачи.</p>
+            <p>Flask 3.1, около 30 минут. Одно приложение в одном файле: страница со списком и форма добавления задачи.</p>
           </div>
 
           <div class="progress-box reveal" data-progress="project-flask">
@@ -268,7 +258,7 @@ def index():
             </li>
 
             <li class="project-step project-part reveal">
-              <p class="eyebrow">Часть 2. База данных и удаление</p>
+              <p class="part-title">Часть 2. База данных и удаление</p>
               <h3>Шаг 5. Храните задачи в SQLite</h3>
               <p>
                 Замените весь <code>app.py</code> этим кодом. Модуль <code>sqlite3</code> входит в Python, ничего устанавливать не нужно.
@@ -366,9 +356,8 @@ def delete(task_id):
       <section class="section project-track" id="django" aria-labelledby="django-title">
         <div class="container">
           <div class="section-head reveal">
-            <span class="badge-inline">🟢 Django 6.1 · ~60 минут</span>
             <h2 id="django-title">Вариант 2. Список задач на Django</h2>
-            <p>Задачи хранятся в базе данных SQLite, а добавлять их можно через встроенную админ-панель.</p>
+            <p>Django 6.1, около 60 минут. Задачи хранятся в базе данных SQLite, а добавлять их можно через встроенную админ-панель.</p>
           </div>
 
           <div class="progress-box reveal" data-progress="project-django">
@@ -536,7 +525,7 @@ urlpatterns = [
             </li>
 
             <li class="project-step project-part reveal">
-              <p class="eyebrow">Часть 2. Работа без админки</p>
+              <p class="part-title">Часть 2. Работа без админки</p>
               <h3>Шаг 7. Создайте форму</h3>
               <p>
                 <code>ModelForm</code> строит форму прямо по модели: сама проверяет длину названия
@@ -696,7 +685,7 @@ urlpatterns = [
           <details class="reveal">
             <summary>Команда python открывает Microsoft Store или пишет «Python was not found»</summary>
             <p>
-              <span class="error-text">Python was not found; run without arguments to install from the Microsoft Store…</span>
+              <code class="error-text">Python was not found; run without arguments to install from the Microsoft Store…</code>
               Python не установлен или не добавлен в PATH, и Windows подставляет свою заглушку.
               Установите Python с <a href="https://www.python.org/downloads/" rel="noopener">python.org</a> и отметьте пункт
               «Add python.exe to PATH». Если Python уже стоит, используйте команду <code>py</code>:
@@ -707,8 +696,8 @@ urlpatterns = [
           <details class="reveal">
             <summary>PowerShell не даёт активировать окружение: «выполнение сценариев отключено»</summary>
             <p>
-              <span class="error-text">Невозможно загрузить файл …\.venv\Scripts\Activate.ps1, так как выполнение сценариев отключено в этой системе.</span>
-              В английской Windows: <span class="error-text">…Activate.ps1 cannot be loaded because running scripts is disabled on this system.</span>
+              <code class="error-text">Невозможно загрузить файл …\.venv\Scripts\Activate.ps1, так как выполнение сценариев отключено в этой системе.</code>
+              В английской Windows: <code class="error-text">…Activate.ps1 cannot be loaded because running scripts is disabled on this system.</code>
               Разрешите запуск локальных скриптов для своей учётной записи — один раз:
               <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>.
               Другой вариант — открыть терминал «Командная строка» (cmd) вместо PowerShell.
@@ -718,7 +707,7 @@ urlpatterns = [
           <details class="reveal">
             <summary>«flask» или «django-admin» не распознано как имя командлета</summary>
             <p>
-              <span class="error-text">Имя "flask" не распознано как имя командлета, функции, файла сценария или выполняемой программы.</span>
+              <code class="error-text">Имя "flask" не распознано как имя командлета, функции, файла сценария или выполняемой программы.</code>
               Окружение не активировано или пакет не установлен. Активируйте окружение
               (в начале строки терминала появится <code>(.venv)</code>) и повторите <code>pip install flask</code>
               или <code>pip install django</code>.
@@ -728,7 +717,7 @@ urlpatterns = [
           <details class="reveal">
             <summary>Django: «no such table: tasks_task»</summary>
             <p>
-              <span class="error-text">django.db.utils.OperationalError: no such table: tasks_task</span>
+              <code class="error-text">django.db.utils.OperationalError: no such table: tasks_task</code>
               Таблица для модели ещё не создана. Выполните шаг 4: <code>python manage.py makemigrations</code>
               и <code>python manage.py migrate</code>. Если команда пишет «No changes detected», проверьте,
               что <code>'tasks'</code> добавлено в <code>INSTALLED_APPS</code> (шаг 2).
@@ -738,7 +727,7 @@ urlpatterns = [
           <details class="reveal">
             <summary>Django: «TemplateDoesNotExist at /»</summary>
             <p>
-              <span class="error-text">TemplateDoesNotExist at / — tasks/index.html</span>
+              <code class="error-text">TemplateDoesNotExist at / — tasks/index.html</code>
               Django не нашёл шаблон. Путь должен быть точно таким: <code>tasks/templates/tasks/index.html</code> —
               папка <code>tasks</code> внутри <code>templates</code> повторяется намеренно.
               Также проверьте, что приложение есть в <code>INSTALLED_APPS</code>.
@@ -748,7 +737,7 @@ urlpatterns = [
           <details class="reveal">
             <summary>Django: «Forbidden (403) CSRF verification failed»</summary>
             <p>
-              <span class="error-text">Forbidden (403) CSRF verification failed. Request aborted.</span>
+              <code class="error-text">Forbidden (403) CSRF verification failed. Request aborted.</code>
               В форме не хватает тега <code>{% csrf_token %}</code>. Он нужен в каждой форме с
               <code>method="post"</code> — сравните свой шаблон с шагом 9.
             </p>

@@ -18,7 +18,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#0b0f16">
+  <meta name="theme-color" content="#10161d">
 
 
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
@@ -64,22 +64,15 @@
   </script>
 </head>
 
-<body id="top" data-no-toc>
+<body id="top" class="home" data-no-toc>
   <div id="progress" aria-hidden="true"></div>
-
-  <div class="bg-fx" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
 
   <a class="skip-link" href="#content">Перейти к содержанию</a>
 
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html">
-        <span class="brand-icon"><img src="assets/icon.svg" alt="" width="26" height="26"></span>
-        <span class="brand-text">PyWeb <span>Guide</span></span>
+        <span class="brand-text">PyWeb Guide</span>
       </a>
 
       <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
@@ -97,7 +90,7 @@
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
           <li><a class="nav-link" href="deploy.html">Публикация</a></li>
           <li class="nav-more"><details>
-          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true">▼</span></summary>
+          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true"></span></summary>
           <ul class="nav-more-list">
             <li><a href="course.html">Весь курс и прогресс</a></li>
             <li class="sep" role="presentation"></li>
@@ -128,34 +121,26 @@
 
   <main id="content" class="page" tabindex="-1">
       <div class="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <span class="badge">Python • Backend • Django • Flask</span>
+        <div class="container">
+          <h1 class="hero-title"><span class="line"><span>Python для</span></span> <span class="line"><span>веб-разработки</span></span></h1>
 
-            <h1>
-              Python для веб-разработки
-              <span class="h1-sub">от идеи до первого проекта</span>
-            </h1>
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <p class="lead">
+                От идеи до первого проекта. PyWeb Guide — учебный сайт, который помогает студентам понять серверную разработку:
+                запросы, базы данных, фреймворки — и выбрать между Django и Flask для первого проекта.
+              </p>
 
-            <p class="lead">
-              PyWeb Guide — учебный сайт, который помогает студентам понять серверную разработку:
-              запросы, базы данных, фреймворки — и выбрать между Django и Flask для первого проекта.
-            </p>
-
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="about.html">Начать изучение</a>
-              <a class="btn btn-secondary" href="frameworks.html">Сравнить фреймворки</a>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="about.html">Начать изучение</a>
+                <a class="btn btn-secondary" href="frameworks.html">Сравнить фреймворки</a>
+              </div>
+              <p class="hero-hint">Не знаете, что выбрать? <a href="frameworks.html#quiz">Пройдите мини-тест</a> · <a href="course.html">Весь курс</a> · <a href="practice.html">Задачи</a></p>
             </div>
-            <p class="hero-hint">Не знаете, что выбрать? <a href="frameworks.html#quiz">Пройдите мини-тест</a> · <a href="course.html">Весь курс</a> · <a href="practice.html">Задачи</a></p>
 
-          </div>
-
-          <div class="hero-visual reveal">
-            <div class="window">
+            <div class="hero-visual">
+              <div class="window" data-ui>
               <div class="window-bar">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
                 <div class="window-tabs" role="tablist" aria-label="Одна страница на двух фреймворках">
                   <button class="window-tab" type="button" role="tab" id="tab-flask" aria-selected="true" aria-controls="code-flask">Flask</button>
                   <button class="window-tab" type="button" role="tab" id="tab-django" aria-selected="false" aria-controls="code-django" tabindex="-1">Django</button>
@@ -170,14 +155,14 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "PyWeb Guide 🚀"
+    return "PyWeb Guide"
 
 # запуск: flask --app app run --debug</code></pre>
                 <pre class="window-code" id="code-django" role="tabpanel" aria-labelledby="tab-django" tabindex="0" inert><code># myapp/views.py
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse("PyWeb Guide 🚀")
+    return HttpResponse("PyWeb Guide")
 
 # mysite/urls.py
 from django.urls import path
@@ -189,31 +174,31 @@ urlpatterns = [path("", views.home)]
               </div>
             </div>
             <p class="note hero-note">Одна и та же страница на двух фреймворках. Скопируйте код и запустите у себя командой из последней строки.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="container">
-        <div class="hero-stats">
-          <article class="stat reveal">
-            <strong>01</strong>
-            <span>Серверная логика</span>
-          </article>
-
-          <article class="stat reveal">
-            <strong>02</strong>
-            <span>Маршрутизация</span>
-          </article>
-
-          <article class="stat reveal">
-            <strong>03</strong>
-            <span>Базы данных</span>
-          </article>
-
-          <article class="stat reveal">
-            <strong>04</strong>
-            <span>Выбор фреймворка</span>
-          </article>
-        </div>
+          <div class="topics">
+          <a class="topic reveal" href="about.html">
+            <span class="topic-picture"><img src="assets/img/eniac.jpg" width="900" height="617" alt="Две женщины настраивают компьютер ENIAC у панелей с кабелями, 1946 год" loading="lazy" decoding="async"></span>
+            <strong>Серверная логика</strong>
+            <span>Компьютер ENIAC, 1946 год</span>
+          </a>
+          <a class="topic reveal" href="about.html#flow">
+            <span class="topic-picture"><img src="assets/img/switchboard.jpg" width="900" height="715" alt="Телефонистки у международного коммутатора Bell System соединяют звонки" loading="lazy" decoding="async"></span>
+            <strong>Маршрутизация</strong>
+            <span>Коммутатор Bell System</span>
+          </a>
+          <a class="topic reveal" href="databases.html">
+            <span class="topic-picture"><img src="assets/img/card-catalog.jpg" width="900" height="675" alt="Ряды ящиков карточного каталога в Библиотеке Конгресса" loading="lazy" decoding="async"></span>
+            <strong>Базы данных</strong>
+            <span>Каталог Библиотеки Конгресса</span>
+          </a>
+          <a class="topic reveal" href="frameworks.html">
+            <span class="topic-picture"><img src="assets/img/reinhardt.jpg" width="900" height="945" alt="Гитарист Джанго Рейнхардт играет на гитаре, около 1946 года" loading="lazy" decoding="async"></span>
+            <strong>Выбор фреймворка</strong>
+            <span>Джанго Рейнхардт: в его честь назван Django</span>
+          </a>
+          </div>
         </div>
       </div>
 
@@ -245,22 +230,22 @@ urlpatterns = [path("", views.home)]
 
           <div class="card-grid">
             <article class="card reveal">
-              <h3><span class="tag">🌐</span>Что такое backend</h3>
+              <h3>Что такое backend</h3>
               <p>Серверная часть приложения: принимает запрос, обрабатывает данные и возвращает ответ пользователю. <a href="about.html">Как Python работает на сервере</a>.</p>
             </article>
 
             <article class="card reveal">
-              <h3><span class="tag">🧩</span>Что такое Django</h3>
+              <h3>Что такое Django</h3>
               <p>Крупный фреймворк с готовыми инструментами «из коробки»: ORM, админ-панель, пользователи.</p>
             </article>
 
             <article class="card reveal">
-              <h3><span class="tag">⚙️</span>Что такое Flask</h3>
+              <h3>Что такое Flask</h3>
               <p>Лёгкий фреймворк: берёшь только то, что нужно, и сам решаешь, как устроен проект.</p>
             </article>
 
             <article class="card reveal">
-              <h3><span class="tag">🧭</span>Когда что выбирать</h3>
+              <h3>Когда что выбирать</h3>
               <p>Зависит от размера проекта, сроков и опыта: короткий сервис — Flask, большой сайт — Django. <a href="frameworks.html">Сравнение Django и Flask</a>.</p>
             </article>
           </div>
@@ -414,24 +399,24 @@ urlpatterns = [path("", views.home)]
             <p>Если хочется закрепить материал, лучше всего сделать маленький проект.</p>
           </div>
 
-          <div class="card-grid">
+          <div class="card-grid idea-rows">
             <article class="card reveal">
-              <h3><span class="tag">✅</span>Todo-список</h3>
+              <h3>Todo-список</h3>
               <p>Добавление, удаление и отметка задач — классика для первого CRUD-приложения. <a href="project.html">Пошаговая инструкция</a>.</p>
             </article>
 
             <article class="card reveal">
-              <h3><span class="tag">📝</span>Мини-блог</h3>
+              <h3>Мини-блог</h3>
               <p>Статьи, категории и страница с деталями поста — хороший проект для Django.</p>
             </article>
 
             <article class="card reveal">
-              <h3><span class="tag">🔗</span>Сокращатель ссылок</h3>
+              <h3>Сокращатель ссылок</h3>
               <p>Простая логика, база данных и редиректы — удобно делать на Flask.</p>
             </article>
 
             <article class="card reveal">
-              <h3><span class="tag">🧑‍💻</span>Портфолио</h3>
+              <h3>Портфолио</h3>
               <p>Личный сайт с проектами, контактами и красивой подачей материалов.</p>
             </article>
           </div>
@@ -479,16 +464,17 @@ urlpatterns = [path("", views.home)]
 
       <section class="section" aria-label="Быстрый переход">
         <div class="container">
-          <div class="cta-panel reveal">
-            <div>
+          <div class="cta-panel cta-panel--picture reveal">
+            <div class="cta-body">
               <h2>Готовы выбрать стек?</h2>
               <p class="lead cta-lead">
                 Откройте сравнение Django и Flask — там есть таблицы, примеры кода и мини-тест.
               </p>
-            </div>
-            <div class="cta-actions">
+              <div class="cta-actions">
               <a class="btn btn-primary" href="frameworks.html">Открыть сравнение</a>
             </div>
+            </div>
+            <img class="cta-picture" src="assets/img/snakes.jpg" width="900" height="602" alt="Старая гравюра: восемь змей, среди них сетчатый питон" loading="lazy" decoding="async">
           </div>
         </div>
       </section>
@@ -513,6 +499,7 @@ urlpatterns = [path("", views.home)]
         Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
         <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
       </p>
+      <p class="note footer-note">Снимки: <a href="https://commons.wikimedia.org/wiki/File:Two_women_operating_ENIAC_(full_resolution).jpg" rel="noopener">ENIAC</a>, армия США; <a href="https://commons.wikimedia.org/wiki/File:Photograph_of_Women_Working_at_a_Bell_System_Telephone_Switchboard_(3660047829).jpg" rel="noopener">коммутатор Bell</a>, Национальный архив США; <a href="https://commons.wikimedia.org/wiki/File:Copyright_Card_Catalog_Files.jpg" rel="noopener">каталог</a>, Michael Holley; <a href="https://commons.wikimedia.org/wiki/File:Django_Reinhardt_(Gottlieb_07301).jpg" rel="noopener">Джанго Рейнхардт</a>, William P. Gottlieb, Библиотека Конгресса; <a href="https://www.rawpixel.com/image/13959871/image-paper-cartoon-art" rel="noopener">гравюра со змеями</a>, rawpixel, CC0. Остальные снимки в общественном достоянии.</p>
       <p class="note footer-note">
         <a href="privacy.html">Политика конфиденциальности</a> ·
         <a href="terms.html">Условия использования</a>
