@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python from scratch: seven lessons in the browser — PyWeb Guide</title>
+
+  <meta name="description" content="Seven short Python lessons for people who have never programmed. The code runs right on the page, nothing to install.">
+  <link rel="canonical" href="https://pywebguide.github.io/en/start.html">
+  <link rel="alternate" hreflang="ru" href="https://pywebguide.github.io/start.html">
+  <link rel="alternate" hreflang="kk" href="https://pywebguide.github.io/kk/start.html">
+  <link rel="alternate" hreflang="en" href="https://pywebguide.github.io/en/start.html">
+  <link rel="alternate" hreflang="x-default" href="https://pywebguide.github.io/start.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Python from scratch: seven lessons in the browser — PyWeb Guide">
+  <meta property="og:description" content="Seven short Python lessons for people who have never programmed. The code runs right on the page, nothing to install.">
+  <meta property="og:url" content="https://pywebguide.github.io/en/start.html">
+  <meta property="og:image" content="https://pywebguide.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide poster: your first website with Python, a free course for people who have never programmed">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffd249">
+
+  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
+  <link rel="preload" href="../assets/fonts/sofia-sans-extra-condensed-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+
+  <script>
+    // The theme is applied before the first paint so the page does not flash
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body data-band="yellow" id="top" data-no-toc>
+  <div id="progress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-text">PyWeb Guide</span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+        <ul class="nav-menu">
+          <li><a class="nav-link active" href="start.html" aria-current="page">From scratch</a></li>
+          <li><a class="nav-link" href="../course.html" hreflang="ru">Full course</a></li>
+          <li><a class="nav-link" href="../project.html" hreflang="ru">First project</a></li>
+          <li><a class="nav-link" href="../playground.html" hreflang="ru">Sandbox</a></li>
+          <li><a class="nav-link" href="../glossary.html" hreflang="ru">Glossary</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">More <span class="caret" aria-hidden="true"></span></summary>
+          <ul class="nav-more-list">
+            <li><a href="../about.html" hreflang="ru">About Python</a></li>
+            <li><a href="../frameworks.html" hreflang="ru">Frameworks</a></li>
+            <li><a href="../databases.html" hreflang="ru">Databases</a></li>
+            <li><a href="../deploy.html" hreflang="ru">Deployment</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../templates.html" hreflang="ru">Templates and forms</a></li>
+            <li><a href="../auth.html" hreflang="ru">Authentication</a></li>
+            <li><a href="../api.html" hreflang="ru">REST API</a></li>
+            <li><a href="../testing.html" hreflang="ru">Testing</a></li>
+            <li><a href="../git.html" hreflang="ru">Git</a></li>
+            <li><a href="../project2.html" hreflang="ru">Second project</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../practice.html" hreflang="ru">Exercises</a></li>
+            <li><a href="../cheatsheet.html" hreflang="ru">Cheat sheet</a></li>
+            <li><a href="../exam.html" hreflang="ru">Final test</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../contacts.html" hreflang="ru">Contact</a></li>
+          </ul>
+        </details></li>
+          <li class="nav-lang" aria-label="Site language">
+            <a href="../start.html" hreflang="ru" lang="ru">РУС</a>
+            <a href="../kk/start.html" hreflang="kk" lang="kk">ҚАЗ</a>
+            <a href="start.html" hreflang="en" lang="en" aria-current="true">ENG</a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Light theme">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="page-band"><div class="container page-hero page-hero--picture">
+<nav class="breadcrumb" aria-label="Breadcrumb">
+<a href="index.html">Home</a>
+<span aria-hidden="true">/</span>
+<span>From scratch</span>
+</nav>
+<h1>Python from scratch</h1>
+<p class="lead">Seven short lessons for people who have never programmed. The code runs right on this page: press “Run”, change the code and run it again. Don't be afraid of mistakes, nothing will break.</p>
+<p class="note">On the first run the browser loads Python, which takes a few seconds. Unfamiliar words are in the <a href="../glossary.html" hreflang="ru">glossary</a> (in Russian for now).</p>
+<div class="progress-box" data-progress="start">
+  <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> of 7 lessons done</p>
+  <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
+  <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Reset progress</button>
+</div>
+<img class="band-picture" src="../assets/img/snakes.jpg" width="1024" height="685" alt="Old engraving: eight snakes, including a reticulated python" decoding="async" fetchpriority="high">
+</div></div>
+<section class="section" aria-label="Lessons">
+<div class="container">
+<ol class="project-steps" data-progress-list="start">
+  <li class="project-step lesson" id="lesson-1">
+    <div class="lesson-text">
+      <h2>Lesson 1. Your first program</h2>
+      <p>A program is a list of commands for the computer. It carries them out one after another, from top to bottom.</p>
+      <p>The <code>print</code> command shows text on the screen. The text itself always goes in quotes.</p>
+      <p><strong>Try it:</strong> write your name in quotes and press “Run”.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Your program</span></div>
+  <pre><code>print("Hello!")
+print("This is my first program")</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="1"> Lesson done</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-2">
+    <div class="lesson-text">
+      <h2>Lesson 2. Variables: how to remember a value</h2>
+      <p>A variable is a label on a box. You put a value in the box and then refer to it by name.</p>
+      <p>You can work with values: for example, add one to an age.</p>
+      <p><strong>Try it:</strong> put in your own name and age and run it again.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Your program</span></div>
+  <pre><code>name = "Anna"
+age = 18
+
+print("My name is", name)
+print("Next year I will be", age + 1)</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="2"> Lesson done</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-3">
+    <div class="lesson-text">
+      <h2>Lesson 3. Conditions: if this, then that</h2>
+      <p>A program can make choices. The word <code>if</code> means “if”, and <code>else</code> means “otherwise”.</p>
+      <p>An indent of four spaces shows which lines belong to the condition.</p>
+      <p><strong>Try it:</strong> change the temperature to 10 and see what changes.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Your program</span></div>
+  <pre><code>temperature = -5
+
+if temperature &lt; 0:
+    print("It's freezing outside, put on a hat")
+else:
+    print("You can go without a hat")</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="3"> Lesson done</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-4">
+    <div class="lesson-text">
+      <h2>Lesson 4. Lists and loops: one action many times</h2>
+      <p>A list keeps several values in a row. A <code>for</code> loop takes them one at a time and does the same thing with each of them.</p>
+      <p>That's how a website shows a feed: it has a list of posts and shows them one after another.</p>
+      <p><strong>Try it:</strong> add your own task to the list.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Your program</span></div>
+  <pre><code>tasks = ["buy bread", "do homework", "call mum"]
+
+for task in tasks:
+    print("To do:", task)
+
+print("Tasks in total:", len(tasks))</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="4"> Lesson done</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-5">
+    <div class="lesson-text">
+      <h2>Lesson 5. Functions: your own command</h2>
+      <p>A function is your own command. You describe it once and call it as many times as you like.</p>
+      <p>The word <code>def</code> starts the description, and <code>return</code> says what the function gives back.</p>
+      <p><strong>Try it:</strong> call the function once more with a different name.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Your program</span></div>
+  <pre><code>def greet(name):
+    return "Hello, " + name + "!"
+
+print(greet("Anna"))
+print(greet("Marat"))</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="5"> Lesson done</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-6">
+    <div class="lesson-text">
+      <h2>Lesson 6. Dictionaries: find a value by its name</h2>
+      <p>A dictionary keeps “name and value” pairs, like a price list in a shop. You find a value by its name, not by its number.</p>
+      <p>Websites use this all the time: for example, to find a page by its address.</p>
+      <p><strong>Try it:</strong> add your own product with a price.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Your program</span></div>
+  <pre><code>prices = {"bread": 200, "milk": 450}
+
+print("Bread costs", prices["bread"], "tenge")
+
+prices["cheese"] = 1500
+print(prices)</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="6"> Lesson done</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-7">
+    <div class="lesson-text">
+      <h2>Lesson 7. How this connects to websites</h2>
+      <p>You already know enough to understand the main idea. The address in the browser picks a function, and the function returns a page.</p>
+      <p>Below is a tiny website built from what you have just learned: functions and a dictionary.</p>
+      <p>The second example does the same with Flask. It is a ready-made tool for websites: the line <code>@app.route</code> says which address opens this function.</p>
+      <p><strong>Try it:</strong> change the address to "/" and run it again.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>A site made of functions and a dictionary</span></div>
+  <pre><code>def home():
+    return "Home page"
+
+def contacts():
+    return "Our contacts"
+
+pages = {"/": home, "/contacts": contacts}
+
+address = "/contacts"
+print("You opened:", address)
+print("The site replied:", pages[address]())</code></pre>
+</div>
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>The same with Flask</span></div>
+  <pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Home page"
+
+print("The site replied:", app.test_client().get("/").text)</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="7"> Lesson done</label>
+    </div>
+  </li>
+</ol>
+</div>
+</section>
+<section class="section" aria-labelledby="next-title">
+<div class="container">
+<div class="cta-panel">
+  <div>
+    <h2 id="next-title">What's next</h2>
+    <p class="lead cta-lead">Now you understand the basics. Next you will see how a request travels through a real server and build your first website. These sections are in Russian for now.</p>
+  </div>
+  <div class="cta-actions">
+    <a class="btn btn-primary" href="../about.html" hreflang="ru">How a website works</a>
+    <a class="btn btn-secondary" href="../project.html" hreflang="ru">First project</a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="mark reveal" aria-hidden="true"><span>P</span><span>Y</span><span>W</span><span>E</span><span>B</span><span>G</span><span>U</span><span>I</span><span>D</span><span>E</span></div>
+      <div class="footer-links">
+        <div><strong>Start</strong><ul><li><a href="start.html">Python from scratch</a></li><li><a href="../glossary.html" hreflang="ru">Glossary</a></li><li><a href="../playground.html" hreflang="ru">Sandbox</a></li></ul></div>
+        <div><strong>Understand</strong><ul><li><a href="../about.html" hreflang="ru">About Python</a></li><li><a href="../frameworks.html" hreflang="ru">Frameworks</a></li><li><a href="../databases.html" hreflang="ru">Databases</a></li></ul></div>
+        <div><strong>Build</strong><ul><li><a href="../project.html" hreflang="ru">First project</a></li><li><a href="../deploy.html" hreflang="ru">Deployment</a></li><li><a href="../practice.html" hreflang="ru">Exercises</a></li></ul></div>
+        <div><strong>Site</strong><ul><li><a href="../course.html" hreflang="ru">Full course</a></li><li><a href="../contacts.html" hreflang="ru">Contact</a></li><li><a href="index.html">Home</a></li></ul></div>
+      </div>
+      <p class="footer-copy">© 2026 PyWeb Guide, a learning project about Python in web development</p>
+      <p class="note footer-note">Author: <a href="../contacts.html#authors" hreflang="ru">E. Zhanguzhin</a> · Updated: <time datetime="2026-11-06">06.11.2026</time> · Versions in the examples: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 · <a href="https://github.com/pywebguide/pywebguide.github.io" rel="noopener">Source code on GitHub</a></p>
+      <p class="note footer-note">Image: <a href="https://www.rawpixel.com/image/13959871/image-paper-cartoon-art" rel="noopener">engraving with snakes, rawpixel, CC0</a>.</p>
+      <p class="note footer-note"><a href="../privacy.html" hreflang="ru">Privacy policy</a> · <a href="../terms.html" hreflang="ru">Terms of use</a></p>
+      <p class="note footer-note">This is a learning site. Messages from the form are sent through the public Issues section on GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Back to top">↑</button>
+
+  <script data-goatcounter="https://pywebguide.goatcounter.com/count" async src="https://gc.zgo.at/count.v4.js" crossorigin="anonymous" integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"></script>
+  <script src="../assets/i18n.js"></script>
+  <script src="../script.js"></script>
+  <script src="../features.js"></script>
+</body>
+</html>

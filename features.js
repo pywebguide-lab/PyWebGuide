@@ -2,6 +2,11 @@
 (function () {
   "use strict";
 
+  const t = window.pywebT || function (text) { return text; };
+  // Корень сайта (здесь лежит features.js): страницы на казахском и английском находятся в kk/ и en/
+  const ROOT = document.currentScript ? new URL(".", document.currentScript.src).href : "";
+  const LANG = window.pywebLang || "ru";
+
   const PYODIDE = "https://cdn.jsdelivr.net/pyodide/v0.29.0/full/";
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -59,15 +64,15 @@
   function setupSearch() {
     if (!themeToggle || typeof HTMLDialogElement === "undefined") return;
 
-    const open = el("button", { class: "search-toggle", type: "button", "aria-label": "Поиск по сайту", title: "Поиск ( / )" });
+    const open = el("button", { class: "search-toggle", type: "button", "aria-label": t("Поиск по сайту"), title: t("Поиск ( / )") });
     open.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>';
     themeToggle.parentNode.insertBefore(open, themeToggle);
 
-    const input = el("input", { type: "search", class: "search-input", placeholder: "Например: миграции, JSON, venv", "aria-label": "Что искать", autocomplete: "off" });
-    const close = el("button", { type: "button", class: "search-close", "aria-label": "Закрыть поиск", text: "×" });
+    const input = el("input", { type: "search", class: "search-input", placeholder: t("Например: миграции, JSON, venv"), "aria-label": t("Что искать"), autocomplete: "off" });
+    const close = el("button", { type: "button", class: "search-close", "aria-label": t("Закрыть поиск"), text: "×" });
     const status = el("p", { class: "search-status", role: "status" });
     const list = el("ul", { class: "search-results" });
-    const dialog = el("dialog", { class: "search-dialog", "aria-label": "Поиск по сайту" }, [
+    const dialog = el("dialog", { class: "search-dialog", "aria-label": t("Поиск по сайту") }, [
       el("div", { class: "search-bar" }, [input, close]), status, list
     ]);
     document.body.appendChild(dialog);
@@ -77,7 +82,7 @@
     function loadIndex() {
       if (index) return Promise.resolve(index);
       return new Promise(function (resolve, reject) {
-        const script = el("script", { src: "assets/search-index.js" });
+        const script = el("script", { src: ROOT + "assets/search-index" + (LANG === "ru" ? "" : "." + LANG) + ".js" });
         script.onload = function () {
           index = (window.PYWEB_SEARCH || []).map(function (item) {
             return Object.assign({ n: normalize(item.p + " " + item.h + " " + item.x), nh: normalize(item.p + " " + item.h) }, item);
@@ -100,7 +105,7 @@
       list.textContent = "";
 
       if (!words.length) {
-        status.textContent = "Начните вводить запрос.";
+        status.textContent = t("Начните вводить запрос.");
         return;
       }
 
@@ -111,7 +116,7 @@
         return { item: item, score: score };
       }).sort(function (a, b) { return b.score - a.score; }).slice(0, 12);
 
-      status.textContent = found.length ? "Найдено: " + found.length : "Ничего не найдено. Попробуйте другое слово.";
+      status.textContent = found.length ? t("Найдено: {n}", { n: found.length }) : t("Ничего не найдено. Попробуйте другое слово.");
 
       found.forEach(function (entry) {
         const link = el("a", { href: entry.item.u }, [
@@ -127,9 +132,9 @@
     function show() {
       dialog.showModal();
       input.focus();
-      status.textContent = "Загружаю индекс…";
+      status.textContent = t("Загружаю индекс…");
       loadIndex().then(render).catch(function () {
-        status.textContent = "Не удалось загрузить индекс поиска.";
+        status.textContent = t("Не удалось загрузить индекс поиска.");
       });
     }
 
@@ -199,11 +204,11 @@
     });
 
     const list = el("ol", {}, links.map(function (link) { return el("li", {}, [link]); }));
-    const panel = el("nav", { class: "page-rail", "aria-label": "На этой странице", id: "page-rail" }, [
-      el("p", { class: "rail-title", text: "На этой странице" }), list
+    const panel = el("nav", { class: "page-rail", "aria-label": t("На этой странице"), id: "page-rail" }, [
+      el("p", { class: "rail-title", text: t("На этой странице") }), list
     ]);
-    const toggle = el("button", { class: "rail-toggle", type: "button", "aria-expanded": "false", "aria-controls": "page-rail", "aria-label": "На этой странице" }, [
-      el("span", { class: "rail-label", "aria-hidden": "true", text: "На странице" })
+    const toggle = el("button", { class: "rail-toggle", type: "button", "aria-expanded": "false", "aria-controls": "page-rail", "aria-label": t("На этой странице") }, [
+      el("span", { class: "rail-label", "aria-hidden": "true", text: t("На странице") })
     ]);
 
     document.body.appendChild(panel);
@@ -266,7 +271,7 @@
     '    py.setStdin({ error: true });',
     '    const all = job.code + "\\n" + (job.tests || "");',
     '    if (/^\\s*(from|import)\\s+flask\\b/m.test(all) && !hasFlask) {',
-    '      postMessage({ type: "status", text: "Устанавливаю Flask…" });',
+    '      postMessage({ type: "status", text: ' + JSON.stringify(t("Устанавливаю Flask…")) + ' });',
     '      await py.loadPackage("micropip", quiet);',
     '      await py.pyimport("micropip").install("flask");',
     '      hasFlask = true;',
@@ -302,7 +307,7 @@
     function cleanError(text) {
       // Проверки задач: ученику важен только текст подсказки
       const assertion = text.match(/AssertionError: ?([\s\S]*)$/);
-      if (assertion) return assertion[1].trim() || "Проверка не пройдена.";
+      if (assertion) return assertion[1].trim() || t("Проверка не пройдена.");
 
       // Внутренние строки Pyodide убираем: оставляем всё, начиная с первой строки кода ученика
       const lines = text.split("\n");
@@ -310,17 +315,17 @@
       const shown = (first === -1 ? text : "Traceback (most recent call last):\n" + lines.slice(first).join("\n")).trim();
 
       if (/EOFError|I\/O error/.test(shown)) {
-        return shown + "\n\nПодсказка: input() в браузере не работает. Задайте значение прямо в коде.";
+        return shown + t("\n\nПодсказка: input() в браузере не работает. Задайте значение прямо в коде.");
       }
       return shown;
     }
 
     /* onEvent: status(текст), out(текст). Возвращает Promise<{ok, error}> */
     function run(job, onEvent) {
-      if (busy) return Promise.resolve({ ok: false, error: "Дождитесь завершения предыдущего запуска." });
+      if (busy) return Promise.resolve({ ok: false, error: t("Дождитесь завершения предыдущего запуска.") });
       busy = true;
       if (!worker) start();
-      if (!loaded) onEvent("status", "Загружаю Python: около 5 МБ, только при первом запуске…");
+      if (!loaded) onEvent("status", t("Загружаю Python: около 5 МБ, только при первом запуске…"));
 
       return new Promise(function (resolve) {
         let timer = null;
@@ -339,7 +344,7 @@
         worker.onerror = function (event) {
           worker.terminate();
           worker = null;
-          finish({ ok: false, error: "Не удалось запустить Python: проверьте интернет. " + (event.message || "") });
+          finish({ ok: false, error: t("Не удалось запустить Python: проверьте интернет. ") + (event.message || "") });
         };
 
         worker.onmessage = function (event) {
@@ -349,11 +354,11 @@
           else if (data.type === "out") onEvent("out", data.text);
           else if (data.type === "started") {
             loaded = true;
-            onEvent("status", "Выполняется…");
+            onEvent("status", t("Выполняется…"));
             timer = setTimeout(function () {
               worker.terminate();
               worker = null;
-              finish({ ok: false, error: "Код выполнялся дольше 10 секунд и был остановлен. Возможно, в нём бесконечный цикл." });
+              finish({ ok: false, error: t("Код выполнялся дольше 10 секунд и был остановлен. Возможно, в нём бесконечный цикл.") });
             }, TIME_LIMIT);
           } else if (data.type === "done") {
             finish({ ok: data.ok, error: data.error ? cleanError(data.error) : "" });
@@ -382,7 +387,7 @@
     box.classList.remove("is-error", "is-ok");
     text.textContent = "";
     button.disabled = true;
-    button.textContent = "Выполняется…";
+    button.textContent = t("Выполняется…");
 
     return Py.run(job, function (type, value) {
       if (type === "status") status.textContent = value;
@@ -390,7 +395,7 @@
     }).then(function (result) {
       button.disabled = false;
       button.textContent = label;
-      status.textContent = result.ok ? (text.textContent ? "Готово." : "Готово, код ничего не вывел. Добавьте print().") : "Ошибка";
+      status.textContent = result.ok ? (text.textContent ? t("Готово.") : t("Готово, код ничего не вывел. Добавьте print().")) : t("Ошибка");
       if (!result.ok) {
         text.textContent += result.error + "\n";
         box.classList.add("is-error");
@@ -410,7 +415,7 @@
 
   function tabInsert(area) {
     let release = false;
-    const hint = el("p", { class: "note code-hint", id: "code-hint-" + (++hintCount), text: "Tab вставляет отступ. Чтобы перейти к кнопкам, нажмите Esc, затем Tab." });
+    const hint = el("p", { class: "note code-hint", id: "code-hint-" + (++hintCount), text: t("Tab вставляет отступ. Чтобы перейти к кнопкам, нажмите Esc, затем Tab.") });
 
     area.setAttribute("aria-describedby", [area.getAttribute("aria-describedby"), hint.id].filter(Boolean).join(" "));
     // Поле у примера вставляется в страницу уже после вызова, поэтому подсказка ждёт следующего кадра
@@ -443,7 +448,7 @@
     button.addEventListener("click", function () {
       if (!button.classList.contains("is-armed")) {
         button.classList.add("is-armed");
-        button.textContent = "Стереть правки? Нажмите ещё раз";
+        button.textContent = t("Стереть правки? Нажмите ещё раз");
         timer = setTimeout(disarm, 5000);
         return;
       }
@@ -493,8 +498,8 @@
   document.querySelectorAll(".code-block[data-run]").forEach(function (block) {
     const head = block.querySelector(".code-head");
     const copy = head.querySelector(".copy-btn");
-    const run = el("button", { class: "run-btn", type: "button", text: "Запустить" });
-    const edit = el("button", { class: "copy-btn-plain", type: "button", text: "Изменить" });
+    const run = el("button", { class: "run-btn", type: "button", text: t("Запустить") });
+    const edit = el("button", { class: "copy-btn-plain", type: "button", text: t("Изменить") });
     const box = outputBox();
 
     head.insertBefore(edit, copy);
@@ -503,7 +508,7 @@
 
     function openEditor(focus) {
       const pre = block.querySelector("pre");
-      const area = el("textarea", { class: "code-edit", spellcheck: "false", "aria-label": "Код примера, его можно менять" });
+      const area = el("textarea", { class: "code-edit", spellcheck: "false", "aria-label": t("Код примера, его можно менять") });
       area.value = pre.querySelector("code").textContent;
       area.rows = Math.min(24, area.value.split("\n").length + 1);
       tabInsert(area);
@@ -611,14 +616,14 @@
         runInto(box, { code: area.value, tests: tests }, check).then(function (result) {
           const status = box.querySelector(".run-status");
           if (result.ok) {
-            status.textContent = "Верно! Все проверки пройдены.";
+            status.textContent = t("Верно! Все проверки пройдены.");
             box.classList.add("is-ok");
             solved[id] = true;
             writeJson("pyweb_tasks", solved);
             node.classList.add("is-solved", "just-solved");
             updateTasks();
           } else {
-            status.textContent = "Пока не получилось";
+            status.textContent = t("Пока не получилось");
           }
         });
       });
@@ -656,7 +661,7 @@
         dot.style.transform = "translate(" + (target.offsetLeft + target.offsetWidth / 2) + "px, " + target.offsetTop + "px)";
       }
 
-      counter.textContent = "Шаг " + (position + 1) + " из " + steps.length;
+      counter.textContent = t("Шаг {i} из {n}", { i: position + 1, n: steps.length });
       prev.disabled = position === 0;
       next.disabled = position === steps.length - 1;
     }
@@ -664,7 +669,7 @@
     function stop() {
       clearInterval(timer);
       timer = null;
-      play.textContent = "Показать весь путь";
+      play.textContent = t("Показать весь путь");
     }
 
     prev.addEventListener("click", function () { stop(); show(current - 1); });
@@ -673,7 +678,7 @@
     play.addEventListener("click", function () {
       if (timer) { stop(); return; }
       if (current === steps.length - 1) show(0);
-      play.textContent = "Пауза";
+      play.textContent = t("Пауза");
       timer = setInterval(function () {
         if (current >= steps.length - 1) { stop(); return; }
         show(current + 1);
@@ -689,11 +694,11 @@
 
   if (dash) {
     const TRACKS = {
-      "start": { name: "Python с нуля", total: 7, url: "start.html" },
-      "roadmap": { name: "Дорожная карта", total: 5, url: "index.html" },
-      "project-flask": { name: "Первый проект: Flask", total: 6, url: "project.html#flask" },
-      "project-django": { name: "Первый проект: Django", total: 10, url: "project.html#django" },
-      "project-blog": { name: "Второй проект: API блога", total: 7, url: "project2.html" }
+      "start": { name: t("Python с нуля"), total: 7, url: "start.html" },
+      "roadmap": { name: t("Дорожная карта"), total: 5, url: "index.html" },
+      "project-flask": { name: t("Первый проект: Flask"), total: 6, url: "project.html#flask" },
+      "project-django": { name: t("Первый проект: Django"), total: 10, url: "project.html#django" },
+      "project-blog": { name: t("Второй проект: API блога"), total: 7, url: "project2.html" }
     };
     const body = dash.querySelector("[data-dash-rows]");
     const message = dash.querySelector("[data-dash-message]");
@@ -705,7 +710,7 @@
       fill.style.transform = "scaleX(" + (total ? done / total : 0) + ")";
       return el("div", { class: "dash-row" }, [
         el("a", { href: url, text: name }),
-        el("span", { class: "dash-count", text: done + " из " + total }),
+        el("span", { class: "dash-count", text: t("{d} из {n}", { d: done, n: total }) }),
         el("div", { class: "progress-track", "aria-hidden": "true" }, [fill])
       ]);
     }
@@ -720,10 +725,10 @@
         const steps = Array.isArray(progress[key]) ? progress[key].length : 0;
         body.appendChild(row(TRACKS[key].name, TRACKS[key].url, steps, TRACKS[key].total));
       });
-      body.appendChild(row("Задачи с автопроверкой", "practice.html", Object.keys(tasks).length, TASK_TOTAL));
+      body.appendChild(row(t("Задачи с автопроверкой"), "practice.html", Object.keys(tasks).length, TASK_TOTAL));
       body.appendChild(el("p", {
         class: "note",
-        text: exam && typeof exam.best === "number" ? "Лучший результат финального теста: " + exam.best + " из 15." : "Финальный тест пока не пройден."
+        text: exam && typeof exam.best === "number" ? t("Лучший результат финального теста: {b} из 15.", { b: exam.best }) : t("Финальный тест пока не пройден.")
       }));
     }
 
@@ -752,7 +757,7 @@
       link.click();
       link.remove();
       setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-      message.textContent = "Файл pyweb-progress.json сохранён. Откройте эту страницу на другом устройстве и загрузите его.";
+      message.textContent = t("Файл pyweb-progress.json сохранён. Откройте эту страницу на другом устройстве и загрузите его.");
     });
 
     file.addEventListener("change", function () {
@@ -766,9 +771,9 @@
         writeJson("pyweb_tasks", data.tasks);
         if (data.exam) writeJson("pyweb_exam", data.exam);
         render();
-        message.textContent = "Прогресс загружен.";
+        message.textContent = t("Прогресс загружен.");
       }).catch(function () {
-        message.textContent = "Это не файл прогресса PyWeb Guide. Текущий прогресс не изменён.";
+        message.textContent = t("Это не файл прогресса PyWeb Guide. Текущий прогресс не изменён.");
       }).finally(function () {
         file.value = "";
       });
@@ -790,8 +795,8 @@
 
     function draw() {
       const ctx = canvas.getContext("2d");
-      const name = nameInput.value.trim() || "Ваше имя";
-      const date = new Date().toLocaleDateString("ru-RU");
+      const name = nameInput.value.trim() || t("Ваше имя");
+      const date = new Date().toLocaleDateString(window.pywebLocale || "ru-RU");
       const w = canvas.width;
       const h = canvas.height;
 
@@ -807,7 +812,7 @@
       ctx.fillText("PYWEB GUIDE", w / 2, 100);
 
       ctx.font = "900 110px " + display;
-      ctx.fillText("СЕРТИФИКАТ О ПРОХОЖДЕНИИ", w / 2, 215);
+      ctx.fillText(t("СЕРТИФИКАТ О ПРОХОЖДЕНИИ"), w / 2, 215);
 
       ctx.fillStyle = "#ffc4ef";
       ctx.fillRect(0, 262, w, 110);
@@ -822,11 +827,11 @@
       ctx.fillText(name, w / 2, 345);
 
       ctx.font = "500 30px " + body;
-      ctx.fillText("прошёл(ла) финальный тест курса «Python для веб-разработки»", w / 2, 435);
-      ctx.fillText("Результат: " + score + " из 15 · " + date, w / 2, 485);
+      ctx.fillText(t("прошёл(ла) финальный тест курса «Python для веб-разработки»"), w / 2, 435);
+      ctx.fillText(t("Результат: {s} из 15 · {d}", { s: score, d: date }), w / 2, 485);
 
       ctx.font = "400 22px " + body;
-      ctx.fillText("Учебный сертификат для самопроверки. Не является официальным документом.", w / 2, 565);
+      ctx.fillText(t("Учебный сертификат для самопроверки. Не является официальным документом."), w / 2, 565);
     }
 
     examForm.addEventListener("submit", function () {
@@ -856,8 +861,9 @@
       if (right >= PASS) {
         (document.fonts
           ? Promise.all([
-              document.fonts.load('900 84px "Sofia Sans Extra Condensed"', "Сертификат"),
-              document.fonts.load("500 30px Onest", "Результат")
+              // Образец текста на языке страницы: для казахского подгрузится и расширенная кириллица
+              document.fonts.load('900 84px "Sofia Sans Extra Condensed"', t("СЕРТИФИКАТ О ПРОХОЖДЕНИИ")),
+              document.fonts.load("500 30px Onest", t("прошёл(ла) финальный тест курса «Python для веб-разработки»"))
             ]).catch(function () {})
           : Promise.resolve()
         ).then(draw);

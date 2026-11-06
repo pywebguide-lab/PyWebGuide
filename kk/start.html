@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python нөлден: браузердегі жеті сабақ — PyWeb Guide</title>
+
+  <meta name="description" content="Бұрын ешқашан бағдарлама жазбағандарға арналған Python бойынша жеті қысқа сабақ. Код тікелей бетте іске қосылады, ештеңе орнатудың қажеті жоқ.">
+  <link rel="canonical" href="https://pywebguide.github.io/kk/start.html">
+  <link rel="alternate" hreflang="ru" href="https://pywebguide.github.io/start.html">
+  <link rel="alternate" hreflang="kk" href="https://pywebguide.github.io/kk/start.html">
+  <link rel="alternate" hreflang="en" href="https://pywebguide.github.io/en/start.html">
+  <link rel="alternate" hreflang="x-default" href="https://pywebguide.github.io/start.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="kk_KZ">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Python нөлден: браузердегі жеті сабақ — PyWeb Guide">
+  <meta property="og:description" content="Бұрын ешқашан бағдарлама жазбағандарға арналған Python бойынша жеті қысқа сабақ. Код тікелей бетте іске қосылады, ештеңе орнатудың қажеті жоқ.">
+  <meta property="og:url" content="https://pywebguide.github.io/kk/start.html">
+  <meta property="og:image" content="https://pywebguide.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide плакаты: Python-да алғашқы сайт, бағдарлама жазбағандарға арналған тегін курс">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffd249">
+
+  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
+  <link rel="preload" href="../assets/fonts/fira-sans-extra-condensed-cyrillic-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/fira-sans-extra-condensed-cyrillic-ext-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+
+  <script>
+    // Бет жыпылықтамас үшін тақырып сурет салынғанға дейін таңдалады
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body data-band="yellow" id="top" data-no-toc>
+  <div id="progress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#content">Мазмұнға өту</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-text">PyWeb Guide</span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Мәзірді ашу" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Негізгі навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link active" href="start.html" aria-current="page">Нөлден</a></li>
+          <li><a class="nav-link" href="../course.html" hreflang="ru">Бүкіл курс</a></li>
+          <li><a class="nav-link" href="../project.html" hreflang="ru">Алғашқы жоба</a></li>
+          <li><a class="nav-link" href="../playground.html" hreflang="ru">Құмсалғыш</a></li>
+          <li><a class="nav-link" href="../glossary.html" hreflang="ru">Сөздік</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">Тағы <span class="caret" aria-hidden="true"></span></summary>
+          <ul class="nav-more-list">
+            <li><a href="../about.html" hreflang="ru">Python туралы</a></li>
+            <li><a href="../frameworks.html" hreflang="ru">Фреймворктер</a></li>
+            <li><a href="../databases.html" hreflang="ru">Дерекқорлар</a></li>
+            <li><a href="../deploy.html" hreflang="ru">Жариялау</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../templates.html" hreflang="ru">Үлгілер мен формалар</a></li>
+            <li><a href="../auth.html" hreflang="ru">Авторизация</a></li>
+            <li><a href="../api.html" hreflang="ru">REST API</a></li>
+            <li><a href="../testing.html" hreflang="ru">Тесттер</a></li>
+            <li><a href="../git.html" hreflang="ru">Git</a></li>
+            <li><a href="../project2.html" hreflang="ru">Екінші жоба</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../practice.html" hreflang="ru">Есептер</a></li>
+            <li><a href="../cheatsheet.html" hreflang="ru">Қысқаша анықтама</a></li>
+            <li><a href="../exam.html" hreflang="ru">Қорытынды тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../contacts.html" hreflang="ru">Байланыс</a></li>
+          </ul>
+        </details></li>
+          <li class="nav-lang" aria-label="Сайт тілі">
+            <a href="../start.html" hreflang="ru" lang="ru">РУС</a>
+            <a href="start.html" hreflang="kk" lang="kk" aria-current="true">ҚАЗ</a>
+            <a href="../en/start.html" hreflang="en" lang="en">ENG</a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Жарық тақырып">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="page-band"><div class="container page-hero page-hero--picture">
+<nav class="breadcrumb" aria-label="Навигациялық тізбек">
+<a href="index.html">Басты бет</a>
+<span aria-hidden="true">/</span>
+<span>Нөлден</span>
+</nav>
+<h1>Python нөлден</h1>
+<p class="lead">Бұрын ешқашан бағдарлама жазбағандарға арналған жеті қысқа сабақ. Код дәл осы бетте іске қосылады: «Іске қосу» батырмасын басыңыз, кодты өзгертіп, қайта іске қосыңыз. Қателесуден қорықпаңыз, ештеңе бұзылмайды.</p>
+<p class="note">Алғаш іске қосқанда браузер Python-ды жүктейді, бұл бірнеше секундқа созылады. Бейтаныс сөздер <a href="../glossary.html" hreflang="ru">сөздікте</a> бар (әзірге орыс тілінде).</p>
+<div class="progress-box" data-progress="start">
+  <p class="progress-label" role="status" aria-live="polite">7 сабақтың <span data-progress-count>0</span> сабағы өтілді</p>
+  <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
+  <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Прогресті тастау</button>
+</div>
+<img class="band-picture" src="../assets/img/snakes.jpg" width="1024" height="685" alt="Ескі гравюра: сегіз жылан, олардың арасында торлы питон бар" decoding="async" fetchpriority="high">
+</div></div>
+<section class="section" aria-label="Сабақтар">
+<div class="container">
+<ol class="project-steps" data-progress-list="start">
+  <li class="project-step lesson" id="lesson-1">
+    <div class="lesson-text">
+      <h2>1-сабақ. Алғашқы бағдарлама</h2>
+      <p>Бағдарлама — компьютерге арналған командалар тізімі. Ол оларды жоғарыдан төменге қарай кезекпен орындайды.</p>
+      <p><code>print</code> командасы мәтінді экранға шығарады. Мәтіннің өзі әрқашан тырнақшаға алынып жазылады.</p>
+      <p><strong>Байқап көріңіз:</strong> тырнақшаның ішіне атыңызды жазып, «Іске қосу» батырмасын басыңыз.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Сіздің бағдарламаңыз</span></div>
+  <pre><code>print("Сәлем!")
+print("Бұл менің алғашқы бағдарламам")</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="1"> Сабақ өтілді</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-2">
+    <div class="lesson-text">
+      <h2>2-сабақ. Айнымалылар: мәнді қалай есте сақтау</h2>
+      <p>Айнымалы — қораптағы жазу сияқты. Қорапқа мән салынады, содан кейін оған аты арқылы жүгінеді.</p>
+      <p>Мәндермен жұмыс істеуге болады: мысалы, жасқа бір қосу.</p>
+      <p><strong>Байқап көріңіз:</strong> өз атыңыз бен жасыңызды қойып, қайта іске қосыңыз.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Сіздің бағдарламаңыз</span></div>
+  <pre><code>name = "Аружан"
+age = 18
+
+print("Менің атым", name)
+print("Келесі жылы:", age + 1, "жас")</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="2"> Сабақ өтілді</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-3">
+    <div class="lesson-text">
+      <h2>3-сабақ. Шарттар: егер былай болса, онда былай</h2>
+      <p>Бағдарлама таңдау жасай алады. <code>if</code> сөзі «егер», ал <code>else</code> «әйтпесе» дегенді білдіреді.</p>
+      <p>Төрт бос орыннан тұратын шегініс қай жолдардың шартқа жататынын көрсетеді.</p>
+      <p><strong>Байқап көріңіз:</strong> температураны 10-ға өзгертіп, не өзгеретінін қараңыз.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Сіздің бағдарламаңыз</span></div>
+  <pre><code>temperature = -5
+
+if temperature &lt; 0:
+    print("Далада аяз, бөрігіңізді киіңіз")
+else:
+    print("Бөріксіз де болады")</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="3"> Сабақ өтілді</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-4">
+    <div class="lesson-text">
+      <h2>4-сабақ. Тізімдер мен циклдер: бір әрекетті көп рет</h2>
+      <p>Тізім бірнеше мәнді қатарынан сақтайды. <code>for</code> циклі оларды бір-бірден алып, әрқайсысымен бірдей әрекет жасайды.</p>
+      <p>Сайт лентаны осылай көрсетеді: оның жазбалар тізімі бар, ол оларды бірінен соң бірін шығарады.</p>
+      <p><strong>Байқап көріңіз:</strong> тізімге өз ісіңізді қосыңыз.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Сіздің бағдарламаңыз</span></div>
+  <pre><code>tasks = ["нан сатып алу", "сабақ оқу", "анама қоңырау шалу"]
+
+for task in tasks:
+    print("Істеу керек:", task)
+
+print("Барлық іс:", len(tasks))</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="4"> Сабақ өтілді</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-5">
+    <div class="lesson-text">
+      <h2>5-сабақ. Функциялар: өз командаңыз</h2>
+      <p>Функция — сіздің жеке командаңыз. Оны бір рет сипаттайды, ал қанша рет болса да шақыра береді.</p>
+      <p><code>def</code> сөзі сипаттаманы бастайды, ал <code>return</code> функцияның не қайтаратынын айтады.</p>
+      <p><strong>Байқап көріңіз:</strong> функцияны басқа атпен тағы бір рет шақырыңыз.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Сіздің бағдарламаңыз</span></div>
+  <pre><code>def greet(name):
+    return "Сәлем, " + name + "!"
+
+print(greet("Аружан"))
+print(greet("Марат"))</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="5"> Сабақ өтілді</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-6">
+    <div class="lesson-text">
+      <h2>6-сабақ. Сөздіктер: мәнді атауы бойынша табу</h2>
+      <p>Сөздік «атау мен мән» жұптарын дүкендегі баға тізімі сияқты сақтайды. Мәнді нөмірі бойынша емес, атауы бойынша табады.</p>
+      <p>Сайттар мұны үнемі пайдаланады: мысалы, бетті оның мекенжайы бойынша табады.</p>
+      <p><strong>Байқап көріңіз:</strong> өз тауарыңызды бағасымен қосыңыз.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Сіздің бағдарламаңыз</span></div>
+  <pre><code>prices = {"нан": 200, "сүт": 450}
+
+print("Нанның бағасы", prices["нан"], "теңге")
+
+prices["ірімшік"] = 1500
+print(prices)</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="6"> Сабақ өтілді</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-7">
+    <div class="lesson-text">
+      <h2>7-сабақ. Мұның сайттарға қандай қатысы бар</h2>
+      <p>Ең бастысын түсіну үшін сіз бәрін біліп қойдыңыз. Браузердегі мекенжай функцияны таңдайды, ал функция бетті қайтарады.</p>
+      <p>Төменде сіз жаңа ғана өткен нәрселерден — функциялар мен сөздіктен жасалған шағын сайт тұр.</p>
+      <p>Екінші мысал дәл осыны Flask-та жасайды. Бұл сайттарға арналған дайын құрал: <code>@app.route</code> жолы осы функцияны қай мекенжай ашатынын айтады.</p>
+      <p><strong>Байқап көріңіз:</strong> мекенжайды "/" деп өзгертіп, қайта іске қосыңыз.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Функциялар мен сөздіктен жасалған сайт</span></div>
+  <pre><code>def home():
+    return "Басты бет"
+
+def contacts():
+    return "Біздің байланыс деректеріміз"
+
+pages = {"/": home, "/contacts": contacts}
+
+address = "/contacts"
+print("Сіз аштыңыз:", address)
+print("Сайт жауап берді:", pages[address]())</code></pre>
+</div>
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Дәл осы Flask-та</span></div>
+  <pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Басты бет"
+
+print("Сайт жауап берді:", app.test_client().get("/").text)</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="7"> Сабақ өтілді</label>
+    </div>
+  </li>
+</ol>
+</div>
+</section>
+<section class="section" aria-labelledby="next-title">
+<div class="container">
+<div class="cta-panel">
+  <div>
+    <h2 id="next-title">Әрі қарай не бар</h2>
+    <p class="lead cta-lead">Енді сіз негізді түсінесіз. Әрі қарай сұрау нағыз сервер арқылы қалай өтетінін біліп, алғашқы сайтыңызды жасайсыз. Бұл бөлімдер әзірге орыс тілінде.</p>
+  </div>
+  <div class="cta-actions">
+    <a class="btn btn-primary" href="../about.html" hreflang="ru">Сайт қалай жұмыс істейді</a>
+    <a class="btn btn-secondary" href="../project.html" hreflang="ru">Алғашқы жоба</a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="mark reveal" aria-hidden="true"><span>P</span><span>Y</span><span>W</span><span>E</span><span>B</span><span>G</span><span>U</span><span>I</span><span>D</span><span>E</span></div>
+      <div class="footer-links">
+        <div><strong>Бастау</strong><ul><li><a href="start.html">Python нөлден</a></li><li><a href="../glossary.html" hreflang="ru">Сөздік</a></li><li><a href="../playground.html" hreflang="ru">Құмсалғыш</a></li></ul></div>
+        <div><strong>Түсіну</strong><ul><li><a href="../about.html" hreflang="ru">Python туралы</a></li><li><a href="../frameworks.html" hreflang="ru">Фреймворктер</a></li><li><a href="../databases.html" hreflang="ru">Дерекқорлар</a></li></ul></div>
+        <div><strong>Жасау</strong><ul><li><a href="../project.html" hreflang="ru">Алғашқы жоба</a></li><li><a href="../deploy.html" hreflang="ru">Жариялау</a></li><li><a href="../practice.html" hreflang="ru">Есептер</a></li></ul></div>
+        <div><strong>Сайт</strong><ul><li><a href="../course.html" hreflang="ru">Бүкіл курс</a></li><li><a href="../contacts.html" hreflang="ru">Байланыс</a></li><li><a href="index.html">Басты бет</a></li></ul></div>
+      </div>
+      <p class="footer-copy">© 2026 PyWeb Guide, Python-ның веб-әзірлеудегі рөлі туралы оқу жобасы</p>
+      <p class="note footer-note">Авторы: <a href="../contacts.html#authors" hreflang="ru">Жангужин Е. Е.</a> · Жаңартылған күні: <time datetime="2026-11-06">06.11.2026</time> · Мысалдардағы нұсқалар: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 · <a href="https://github.com/pywebguide/pywebguide.github.io" rel="noopener">GitHub-тағы бастапқы код</a></p>
+      <p class="note footer-note">Сурет: <a href="https://www.rawpixel.com/image/13959871/image-paper-cartoon-art" rel="noopener">жыландар бейнеленген гравюра, rawpixel, CC0</a>.</p>
+      <p class="note footer-note"><a href="../privacy.html" hreflang="ru">Құпиялылық саясаты</a> · <a href="../terms.html" hreflang="ru">Пайдалану шарттары</a></p>
+      <p class="note footer-note">Сайт оқу мақсатында жасалған. Форма хабарламалары GitHub-тағы ашық Issues бөлімі арқылы жіберіледі.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Жоғарыға айналдыру">↑</button>
+
+  <script data-goatcounter="https://pywebguide.goatcounter.com/count" async src="https://gc.zgo.at/count.v4.js" crossorigin="anonymous" integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"></script>
+  <script src="../assets/i18n.js"></script>
+  <script src="../script.js"></script>
+  <script src="../features.js"></script>
+</body>
+</html>

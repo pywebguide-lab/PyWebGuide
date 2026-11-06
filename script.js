@@ -1,5 +1,6 @@
 (function () {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const t = window.pywebT || function (text) { return text; };
 
   const menuButton = document.querySelector(".burger");
   const nav = document.getElementById("site-nav");
@@ -8,14 +9,14 @@
     if (!nav || !menuButton) return;
     nav.classList.remove("open");
     menuButton.setAttribute("aria-expanded", "false");
-    menuButton.setAttribute("aria-label", "Открыть меню");
+    menuButton.setAttribute("aria-label", t("Открыть меню"));
   }
 
   if (menuButton && nav) {
     menuButton.addEventListener("click", function () {
       const isOpen = nav.classList.toggle("open");
       menuButton.setAttribute("aria-expanded", String(isOpen));
-      menuButton.setAttribute("aria-label", isOpen ? "Закрыть меню" : "Открыть меню");
+      menuButton.setAttribute("aria-label", isOpen ? t("Закрыть меню") : t("Открыть меню"));
     });
 
     nav.querySelectorAll(".nav-link").forEach(function (link) {
@@ -199,7 +200,7 @@
 
     try {
       await copyText(code.innerText);
-      button.textContent = "Скопировано";
+      button.textContent = t("Скопировано");
       button.classList.add("copied");
 
       setTimeout(function () {
@@ -207,7 +208,7 @@
         button.classList.remove("copied");
       }, 1800);
     } catch (error) {
-      button.textContent = "Ошибка";
+      button.textContent = t("Ошибка");
 
       setTimeout(function () {
         button.textContent = oldText;
@@ -229,13 +230,13 @@
     const nextSteps = {
       django: {
         project: "project.html#django",
-        projectText: "Сделать первый проект на Django",
+        projectText: t("Сделать первый проект на Django"),
         docs: "https://docs.djangoproject.com/en/6.1/intro/tutorial01/",
-        docsText: "Руководство Django 6.1"
+        docsText: t("Руководство Django 6.1")
       },
       flask: {
         project: "project.html#flask",
-        projectText: "Сделать первый проект на Flask",
+        projectText: t("Сделать первый проект на Flask"),
         docs: "https://flask.palletsprojects.com/en/stable/quickstart/",
         docsText: "Flask 3.1: Quickstart"
       }
@@ -276,7 +277,7 @@
       const answered = django + flask;
 
       if (answered < QUIZ_COUNT) {
-        showQuizResult("Ответь на все вопросы: отвечено " + answered + " из " + QUIZ_COUNT + ".", "is-error");
+        showQuizResult(t("Ответь на все вопросы: отвечено {a} из {n}.", { a: answered, n: QUIZ_COUNT }), "is-error");
         showNextStep(null);
         return;
       }
@@ -285,10 +286,10 @@
       const score = " (Django: " + django + ", Flask: " + flask + ")";
 
       if (django > flask) {
-        showQuizResult("Тебе лучше подойдёт Django: готовая структура, ORM и админ-панель." + score, "is-django");
+        showQuizResult(t("Тебе лучше подойдёт Django: готовая структура, ORM и админ-панель.") + score, "is-django");
         showNextStep("django");
       } else {
-        showQuizResult("Тебе лучше подойдёт Flask: минимализм, гибкость и понятный старт." + score, "");
+        showQuizResult(t("Тебе лучше подойдёт Flask: минимализм, гибкость и понятный старт.") + score, "");
         showNextStep("flask");
       }
     });
@@ -381,7 +382,7 @@
       reset.addEventListener("click", function () {
         if (!reset.classList.contains("is-armed")) {
           reset.classList.add("is-armed");
-          reset.textContent = "Снять все отметки? Нажмите ещё раз";
+          reset.textContent = t("Снять все отметки? Нажмите ещё раз");
           resetTimer = setTimeout(disarmReset, 5000);
           return;
         }
@@ -418,7 +419,7 @@
     // Адрес новой записи в Issues с уже заполненным заголовком и текстом
     function issueLink(name, message) {
       return ISSUE_URL +
-        "?title=" + encodeURIComponent("Вопрос с сайта: " + name) +
+        "?title=" + encodeURIComponent(t("Вопрос с сайта: ") + name) +
         "&body=" + encodeURIComponent(message + "\n\n— " + name);
     }
 
@@ -492,13 +493,13 @@
 
       if (!result.ok) {
         addInfo(result.reason === "corrupted"
-          ? "Сохранённые данные повреждены. Их можно очистить кнопкой ниже."
-          : "localStorage недоступен в этом браузере.");
+          ? t("Сохранённые данные повреждены. Их можно очистить кнопкой ниже.")
+          : t("localStorage недоступен в этом браузере."));
         return;
       }
 
       if (!result.items.length) {
-        addInfo("Пока нет сохранённых сообщений.");
+        addInfo(t("Пока нет сохранённых сообщений."));
         return;
       }
 
@@ -510,7 +511,7 @@
         const date = new Date(item.date);
 
         name.textContent = item.name;
-        meta.textContent = (item.email ? " · " + item.email : "") + (isNaN(date) ? "" : " · " + date.toLocaleString("ru-RU"));
+        meta.textContent = (item.email ? " · " + item.email : "") + (isNaN(date) ? "" : " · " + date.toLocaleString(window.pywebLocale || "ru-RU"));
         text.textContent = item.message;
 
         li.appendChild(name);
@@ -560,11 +561,11 @@
       const name = nameField.value.trim();
       const message = messageField.value.trim();
 
-      setFieldError(nameField, name ? "" : "Напишите имя или псевдоним, чтобы мы знали, как к вам обращаться.");
-      setFieldError(messageField, message ? "" : "Напишите вопрос или предложение, хотя бы одно предложение.");
+      setFieldError(nameField, name ? "" : t("Напишите имя или псевдоним, чтобы мы знали, как к вам обращаться."));
+      setFieldError(messageField, message ? "" : t("Напишите вопрос или предложение, хотя бы одно предложение."));
 
       if (!name || !message) {
-        setStatus("Заполните отмеченные поля.", "error");
+        setStatus(t("Заполните отмеченные поля."), "error");
         (name ? messageField : nameField).focus();
         shakeForm();
         return;
@@ -594,9 +595,9 @@
       link.href = url;
       link.target = "_blank";
       link.rel = "noopener";
-      link.textContent = "Открыть GitHub ещё раз";
+      link.textContent = t("Открыть GitHub ещё раз");
 
-      setStatus("Сообщение ещё не отправлено: на вкладке GitHub нажмите кнопку создания. ", "success");
+      setStatus(t("Сообщение ещё не отправлено: на вкладке GitHub нажмите кнопку создания. "), "success");
       status.appendChild(link);
 
       form.reset();
@@ -619,8 +620,8 @@
       clearButton.addEventListener("click", function () {
         if (!clearButton.classList.contains("is-armed")) {
           clearButton.classList.add("is-armed");
-          clearButton.textContent = "Точно удалить? Нажмите ещё раз";
-          setStatus("Сообщения удалятся без возможности восстановить. Нажмите кнопку ещё раз, чтобы подтвердить.", "error");
+          clearButton.textContent = t("Точно удалить? Нажмите ещё раз");
+          setStatus(t("Сообщения удалятся без возможности восстановить. Нажмите кнопку ещё раз, чтобы подтвердить."), "error");
           clearTimer = setTimeout(disarmClear, 5000);
           return;
         }
@@ -629,9 +630,9 @@
 
         try {
           localStorage.removeItem(STORE_KEY);
-          setStatus("Сохранённые сообщения удалены.", "success");
+          setStatus(t("Сохранённые сообщения удалены."), "success");
         } catch (error) {
-          setStatus("Не удалось очистить: localStorage недоступен.", "error");
+          setStatus(t("Не удалось очистить: localStorage недоступен."), "error");
         }
 
         renderSaved();
@@ -715,7 +716,7 @@
     const name = label ? label.textContent.trim() : "";
 
     // Команды терминала, HTML-шаблоны и SQL не подсвечиваем как Python
-    if (/Терминал|\.html$|SQL/.test(name)) return;
+    if (/Терминал|Terminal|\.html$|SQL/.test(name)) return;
 
     code.innerHTML = highlightPython(code.textContent);
   });
@@ -762,14 +763,14 @@
       });
 
       if (answered < groups.length) {
-        score.textContent = "Ответь на все вопросы: отвечено " + answered + " из " + groups.length + ".";
+        score.textContent = t("Ответь на все вопросы: отвечено {a} из {n}.", { a: answered, n: groups.length });
         score.className = "check-score quiz-result is-error";
         return;
       }
 
-      score.textContent = "Верно " + right + " из " + groups.length + (right === groups.length
-        ? ". Отлично, можно идти дальше!"
-        : ". Посмотри объяснения под вопросами.");
+      score.textContent = t(right === groups.length
+        ? "Верно {r} из {n}. Отлично, можно идти дальше!"
+        : "Верно {r} из {n}. Посмотри объяснения под вопросами.", { r: right, n: groups.length });
     });
 
     checkForm.addEventListener("reset", clear);
@@ -792,7 +793,7 @@
       if (!inProgress) return;
 
       unfinished++;
-      link.querySelector("[data-track-count]").textContent = done + " из " + total;
+      link.querySelector("[data-track-count]").textContent = t("{d} из {n}", { d: done, n: total });
     });
 
     continueBox.hidden = unfinished === 0;

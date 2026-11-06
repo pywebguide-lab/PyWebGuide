@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PyWeb Guide — Python-да алғашқы сайт нөлден</title>
+
+  <meta name="description" content="Бұрын ешқашан бағдарлама жазбағандарға арналған тегін оқу сайты: Python негіздері тікелей браузерде және алғашқы сайтты қадам-қадаммен жасау.">
+  <link rel="canonical" href="https://pywebguide.github.io/kk/">
+  <link rel="alternate" hreflang="ru" href="https://pywebguide.github.io/">
+  <link rel="alternate" hreflang="kk" href="https://pywebguide.github.io/kk/">
+  <link rel="alternate" hreflang="en" href="https://pywebguide.github.io/en/">
+  <link rel="alternate" hreflang="x-default" href="https://pywebguide.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="kk_KZ">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="PyWeb Guide — Python-да алғашқы сайт нөлден">
+  <meta property="og:description" content="Бұрын ешқашан бағдарлама жазбағандарға арналған тегін оқу сайты: Python негіздері тікелей браузерде және алғашқы сайтты қадам-қадаммен жасау.">
+  <meta property="og:url" content="https://pywebguide.github.io/kk/">
+  <meta property="og:image" content="https://pywebguide.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide плакаты: Python-да алғашқы сайт, бағдарлама жазбағандарға арналған тегін курс">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffd249">
+
+  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
+  <link rel="preload" href="../assets/fonts/fira-sans-extra-condensed-cyrillic-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/fira-sans-extra-condensed-cyrillic-ext-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+
+  <script>
+    // Бет жыпылықтамас үшін тақырып сурет салынғанға дейін таңдалады
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "PyWeb Guide",
+      "url": "https://pywebguide.github.io/kk/",
+      "inLanguage": "kk",
+      "description": "Python-ның веб-әзірлеудегі рөлі туралы оқу ресурсы: Django, Flask, дерекқорлар және қадам-қадаммен алғашқы жоба.",
+      "author": { "@type": "Person", "name": "Жангужин Е. Е." }
+    }
+  </script>
+</head>
+
+<body data-band="yellow" id="top" class="home" data-no-toc>
+  <div id="progress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#content">Мазмұнға өту</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-text">PyWeb Guide</span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Мәзірді ашу" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Негізгі навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="start.html">Нөлден</a></li>
+          <li><a class="nav-link" href="../course.html" hreflang="ru">Бүкіл курс</a></li>
+          <li><a class="nav-link" href="../project.html" hreflang="ru">Алғашқы жоба</a></li>
+          <li><a class="nav-link" href="../playground.html" hreflang="ru">Құмсалғыш</a></li>
+          <li><a class="nav-link" href="../glossary.html" hreflang="ru">Сөздік</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">Тағы <span class="caret" aria-hidden="true"></span></summary>
+          <ul class="nav-more-list">
+            <li><a href="../about.html" hreflang="ru">Python туралы</a></li>
+            <li><a href="../frameworks.html" hreflang="ru">Фреймворктер</a></li>
+            <li><a href="../databases.html" hreflang="ru">Дерекқорлар</a></li>
+            <li><a href="../deploy.html" hreflang="ru">Жариялау</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../templates.html" hreflang="ru">Үлгілер мен формалар</a></li>
+            <li><a href="../auth.html" hreflang="ru">Авторизация</a></li>
+            <li><a href="../api.html" hreflang="ru">REST API</a></li>
+            <li><a href="../testing.html" hreflang="ru">Тесттер</a></li>
+            <li><a href="../git.html" hreflang="ru">Git</a></li>
+            <li><a href="../project2.html" hreflang="ru">Екінші жоба</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../practice.html" hreflang="ru">Есептер</a></li>
+            <li><a href="../cheatsheet.html" hreflang="ru">Қысқаша анықтама</a></li>
+            <li><a href="../exam.html" hreflang="ru">Қорытынды тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../contacts.html" hreflang="ru">Байланыс</a></li>
+          </ul>
+        </details></li>
+          <li class="nav-lang" aria-label="Сайт тілі">
+            <a href="../index.html" hreflang="ru" lang="ru">РУС</a>
+            <a href="index.html" hreflang="kk" lang="kk" aria-current="true">ҚАЗ</a>
+            <a href="../en/index.html" hreflang="en" lang="en">ENG</a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Жарық тақырып">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="content" class="page" tabindex="-1">
+      <div class="lang-note"><div class="container">Сайт қазақ тіліне аударылып жатыр. Кейбір бөлімдер әзірге тек орыс тілінде.</div></div>
+
+      <div class="poster-hero field-yellow">
+        <div class="container">
+          <h1 class="hero-title"><span class="line"><span>Алғашқы сайт</span></span> <span class="line"><span>Python-да</span></span></h1>
+          <img class="hero-sticker" src="../assets/img/python-left.jpg" width="510" height="474" alt="Ескі гравюра: торлы питон және тағы бір жылан" decoding="async" fetchpriority="high">
+
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <p class="lead">Бұрын ешқашан бағдарлама жазбағандарға арналған тегін оқу сайты. Қарапайым бағдарламалау тілі Python-ның негіздерін үйреніп, өз сайтыңызды қадам-қадаммен жасайсыз.</p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="start.html">Нөлден бастау</a>
+              </div>
+              <p class="hero-hint"><a href="../course.html" hreflang="ru">Мен Python-ды білемін</a></p>
+            </div>
+
+            <div class="hero-live">
+              <div class="code-block" data-run="python" data-open data-ui data-poster="#poster-out">
+                <div class="code-head"><span>Атты өзгертіп, «Іске қосу» батырмасын басыңыз</span></div>
+                <pre><code>name = "Аружан"
+print("Сәлем,", name)</code></pre>
+              </div>
+              <div class="poster-out field-pink" aria-hidden="true"><span id="poster-out">Сәлем, Аружан</span></div>
+              <p class="hero-note">Бұл — нағыз Python бағдарламасы. Ол дәл осы жерде жұмыс істеп, осы бетке жазады.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="section" id="continue" aria-labelledby="continue-title" hidden>
+        <div class="container">
+          <div class="continue-box">
+            <div>
+              <h2 id="continue-title">Оқуды жалғастыру</h2>
+              <p>Сіз бастап қойдыңыз. Міне, тоқтаған жеріңіз.</p>
+            </div>
+            <div class="continue-links">
+              <a class="btn btn-primary" href="start.html" data-track="start" data-total="7" hidden>Python нөлден: <span data-track-count></span></a>
+              <a class="btn btn-primary" href="../project.html#flask" hreflang="ru" data-track="project-flask" data-total="6" hidden>Flask: <span data-track-count></span></a>
+              <a class="btn btn-primary" href="../project.html#django" hreflang="ru" data-track="project-django" data-total="10" hidden>Django: <span data-track-count></span></a>
+              <a class="btn btn-primary" href="../project2.html" hreflang="ru" data-track="project-blog" data-total="7" hidden>Блог API: <span data-track-count></span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="board" aria-labelledby="intro-title">
+        <div class="container">
+          <div class="board-grid">
+            <div class="tile tile-a field-ink reveal"><h2 id="intro-title" class="slogan"><span class="m"><span>Ештеңе білу</span></span><span class="m"><span>міндетті емес</span></span></h2></div>
+            <div class="tile tile-b field-cyan reveal"><p class="slogan"><span>7</span><span>сабақ</span></p></div>
+            <div class="tile tile-c field-orange reveal"><img src="../assets/img/eniac.jpg" width="900" height="617" alt="Екі әйел кабель панельдерінің жанында ENIAC компьютерін баптап жатыр, 1946 жыл" loading="lazy" decoding="async"></div>
+          </div>
+          <div class="tile tile-text field-white reveal">
+            <h3>Бұл қалай жұмыс істейді</h3>
+            <p>Сіз бір жол кодтан бастап, батырманы басасыз. Алғашқы сабақтар тікелей браузерде өтеді, сондықтан ештеңе орнатудың қажеті жоқ, ал қате ештеңені бұзбайды. Содан кейін сайттың іштей қалай құрылғанын білесіз: сұрауыңызды кім қабылдайды, деректер қайда сақталады және бет қайдан алынады. Осыдан кейін дайын нұсқаулық бойынша алғашқы сайтыңызды — тапсырмалар тізімін жасап, оны интернетке жариялайсыз. Бүкіл курс тегін. Оны Солтүстік Қазақстан университетінің студенті жасады.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="band field-white" aria-labelledby="plan-title">
+        <div class="container">
+          <h2 id="plan-title" class="band-title reveal">Өз сайтыңызға дейін бес қадам</h2>
+
+          <div class="progress-box reveal" data-progress="roadmap">
+            <p class="progress-label" role="status" aria-live="polite">5 қадамның <span data-progress-count>0</span> қадамы өтілді. Белгілер осы браузерде сақталады.</p>
+            <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
+            <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Прогресті тастау</button>
+          </div>
+
+          <div class="stage-bar" data-progress-list="roadmap">
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-yellow">7 сабақ</span>
+              <div class="timeline-content">
+                <h3>Python негіздерін үйреніңіз</h3>
+                <p>Деректерді қалай сақтау, шарт қою және өз командаларыңызды жазу. <a href="start.html">«Нөлден» сабақтары</a>.</p>
+                <label class="step-check"><input type="checkbox" data-step="1"> Қадам өтілді</label>
+              </div>
+            </div>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-pink">8 қадам</span>
+              <div class="timeline-content">
+                <h3>Сайттың қалай жұмыс істейтінін түсініңіз</h3>
+                <p>Сілтемені басқаннан бет пайда болғанға дейін не болады. <a href="../about.html#flow" hreflang="ru">Қадамдық талдау</a>.</p>
+                <label class="step-check"><input type="checkbox" data-step="2"> Қадам өтілді</label>
+              </div>
+            </div>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-cyan">1 тест</span>
+              <div class="timeline-content">
+                <h3>Құралды таңдаңыз</h3>
+                <p>Сайт жасауға арналған дайын жиынтық екеу: Flask және Django. Қайсысын алу керегін <a href="../frameworks.html#quiz" hreflang="ru">шағын тест</a> айтады.</p>
+                <label class="step-check"><input type="checkbox" data-step="3"> Қадам өтілді</label>
+              </div>
+            </div>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-orange">1 бөлім</span>
+              <div class="timeline-content">
+                <h3>Сайтқа есте сақтауды үйретіңіз</h3>
+                <p>Жазбалар <a href="../databases.html" hreflang="ru">дерекқорда</a> сақталады, сондықтан жоғалмайды.</p>
+                <label class="step-check"><input type="checkbox" data-step="4"> Қадам өтілді</label>
+              </div>
+            </div>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-blue">6 қадам</span>
+              <div class="timeline-content">
+                <h3>Өз сайтыңызды жасаңыз</h3>
+                <p><a href="../project.html" hreflang="ru">Дайын нұсқаулығы</a> бар қарапайым алғашқы жоба. Кейін оны <a href="../deploy.html" hreflang="ru">интернетке жариялауға</a> болады.</p>
+                <label class="step-check"><input type="checkbox" data-step="5"> Қадам өтілді</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band field-pink" aria-labelledby="parts-title">
+        <div class="container">
+          <div class="parts-board">
+            <div class="part-head reveal">
+              <h2 id="parts-title" class="band-title">Сайт неден тұрады</h2>
+              <p>Сізге ең жиі кездесетін төрт сөз.</p>
+            </div>
+            <a class="part part-route field-yellow reveal" href="../glossary.html#route" hreflang="ru">
+              <img src="../assets/img/switchboard.jpg" width="900" height="715" alt="Bell System халықаралық коммутаторында қоңырауларды қосып отырған телефонистер" loading="lazy" decoding="async">
+              <span class="part-bar field-yellow"><strong>Маршрут</strong><span>Мекенжайды қажетті бетпен байланыстырады, телефонист қоңырауларды қосқан сияқты.</span></span>
+            </a>
+            <a class="part part-server field-cyan reveal" href="../glossary.html#server" hreflang="ru">
+              <img src="../assets/img/eniac.jpg" width="900" height="617" alt="ENIAC компьютерінің панельдерін баптап жатқан әйел, 1946 жыл" loading="lazy" decoding="async">
+              <span class="part-bar field-cyan"><strong>Сервер</strong><span>Сайт бағдарламасы жұмыс істейтін компьютер. Суретте — ENIAC, 1946 жыл.</span></span>
+            </a>
+            <a class="part part-base field-orange reveal" href="../glossary.html#database" hreflang="ru">
+              <img src="../assets/img/card-catalog.jpg" width="900" height="675" alt="Конгресс кітапханасындағы карточкалық каталог жәшіктерінің қатарлары" loading="lazy" decoding="async">
+              <span class="part-bar field-orange"><strong>Дерекқор</strong><span>Жазбаларды каталогтағы карточкалар сияқты сақтайды.</span></span>
+            </a>
+            <a class="part part-frame field-white reveal" href="../glossary.html#framework" hreflang="ru">
+              <img src="../assets/img/reinhardt.jpg" width="900" height="945" alt="Гитарист Джанго Рейнхардт гитарада ойнап отыр, шамамен 1946 жыл" loading="lazy" decoding="async">
+              <span class="part-bar field-white"><strong>Фреймворк</strong><span>Сайт жасауға арналған жиынтық. Django осы гитаристің құрметіне аталған.</span></span>
+            </a>
+            <div class="part-more field-white reveal"><p>Бейтаныс сөз кездестірдіңіз бе? Барлығы <a href="../glossary.html" hreflang="ru">сөздікте</a> түсіндірілген.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band field-cyan" aria-labelledby="inside-title">
+        <div class="container">
+          <h2 id="inside-title" class="band-title reveal">Ішінде не бар</h2>
+          <ul class="lineup">
+            <li class="reveal"><a href="start.html"><span>Python нөлден</span><span>Орнатусыз, тікелей браузерде жеті сабақ</span><span>Сабақтар</span></a></li>
+            <li class="reveal"><a href="../about.html" hreflang="ru"><span>Python туралы</span><span>Бетті ашқанда не болады</span><span>Бөлім</span></a></li>
+            <li class="reveal"><a href="../frameworks.html" hreflang="ru"><span>Фреймворктер</span><span>Django, Flask және FastAPI: қайсысын таңдау керек</span><span>Бөлім</span></a></li>
+            <li class="reveal"><a href="../databases.html" hreflang="ru"><span>Дерекқорлар</span><span>Сайт жазбаларды қайда сақтайды және оларды қалай табады</span><span>Бөлім</span></a></li>
+            <li class="reveal"><a href="../project.html" hreflang="ru"><span>Алғашқы жоба</span><span>Flask немесе Django-дағы тапсырмалар тізімі</span><span>Жоба</span></a></li>
+            <li class="reveal"><a href="../deploy.html" hreflang="ru"><span>Жариялау</span><span>PythonAnywhere арқылы сайт интернетте</span><span>Бөлім</span></a></li>
+            <li class="reveal"><a href="../templates.html" hreflang="ru"><span>Үлгілер мен формалар</span><span>Үлгілерден жасалған беттер және деректерді тексеру</span><span>Бөлім</span></a></li>
+            <li class="reveal"><a href="../auth.html" hreflang="ru"><span>Авторизация</span><span>Құпиясөздер, кіру және қолжетімділік құқықтары</span><span>Бөлім</span></a></li>
+            <li class="reveal"><a href="../api.html" hreflang="ru"><span>REST API</span><span>Бағдарламалар деректермен қалай алмасады</span><span>Бөлім</span></a></li>
+            <li class="reveal"><a href="../testing.html" hreflang="ru"><span>Тесттер</span><span>Бәрі жұмыс істейтінін қалай тексеруге болады</span><span>Бөлім</span></a></li>
+            <li class="reveal"><a href="../git.html" hreflang="ru"><span>Git</span><span>Кодтағы өзгерістер тарихы</span><span>Бөлім</span></a></li>
+            <li class="reveal"><a href="../project2.html" hreflang="ru"><span>Екінші жоба</span><span>Блогқа арналған API</span><span>Жоба</span></a></li>
+            <li class="reveal"><a href="../playground.html" hreflang="ru"><span>Құмсалғыш</span><span>Кодты жазып, бірден іске қосыңыз</span><span>Құрал</span></a></li>
+            <li class="reveal"><a href="../practice.html" hreflang="ru"><span>Есептер</span><span>Автоматты тексерілетін он есеп</span><span>Практика</span></a></li>
+            <li class="reveal"><a href="../cheatsheet.html" hreflang="ru"><span>Қысқаша анықтама</span><span>Ең маңыздысы бір бетте</span><span>Құрал</span></a></li>
+            <li class="reveal"><a href="../exam.html" hreflang="ru"><span>Қорытынды тест</span><span>Есте не қалғанын тексеріңіз</span><span>Практика</span></a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="band field-orange" aria-labelledby="words-title">
+        <div class="container">
+          <h2 id="words-title" class="band-title band-title--mid reveal">Сөздер қарапайым тілмен</h2>
+          <div class="words">
+            <a class="reveal" href="../glossary.html#python" hreflang="ru">Python</a>
+            <a class="reveal" href="../glossary.html#server" hreflang="ru">Сервер</a>
+            <a class="reveal" href="../glossary.html#backend" hreflang="ru">Backend</a>
+            <a class="reveal" href="../glossary.html#http" hreflang="ru">HTTP</a>
+            <a class="reveal" href="../glossary.html#html" hreflang="ru">HTML</a>
+            <a class="reveal" href="../glossary.html#css" hreflang="ru">CSS</a>
+            <a class="reveal" href="../glossary.html#javascript" hreflang="ru">JavaScript</a>
+            <a class="reveal" href="../glossary.html#framework" hreflang="ru">Фреймворк</a>
+            <a class="reveal" href="../glossary.html#django" hreflang="ru">Django</a>
+            <a class="reveal" href="../glossary.html#flask" hreflang="ru">Flask</a>
+            <a class="reveal" href="../glossary.html#database" hreflang="ru">Дерекқор</a>
+            <a class="reveal" href="../glossary.html#sql" hreflang="ru">SQL</a>
+            <a class="reveal" href="../glossary.html#orm" hreflang="ru">ORM</a>
+            <a class="reveal" href="../glossary.html#api" hreflang="ru">API</a>
+            <a class="reveal" href="../glossary.html#git" hreflang="ru">Git</a>
+            <a class="reveal" href="../glossary.html#deploy" hreflang="ru">Deploy</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band field-white" aria-labelledby="ideas-title">
+        <div class="container">
+          <h2 id="ideas-title" class="band-title reveal">Не жасауға болады</h2>
+          <div class="ideas">
+            <article class="idea field-yellow reveal"><h3>Тапсырмалар тізімі</h3><p>Істерді қосу, жою және белгілеу: ең қарапайым нағыз сайт. <a href="../project.html" hreflang="ru">Қадамдық нұсқаулық</a>.</p></article>
+            <article class="idea field-pink reveal"><h3>Шағын блог</h3><p>Мақалалар, айдарлар және әр мақалаға жеке бет.</p></article>
+            <article class="idea field-cyan reveal"><h3>Сілтеме қысқартқыш</h3><p>Ұзын сілтеме қысқаға айналады. Қарапайым логика және дерекқор.</p></article>
+            <article class="idea field-orange reveal"><h3>Портфолио</h3><p>Жобаларыңыз, байланыс деректеріңіз және материалдарды әдемі ұсынуы бар жеке сайт.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="faq-title">
+        <div class="faq-head field-yellow">
+          <div class="container"><h2 id="faq-title" class="band-title reveal">Жиі қойылатын сұрақтар</h2></div>
+        </div>
+      <div class="faq-band field-white">
+        <div class="container">
+          <h3 class="reveal">Мен ешқашан бағдарлама жазған емеспін. Менде шыға ма?</h3>
+          <p class="reveal">Иә. <a href="start.html">«Нөлден» сабақтарынан</a> бастаңыз: оларға тәжірибе де, бағдарлама орнату да қажет емес.</p>
+        </div>
+      </div>
+      <div class="faq-band field-pink">
+        <div class="container">
+          <h3 class="reveal">Бұл ақылы ма?</h3>
+          <p class="reveal">Жоқ, бүкіл сайт тегін.</p>
+        </div>
+      </div>
+      <div class="faq-band field-white">
+        <div class="container">
+          <h3 class="reveal">Django мен Flask-ты бірден үйрену керек пе?</h3>
+          <p class="reveal">Жоқ. Бір фреймворкті таңдап, онда қарапайым жоба жасап, содан кейін ғана екіншісімен салыстырған дұрыс.</p>
+        </div>
+      </div>
+      <div class="faq-band field-pink">
+        <div class="container">
+          <h3 class="reveal">Дерекқорсыз сайт жасауға бола ма?</h3>
+          <p class="reveal">Иә, бірақ нақты жобалардың көбі пайдаланушыларды, тауарларды немесе контентті сақтайды, сондықтан дерекқор тез қажет болады.</p>
+        </div>
+      </div>
+      <div class="faq-band field-white">
+        <div class="container">
+          <h3 class="reveal">Не маңыздырақ: теория ма, практика ма?</h3>
+          <p class="reveal">Практика. Теория не болып жатқанын түсінуге көмектеседі, бірақ дағды тек код жазып, қателерді талдағаннан кейін пайда болады.</p>
+        </div>
+      </div>
+      </section>
+
+      <section class="section sources-band" aria-labelledby="sources-title">
+        <div class="container">
+          <div class="panel sources reveal">
+            <h2 id="sources-title">Дереккөздер</h2>
+            <p class="note">Сайт материалдары ресми құжаттамамен салыстырылды. Тексерілген күні: <time datetime="2026-11-06">06.11.2026</time>.</p>
+            <ul class="list">
+              <li><a href="https://docs.python.org/3/" rel="noopener">Python 3 құжаттамасы</a>: тіл және стандартты кітапхана</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/" rel="noopener">Django 6.1 құжаттамасы</a>: ағымдағы нұсқасы 6.1.3</li>
+              <li><a href="https://flask.palletsprojects.com/en/stable/" rel="noopener">Flask 3.1 құжаттамасы</a>: ағымдағы нұсқасы 3.1.3</li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview" rel="noopener">MDN: HTTP хаттамасына шолу</a> (ағылшынша): браузер сервермен қалай сөйлеседі</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-open field-blue" aria-labelledby="final-title">
+        <div class="container">
+          <h2 id="final-title" class="band-title reveal">Қазір бастаңыз</h2>
+          <div class="cta-side">
+            <img class="sticker reveal" src="../assets/img/python-right.jpg" width="471" height="450" alt="Ескі гравюра: сол парақтағы үш жылан" loading="lazy" decoding="async">
+            <p class="reveal">Тіркелу қажет емес, ал алғашқы сабаққа бірнеше минут кетеді.</p>
+          </div>
+          <div class="cta-try reveal">
+            <div class="code-block" data-run="python" data-open>
+              <div class="code-head"><span>Алғашқы сабақ ашық тұр</span></div>
+              <pre><code>print("Сәлем!")
+print("Бұл менің алғашқы бағдарламам")</code></pre>
+            </div>
+            <a class="btn btn-primary" href="start.html#lesson-1">Алғашқы сабақты ашу</a>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="mark reveal" aria-hidden="true"><span>P</span><span>Y</span><span>W</span><span>E</span><span>B</span><span>G</span><span>U</span><span>I</span><span>D</span><span>E</span></div>
+      <div class="footer-links">
+        <div><strong>Бастау</strong><ul><li><a href="start.html">Python нөлден</a></li><li><a href="../glossary.html" hreflang="ru">Сөздік</a></li><li><a href="../playground.html" hreflang="ru">Құмсалғыш</a></li></ul></div>
+        <div><strong>Түсіну</strong><ul><li><a href="../about.html" hreflang="ru">Python туралы</a></li><li><a href="../frameworks.html" hreflang="ru">Фреймворктер</a></li><li><a href="../databases.html" hreflang="ru">Дерекқорлар</a></li></ul></div>
+        <div><strong>Жасау</strong><ul><li><a href="../project.html" hreflang="ru">Алғашқы жоба</a></li><li><a href="../deploy.html" hreflang="ru">Жариялау</a></li><li><a href="../practice.html" hreflang="ru">Есептер</a></li></ul></div>
+        <div><strong>Сайт</strong><ul><li><a href="../course.html" hreflang="ru">Бүкіл курс</a></li><li><a href="../contacts.html" hreflang="ru">Байланыс</a></li><li><a href="index.html">Басты бет</a></li></ul></div>
+      </div>
+      <p class="footer-copy">© 2026 PyWeb Guide, Python-ның веб-әзірлеудегі рөлі туралы оқу жобасы</p>
+      <p class="note footer-note">Авторы: <a href="../contacts.html#authors" hreflang="ru">Жангужин Е. Е.</a> · Жаңартылған күні: <time datetime="2026-11-06">06.11.2026</time> · Мысалдардағы нұсқалар: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 · <a href="https://github.com/pywebguide/pywebguide.github.io" rel="noopener">GitHub-тағы бастапқы код</a></p>
+      <p class="note footer-note">Суреттер: <a href="https://commons.wikimedia.org/wiki/File:Two_women_operating_ENIAC_(full_resolution).jpg" rel="noopener">ENIAC</a>, АҚШ армиясы; <a href="https://commons.wikimedia.org/wiki/File:Photograph_of_Women_Working_at_a_Bell_System_Telephone_Switchboard_(3660047829).jpg" rel="noopener">Bell коммутаторы</a>, АҚШ Ұлттық архиві; <a href="https://commons.wikimedia.org/wiki/File:Copyright_Card_Catalog_Files.jpg" rel="noopener">каталог</a>, Michael Holley; <a href="https://commons.wikimedia.org/wiki/File:Django_Reinhardt_(Gottlieb_07301).jpg" rel="noopener">Джанго Рейнхардт</a>, William P. Gottlieb, Конгресс кітапханасы; <a href="https://www.rawpixel.com/image/13959871/image-paper-cartoon-art" rel="noopener">жыландар гравюрасы</a>, rawpixel, CC0. Қалған суреттер қоғамдық игілікте.</p>
+      <p class="note footer-note"><a href="../privacy.html" hreflang="ru">Құпиялылық саясаты</a> · <a href="../terms.html" hreflang="ru">Пайдалану шарттары</a></p>
+      <p class="note footer-note">Сайт оқу мақсатында жасалған. Форма хабарламалары GitHub-тағы ашық Issues бөлімі арқылы жіберіледі.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Жоғарыға айналдыру">↑</button>
+
+  <script data-goatcounter="https://pywebguide.goatcounter.com/count" async src="https://gc.zgo.at/count.v4.js" crossorigin="anonymous" integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"></script>
+  <script src="../assets/i18n.js"></script>
+  <script src="../script.js"></script>
+  <script src="../features.js"></script>
+</body>
+</html>

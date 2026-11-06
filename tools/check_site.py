@@ -1,4 +1,5 @@
 """Проверка сайта без сети: ссылки, якоря, заголовки, описания, карта сайта. Код выхода 1 при ошибках."""
+import posixpath
 import re
 import sys
 from html.parser import HTMLParser
@@ -54,12 +55,21 @@ class Page(HTMLParser):
             self.title += data
 
 
+def resolve(name, path):
+    """Путь ссылки относительно корня сайта. Переводы лежат в kk/ и en/, у 404.html база — корень."""
+    if path.startswith("/"):
+        return path.lstrip("/") or "index.html"
+    folder = "" if name == "404.html" else posixpath.dirname(name)
+    target = posixpath.normpath(posixpath.join(folder, path))
+    return "index.html" if target == "." else target
+
+
 def main():
     pages = {}
-    for path in sorted(ROOT.glob("*.html")):
+    for path in sorted([*ROOT.glob("*.html"), *ROOT.glob("kk/*.html"), *ROOT.glob("en/*.html")]):
         page = Page()
         page.feed(path.read_text(encoding="utf-8"))
-        pages[path.name] = page
+        pages[path.relative_to(ROOT).as_posix()] = page
 
     errors = []
     for name, page in pages.items():
@@ -75,17 +85,17 @@ def main():
             parts = urlsplit(link)
             if parts.scheme or link.startswith(("//", "mailto:", "tel:", "data:")):
                 continue
-            # Страница 404 открывается с любого адреса, поэтому её ссылки абсолютные
-            target = unquote(parts.path).removeprefix("/") or (name if not parts.path else "index.html")
-            if not (ROOT / target).exists():
+            target = resolve(name, unquote(parts.path)) if parts.path else name
+            if target.startswith("..") or not (ROOT / target).is_file():
                 errors.append(f"{name}: нет файла {link}")
             elif parts.fragment and target in pages and parts.fragment not in pages[target].ids:
                 errors.append(f"{name}: нет якоря {link}")
 
     sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
-    listed = {Path(urlsplit(url).path).name for url in re.findall(r"<loc>(.*?)</loc>", sitemap)}
+    # «https://…/kk/» в карте сайта — это страница kk/index.html
+    listed = {(urlsplit(url).path.lstrip("/") + ("index.html" if url.endswith("/") else "")) for url in re.findall(r"<loc>(.*?)</loc>", sitemap)}
     for name in pages:
-        if name not in ("404.html", "index.html") and name not in listed:
+        if name != "404.html" and name not in listed:
             errors.append(f"sitemap.xml: нет страницы {name}")
 
     for error in errors:
