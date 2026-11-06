@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python с нуля: семь уроков в браузере — PyWeb Guide</title>
+
+  <meta name="description" content="Семь коротких уроков Python для тех, кто никогда не программировал. Код запускается прямо на странице, устанавливать ничего не нужно.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/start.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Python с нуля: семь уроков в браузере — PyWeb Guide">
+  <meta property="og:description" content="Семь коротких уроков Python для тех, кто никогда не программировал. Код запускается прямо на странице, устанавливать ничего не нужно.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/start.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Плакат PyWeb Guide: первый сайт на Python, бесплатный курс для тех, кто никогда не программировал">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffd249">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="preload" href="assets/fonts/sofia-sans-extra-condensed-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body data-band="yellow" id="top" data-no-toc>
+  <div id="progress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-text">PyWeb Guide</span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link active" href="start.html" aria-current="page">С нуля</a></li>
+          <li><a class="nav-link" href="course.html">Весь курс</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="playground.html">Песочница</a></li>
+          <li><a class="nav-link" href="glossary.html">Словарь</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true"></span></summary>
+          <ul class="nav-more-list">
+            <li><a href="about.html">О Python</a></li>
+            <li><a href="frameworks.html">Фреймворки</a></li>
+            <li><a href="databases.html">Базы данных</a></li>
+            <li><a href="deploy.html">Публикация</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="page-band"><div class="container page-hero page-hero--picture">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>С нуля</span>
+</nav>
+<h1>Python с нуля</h1>
+<p class="lead">Семь коротких уроков для тех, кто никогда не программировал. Код запускается прямо на этой странице: нажимайте «Запустить», меняйте его и запускайте снова. Ошибиться не страшно, ничего не сломается.</p>
+<p class="note">При первом запуске браузер загружает Python, это займёт несколько секунд. Незнакомые слова есть в <a href="glossary.html">словаре</a>.</p>
+<div class="progress-box" data-progress="start">
+  <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 7 уроков пройдено</p>
+  <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
+  <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Сбросить прогресс</button>
+</div>
+<img class="band-picture" src="assets/img/snakes.jpg" width="1024" height="685" alt="Старая гравюра: восемь змей, среди них сетчатый питон" decoding="async">
+</div></div>
+<section class="section" aria-label="Уроки">
+<div class="container">
+<ol class="project-steps" data-progress-list="start">
+  <li class="project-step lesson" id="lesson-1">
+    <div class="lesson-text">
+      <h2>Урок 1. Первая программа</h2>
+      <p>Программа — это список команд для компьютера. Он выполняет их по очереди, сверху вниз.</p>
+      <p>Команда <code>print</code> выводит текст на экран. Сам текст всегда пишут в кавычках.</p>
+      <p><strong>Попробуйте:</strong> напишите в кавычках своё имя и нажмите «Запустить».</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Ваша программа</span></div>
+  <pre><code>print("Привет!")
+print("Это моя первая программа")</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="1"> Урок пройден</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-2">
+    <div class="lesson-text">
+      <h2>Урок 2. Переменные: как запомнить значение</h2>
+      <p>Переменная — это подпись на коробке. В коробку кладут значение, а потом обращаются к нему по имени.</p>
+      <p>Со значениями можно работать: например, прибавить к возрасту единицу.</p>
+      <p><strong>Попробуйте:</strong> поставьте своё имя и возраст и запустите снова.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Ваша программа</span></div>
+  <pre><code>name = "Аня"
+age = 18
+
+print("Меня зовут", name)
+print("Через год мне будет", age + 1)</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="2"> Урок пройден</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-3">
+    <div class="lesson-text">
+      <h2>Урок 3. Условия: если так, то вот так</h2>
+      <p>Программа умеет выбирать. Слово <code>if</code> значит «если», а <code>else</code> значит «иначе».</p>
+      <p>Отступ из четырёх пробелов показывает, какие строки относятся к условию.</p>
+      <p><strong>Попробуйте:</strong> поменяйте температуру на 10 и посмотрите, что изменится.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Ваша программа</span></div>
+  <pre><code>temperature = -5
+
+if temperature &lt; 0:
+    print("На улице мороз, наденьте шапку")
+else:
+    print("Можно без шапки")</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="3"> Урок пройден</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-4">
+    <div class="lesson-text">
+      <h2>Урок 4. Списки и циклы: одно действие много раз</h2>
+      <p>Список хранит несколько значений подряд. Цикл <code>for</code> берёт их по одному и делает с каждым одно и то же.</p>
+      <p>Так сайт показывает ленту: у него есть список записей, и он выводит их одну за другой.</p>
+      <p><strong>Попробуйте:</strong> добавьте в список своё дело.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Ваша программа</span></div>
+  <pre><code>tasks = ["купить хлеб", "сделать уроки", "позвонить маме"]
+
+for task in tasks:
+    print("Сделать:", task)
+
+print("Всего дел:", len(tasks))</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="4"> Урок пройден</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-5">
+    <div class="lesson-text">
+      <h2>Урок 5. Функции: своя команда</h2>
+      <p>Функция — это ваша собственная команда. Её описывают один раз, а вызывают сколько угодно.</p>
+      <p>Слово <code>def</code> начинает описание, а <code>return</code> говорит, что функция отдаёт обратно.</p>
+      <p><strong>Попробуйте:</strong> вызовите функцию ещё раз с другим именем.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Ваша программа</span></div>
+  <pre><code>def greet(name):
+    return "Привет, " + name + "!"
+
+print(greet("Аня"))
+print(greet("Марат"))</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="5"> Урок пройден</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-6">
+    <div class="lesson-text">
+      <h2>Урок 6. Словари: найти значение по названию</h2>
+      <p>Словарь хранит пары «название и значение», как прайс-лист в магазине. Значение находят по названию, а не по номеру.</p>
+      <p>Сайты пользуются этим постоянно: например, находят страницу по её адресу.</p>
+      <p><strong>Попробуйте:</strong> добавьте свой товар с ценой.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Ваша программа</span></div>
+  <pre><code>prices = {"хлеб": 200, "молоко": 450}
+
+print("Хлеб стоит", prices["хлеб"], "тенге")
+
+prices["сыр"] = 1500
+print(prices)</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="6"> Урок пройден</label>
+    </div>
+  </li>
+  <li class="project-step lesson" id="lesson-7">
+    <div class="lesson-text">
+      <h2>Урок 7. Как это связано с сайтами</h2>
+      <p>Вы уже знаете всё, чтобы понять главное. Адрес в браузере выбирает функцию, а функция возвращает страницу.</p>
+      <p>Ниже маленький сайт, собранный из того, что вы только что прошли: функций и словаря.</p>
+      <p>Второй пример делает то же самое на Flask. Это готовый инструмент для сайтов: строка <code>@app.route</code> говорит, какой адрес открывает эту функцию.</p>
+      <p><strong>Попробуйте:</strong> поменяйте адрес на "/" и запустите снова.</p>
+    </div>
+    <div class="lesson-code">
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>Сайт из функций и словаря</span></div>
+  <pre><code>def home():
+    return "Главная страница"
+
+def contacts():
+    return "Наши контакты"
+
+pages = {"/": home, "/contacts": contacts}
+
+address = "/contacts"
+print("Вы открыли:", address)
+print("Сайт ответил:", pages[address]())</code></pre>
+</div>
+<div class="code-block" data-run="python" data-open>
+  <div class="code-head"><span>То же самое на Flask</span></div>
+  <pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Главная страница"
+
+print("Сайт ответил:", app.test_client().get("/").text)</code></pre>
+</div>
+      <label class="step-check"><input type="checkbox" data-step="7"> Урок пройден</label>
+    </div>
+  </li>
+</ol>
+</div>
+</section>
+<section class="section" aria-labelledby="next-title">
+<div class="container">
+<div class="cta-panel">
+  <div>
+    <h2 id="next-title">Что дальше</h2>
+    <p class="lead cta-lead">Теперь вы понимаете основу. Дальше узнаете, как запрос идёт по настоящему серверу, и соберёте свой первый сайт.</p>
+  </div>
+  <div class="cta-actions">
+    <a class="btn btn-primary" href="about.html">Как работает сайт</a>
+    <a class="btn btn-secondary" href="project.html">Первый проект</a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="mark reveal" aria-hidden="true"><span>P</span><span>Y</span><span>W</span><span>E</span><span>B</span><span>G</span><span>U</span><span>I</span><span>D</span><span>E</span></div>
+      <div class="footer-links">
+        <div><strong>Начать</strong><ul><li><a href="start.html">Python с нуля</a></li><li><a href="glossary.html">Словарь</a></li><li><a href="playground.html">Песочница</a></li></ul></div>
+        <div><strong>Понять</strong><ul><li><a href="about.html">О Python</a></li><li><a href="frameworks.html">Фреймворки</a></li><li><a href="databases.html">Базы данных</a></li></ul></div>
+        <div><strong>Сделать</strong><ul><li><a href="project.html">Первый проект</a></li><li><a href="deploy.html">Публикация</a></li><li><a href="practice.html">Задачи</a></li></ul></div>
+        <div><strong>Сайт</strong><ul><li><a href="course.html">Весь курс</a></li><li><a href="contacts.html">Контакты</a></li><li><a href="index.html">Главная</a></li></ul></div>
+      </div>
+      <p class="footer-copy">© 2026 PyWeb Guide, учебный проект о Python в веб-разработке</p>
+      <p class="note footer-note">Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> · Обновлено: <time datetime="2026-11-06">06.11.2026</time> · Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 · <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a></p>
+      <p class="note footer-note">Снимок: <a href="https://www.rawpixel.com/image/13959871/image-paper-cartoon-art" rel="noopener">гравюра со змеями, rawpixel, CC0</a>.</p>
+      <p class="note footer-note"><a href="privacy.html">Политика конфиденциальности</a> · <a href="terms.html">Условия использования</a></p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>
