@@ -404,12 +404,51 @@
     return area ? area.value : block.querySelector("pre code").textContent;
   }
 
+  // Tab в редакторе вставляет отступ. Esc отпускает фокус: следующий Tab уходит к кнопкам,
+  // иначе с клавиатуры из поля не выбраться (WCAG 2.1.2)
+  let hintCount = 0;
+
   function tabInsert(area) {
+    let release = false;
+    const hint = el("p", { class: "note code-hint", id: "code-hint-" + (++hintCount), text: "Tab вставляет отступ. Чтобы перейти к кнопкам, нажмите Esc, затем Tab." });
+
+    area.setAttribute("aria-describedby", [area.getAttribute("aria-describedby"), hint.id].filter(Boolean).join(" "));
+    // Поле у примера вставляется в страницу уже после вызова, поэтому подсказка ждёт следующего кадра
+    requestAnimationFrame(function () {
+      if (area.parentNode && !hint.isConnected) area.insertAdjacentElement("afterend", hint);
+    });
+
+    area.addEventListener("blur", function () { release = false; });
     area.addEventListener("keydown", function (event) {
-      if (event.key !== "Tab" || event.shiftKey) return;
+      if (event.key === "Escape") { release = true; return; }
+      if (event.key !== "Tab" || event.shiftKey || release) return;
       event.preventDefault();
       const start = area.selectionStart;
       area.setRangeText("    ", start, area.selectionEnd, "end");
+    });
+  }
+
+  // Сброс стирает правки без возврата: первое нажатие только просит подтвердить
+  function confirmTwice(button, action) {
+    const label = button.textContent;
+    let timer = 0;
+
+    function disarm() {
+      clearTimeout(timer);
+      button.classList.remove("is-armed");
+      button.textContent = label;
+    }
+
+    button.addEventListener("blur", disarm);
+    button.addEventListener("click", function () {
+      if (!button.classList.contains("is-armed")) {
+        button.classList.add("is-armed");
+        button.textContent = "Стереть правки? Нажмите ещё раз";
+        timer = setTimeout(disarm, 5000);
+        return;
+      }
+      disarm();
+      action();
     });
   }
 
@@ -521,7 +560,7 @@
       area.value = samples[select.value];
       writeJson("pyweb_playground", area.value);
     });
-    reset.addEventListener("click", function () {
+    confirmTwice(reset, function () {
       area.value = samples[select.value];
       writeJson("pyweb_playground", area.value);
     });
@@ -563,7 +602,7 @@
 
       area.addEventListener("input", function () { writeJson(draftKey, area.value); });
 
-      reset.addEventListener("click", function () {
+      confirmTwice(reset, function () {
         area.value = starter;
         try { localStorage.removeItem(draftKey); } catch (error) { /* черновик просто останется */ }
       });

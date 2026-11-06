@@ -109,7 +109,7 @@
           Задайте вопрос авторам или предложите улучшение. Сообщение отправляется
           через GitHub и видно всем, поэтому не пишите в нём личные данные.
         </p>
-      <img class="band-picture" src="assets/img/telephones.jpg" width="997" height="519" alt="Открытка около 1910 года: мужчина и женщина разговаривают по телефону" decoding="async">
+      <img class="band-picture" src="assets/img/telephones.jpg" width="997" height="519" alt="Открытка около 1910 года: мужчина и женщина разговаривают по телефону" decoding="async" fetchpriority="high">
 </div></div>
 
       <section class="section" aria-label="Форма и информация">
@@ -125,12 +125,12 @@
               <form id="contact-form" class="form-grid" novalidate>
                 <div class="field">
                   <label for="name">Имя</label>
-                  <input id="name" name="name" type="text" autocomplete="name" maxlength="60" placeholder="Имя или псевдоним" required>
+                  <input id="name" name="name" type="text" autocomplete="name" maxlength="60" placeholder="Например, Аня…" required>
                 </div>
 
                 <div class="field">
                   <label for="message">Сообщение</label>
-                  <textarea id="message" name="message" rows="6" maxlength="1000" placeholder="Напишите ваш вопрос или предложение" required></textarea>
+                  <textarea id="message" name="message" rows="6" maxlength="1000" placeholder="Ваш вопрос или предложение…" required></textarea>
                 </div>
 
                 <button class="btn btn-primary" type="submit">Отправить через GitHub</button>

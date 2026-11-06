@@ -106,7 +106,7 @@
 </nav>
 <h1>Финальный тест</h1>
 <p class="lead">15 вопросов по всему курсу. Ответьте верно на 12 или больше, и можно будет скачать учебный сертификат. Количество попыток не ограничено.</p>
-<img class="band-picture" src="assets/img/exam-cell.jpg" width="570" height="644" alt="Гравюра: кандидат пишет экзаменационную работу в отдельной келье, Пекин, 1873 год" decoding="async">
+<img class="band-picture" src="assets/img/exam-cell.jpg" width="570" height="644" alt="Гравюра: кандидат пишет экзаменационную работу в отдельной келье, Пекин, 1873 год" decoding="async" fetchpriority="high">
 </div></div>
 <section class="section" id="test" aria-labelledby="test-title">
 <div class="container">
@@ -259,7 +259,7 @@
 <div class="panel stack-gap" id="certificate" hidden>
 <h3>Поздравляем! Тест пройден</h3>
 <label class="cert-field" for="cert-name">Имя для сертификата
-<input id="cert-name" type="text" maxlength="60" autocomplete="name" placeholder="Ваше имя"></label>
+<input id="cert-name" name="cert-name" type="text" maxlength="60" autocomplete="name" placeholder="Например, Аня Иванова…"></label>
 <canvas class="cert-canvas" id="cert-canvas" width="1200" height="630" role="img" aria-label="Предпросмотр сертификата"></canvas>
 <button class="btn btn-primary" type="button" id="cert-download">Скачать PNG</button>
 <p class="note stack-gap">Сертификат создаётся прямо в браузере, а имя никуда не отправляется и не сохраняется. Это учебный сертификат для самопроверки, а не официальный документ.</p>
