@@ -66,9 +66,14 @@ class Page(HTMLParser):
             })
 
 
-def main():
+# Русские страницы лежат в корне, переводы — в kk/ и en/. Адреса в индексе относительные:
+# поиск на казахской странице ведёт на страницы из kk/
+LANGUAGES = {"ru": (ROOT, "search-index.js"), "kk": (ROOT / "kk", "search-index.kk.js"), "en": (ROOT / "en", "search-index.en.js")}
+
+
+def build(folder):
     items = []
-    for path in sorted(ROOT.glob("*.html")):
+    for path in sorted(folder.glob("*.html")):
         if path.name in SKIP:
             continue
         page = Page()
@@ -81,9 +86,17 @@ def main():
                 "h": section["h"] or title,
                 "x": section["x"],
             })
-    target = ROOT / "assets" / "search-index.js"
-    target.write_text("window.PYWEB_SEARCH=" + json.dumps(items, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
-    print(f"Индекс: {len(items)} разделов, {target.stat().st_size // 1024} КБ")
+    return items
+
+
+def main():
+    for lang, (folder, name) in LANGUAGES.items():
+        if not folder.is_dir():
+            continue
+        items = build(folder)
+        target = ROOT / "assets" / name
+        target.write_text("window.PYWEB_SEARCH=" + json.dumps(items, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
+        print(f"Индекс {lang}: {len(items)} разделов, {target.stat().st_size // 1024} КБ")
 
 
 if __name__ == "__main__":

@@ -93,3 +93,20 @@ PyWeb Guide — учебный веб-ресурс о Python в веб-разр�
   - версии сверены с PyPI, условия PythonAnywhere и GitHub Pages — с их справкой;
   - внешние ссылки проверены, переехавшие адреса MDN и OWASP заменены;
   - подписи к снимкам сверены с описаниями в Wikimedia Commons и Openverse.
+
+ДОРАБОТКА 9 (три языка и статистика, 06.11.2026)
+  - адрес сайта: https://pywebguide.github.io/ (раньше pywebguide-lab.github.io/PyWebGuide);
+  - русский остаётся основным, переводы лежат в kk/ (казахский) и en/ (английский);
+    переведены главная и «Python с нуля», остальные разделы пока ведут на русские страницы;
+  - выбор языка РУС · ҚАЗ · ENG в меню каждой страницы, hreflang для поисковых систем;
+  - строки интерфейса из script.js и features.js переводятся словарём assets/i18n.js
+    (ключ — русская строка, язык берётся из <html lang>);
+  - в Sofia Sans Extra Condensed и JetBrains Mono нет казахских букв ә ғ қ ң ө ұ ү һ,
+    поэтому на страницах kk/ заголовки набраны Fira Sans Extra Condensed, а код — Fira Code (OFL);
+  - поиск по каждому языку: tools/build_search.py собирает search-index.js, .kk.js и .en.js;
+  - tools/check_site.py проверяет и страницы в kk/ и en/;
+  - статистика посещений GoatCounter без cookies (pywebguide.goatcounter.com),
+    описана в политике конфиденциальности.
+  Новый перевод кладите в kk/ или en/ под тем же именем файла, что и русская страница,
+  поменяйте в меню русской страницы ссылки «ҚАЗ» и «ENG» на него, добавьте hreflang,
+  строку в sitemap.xml и запустите tools/build_search.py и tools/check_site.py.

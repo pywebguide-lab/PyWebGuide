@@ -5,6 +5,26 @@
 @font-face { font-family: "Onest"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("assets/fonts/onest-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800; font-display: swap; src: url("assets/fonts/jetbrains-mono-cyrillic-wght-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* taste-skill-ignore: моноширинный шрифт только для кода */
 @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800; font-display: swap; src: url("assets/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* taste-skill-ignore: моноширинный шрифт только для кода */
+/* Расширенная кириллица: казахские ә ғ қ ң ө ү һ. Браузер скачивает файл, только когда на странице есть эти буквы */
+@font-face { font-family: "Sofia Sans Extra Condensed"; font-style: normal; font-weight: 1 1000; font-display: swap; src: url("assets/fonts/sofia-sans-extra-condensed-cyrillic-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+@font-face { font-family: "Onest"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("assets/fonts/onest-cyrillic-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800; font-display: swap; src: url("assets/fonts/jetbrains-mono-cyrillic-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* taste-skill-ignore: моноширинный шрифт только для кода */
+
+/* Казахские страницы: в Sofia Sans Extra Condensed и JetBrains Mono нет ә ғ қ ң ө ұ ү һ,
+   поэтому там заголовки набраны Fira Sans Extra Condensed, а код — Fira Code (обе OFL).
+   Файлы скачиваются, только когда шрифт нужен странице */
+@font-face { font-family: "Fira Sans Extra Condensed"; font-style: normal; font-weight: 700; font-display: swap; src: url("assets/fonts/fira-sans-extra-condensed-latin-700-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Fira Sans Extra Condensed"; font-style: normal; font-weight: 700; font-display: swap; src: url("assets/fonts/fira-sans-extra-condensed-cyrillic-700-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Fira Sans Extra Condensed"; font-style: normal; font-weight: 700; font-display: swap; src: url("assets/fonts/fira-sans-extra-condensed-cyrillic-ext-700-normal.woff2") format("woff2"); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+@font-face { font-family: "Fira Sans Extra Condensed"; font-style: normal; font-weight: 800; font-display: swap; src: url("assets/fonts/fira-sans-extra-condensed-latin-800-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Fira Sans Extra Condensed"; font-style: normal; font-weight: 800; font-display: swap; src: url("assets/fonts/fira-sans-extra-condensed-cyrillic-800-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Fira Sans Extra Condensed"; font-style: normal; font-weight: 800; font-display: swap; src: url("assets/fonts/fira-sans-extra-condensed-cyrillic-ext-800-normal.woff2") format("woff2"); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+@font-face { font-family: "Fira Sans Extra Condensed"; font-style: normal; font-weight: 900; font-display: swap; src: url("assets/fonts/fira-sans-extra-condensed-latin-900-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Fira Sans Extra Condensed"; font-style: normal; font-weight: 900; font-display: swap; src: url("assets/fonts/fira-sans-extra-condensed-cyrillic-900-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Fira Sans Extra Condensed"; font-style: normal; font-weight: 900; font-display: swap; src: url("assets/fonts/fira-sans-extra-condensed-cyrillic-ext-900-normal.woff2") format("woff2"); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+@font-face { font-family: "Fira Code"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("assets/fonts/fira-code-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* taste-skill-ignore: моноширинный шрифт только для кода */
+@font-face { font-family: "Fira Code"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("assets/fonts/fira-code-cyrillic-wght-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* taste-skill-ignore: моноширинный шрифт только для кода */
+@font-face { font-family: "Fira Code"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("assets/fonts/fira-code-cyrillic-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* taste-skill-ignore: моноширинный шрифт только для кода */
 
 /* ---------- Токены. Плоские поля цвета, чёрный текст, синий и жёлтый Python ---------- */
 :root {
@@ -54,6 +74,12 @@
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
   color-scheme: light;
+}
+
+/* Шрифты с казахскими буквами, см. @font-face выше */
+html[lang="kk"] {
+  --display: "Fira Sans Extra Condensed", "Sofia Sans Extra Condensed", Impact, "Arial Narrow", sans-serif;
+  --mono: "Fira Code", "JetBrains Mono", Consolas, "Courier New", monospace; /* taste-skill-ignore: моноширинный шрифт только для кода */
 }
 
 :root[data-theme="dark"] {
@@ -383,6 +409,48 @@ main:focus {
 
 .nav-more-list .sep {
   height: 8px;
+}
+
+/* Выбор языка: РУС · ҚАЗ · ENG */
+.nav-lang {
+  display: flex;
+  gap: 2px;
+  margin-left: 8px;
+  padding-left: 8px;
+  border-left: 2px solid var(--line, currentColor);
+}
+
+.nav-lang a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding-inline: 6px;
+  color: var(--muted);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-lang a[aria-current="true"] {
+  background: var(--text);
+  color: var(--bg, #ffffff);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-lang a:not([aria-current="true"]):hover {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+}
+
+/* Пометка на переведённых страницах: часть разделов пока только на русском */
+.lang-note {
+  margin: 0;
+  padding: 10px 0;
+  background: var(--surface-2);
+  font-size: var(--fs-small);
 }
 
 .account-logout {
@@ -2322,6 +2390,19 @@ textarea[aria-invalid="true"] {
     background: var(--surface-2);
     box-shadow: none; /* taste-skill-ignore: тень есть только у всплывающего слоя */
   }
+
+  .nav-lang {
+    margin: 8px 0 0;
+    padding: 8px 0 0;
+    border-left: 0;
+    border-top: 2px solid var(--line, currentColor);
+  }
+
+  .nav-lang a {
+    flex: 1;
+    min-height: 46px;
+    font-size: var(--fs-body);
+  }
 }
 
 @media (max-width: 1020px) {
@@ -2753,6 +2834,11 @@ body:not(.home) main > .section:nth-of-type(3n + 2) {
   white-space: nowrap;
 }
 
+/* «Алғашқы сайт» длиннее «Первый сайт»: уменьшаем, чтобы строка помещалась целиком */
+html[lang="kk"] .hero-title {
+  font-size: calc(var(--hero-size) * 0.76);
+}
+
 .hero-copy {
   position: relative;
   z-index: 2;
@@ -2843,6 +2929,28 @@ body:not(.home) main > .section:nth-of-type(3n + 2) {
 .band-title--mid {
   font-size: var(--step-mid);
   line-height: 1;
+}
+
+/* У казахских букв есть хвосты (Ң, Қ, Ғ) и значки сверху (Й, Ә, Ө): при плотной строке
+   они залезают в соседнюю, и «сайтыңызға» читается как «ҫайтыңызға» */
+html[lang="kk"] h2,
+html[lang="kk"] h3,
+html[lang="kk"] .band-title,
+html[lang="kk"] .slogan,
+html[lang="kk"] .page-hero h1 {
+  line-height: 1.14;
+}
+
+html[lang="kk"] .hero-title {
+  line-height: 0.92;
+}
+
+html[lang="kk"] .poster-out span {
+  line-height: 1.12;
+}
+
+html[lang="kk"] .band-title--mid {
+  line-height: 1.08;
 }
 
 .board {
@@ -3145,6 +3253,11 @@ body:not(.home) main > .section:nth-of-type(3n + 2) {
   line-height: 0.9;
 }
 
+/* Хвосты Қ и J не должны касаться следующей строки */
+html[lang="kk"] .words {
+  line-height: 1.04;
+}
+
 .words a {
   color: inherit;
   text-decoration: none;
@@ -3247,6 +3360,11 @@ body:not(.home) main {
   margin: 0;
   font-size: min(15.2vw, 13.8rem);
   white-space: nowrap;
+}
+
+/* Fira Sans Extra Condensed шире Sofia: «Қазір бастаңыз» не должна вылезать за экран */
+html[lang="kk"] .cta-open .band-title {
+  font-size: min(12.9vw, 11.7rem);
 }
 
 .cta-side p {

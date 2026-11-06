@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PyWeb Guide — your first website with Python, from scratch</title>
+
+  <meta name="description" content="A free learning site for people who have never programmed: Python basics right in the browser and a step-by-step build of your first website.">
+  <link rel="canonical" href="https://pywebguide.github.io/en/">
+  <link rel="alternate" hreflang="ru" href="https://pywebguide.github.io/">
+  <link rel="alternate" hreflang="kk" href="https://pywebguide.github.io/kk/">
+  <link rel="alternate" hreflang="en" href="https://pywebguide.github.io/en/">
+  <link rel="alternate" hreflang="x-default" href="https://pywebguide.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="PyWeb Guide — your first website with Python, from scratch">
+  <meta property="og:description" content="A free learning site for people who have never programmed: Python basics right in the browser and a step-by-step build of your first website.">
+  <meta property="og:url" content="https://pywebguide.github.io/en/">
+  <meta property="og:image" content="https://pywebguide.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyWeb Guide poster: your first website with Python, a free course for people who have never programmed">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffd249">
+
+  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
+  <link rel="preload" href="../assets/fonts/sofia-sans-extra-condensed-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+
+  <script>
+    // The theme is applied before the first paint so the page does not flash
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "PyWeb Guide",
+      "url": "https://pywebguide.github.io/en/",
+      "inLanguage": "en",
+      "description": "A learning resource about Python in web development: Django, Flask, databases and a first project, step by step.",
+      "author": { "@type": "Person", "name": "E. Zhanguzhin" }
+    }
+  </script>
+</head>
+
+<body data-band="yellow" id="top" class="home" data-no-toc>
+  <div id="progress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-text">PyWeb Guide</span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="start.html">From scratch</a></li>
+          <li><a class="nav-link" href="../course.html" hreflang="ru">Full course</a></li>
+          <li><a class="nav-link" href="../project.html" hreflang="ru">First project</a></li>
+          <li><a class="nav-link" href="../playground.html" hreflang="ru">Sandbox</a></li>
+          <li><a class="nav-link" href="../glossary.html" hreflang="ru">Glossary</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">More <span class="caret" aria-hidden="true"></span></summary>
+          <ul class="nav-more-list">
+            <li><a href="../about.html" hreflang="ru">About Python</a></li>
+            <li><a href="../frameworks.html" hreflang="ru">Frameworks</a></li>
+            <li><a href="../databases.html" hreflang="ru">Databases</a></li>
+            <li><a href="../deploy.html" hreflang="ru">Deployment</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../templates.html" hreflang="ru">Templates and forms</a></li>
+            <li><a href="../auth.html" hreflang="ru">Authentication</a></li>
+            <li><a href="../api.html" hreflang="ru">REST API</a></li>
+            <li><a href="../testing.html" hreflang="ru">Testing</a></li>
+            <li><a href="../git.html" hreflang="ru">Git</a></li>
+            <li><a href="../project2.html" hreflang="ru">Second project</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../practice.html" hreflang="ru">Exercises</a></li>
+            <li><a href="../cheatsheet.html" hreflang="ru">Cheat sheet</a></li>
+            <li><a href="../exam.html" hreflang="ru">Final test</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="../contacts.html" hreflang="ru">Contact</a></li>
+          </ul>
+        </details></li>
+          <li class="nav-lang" aria-label="Site language">
+            <a href="../index.html" hreflang="ru" lang="ru">РУС</a>
+            <a href="../kk/index.html" hreflang="kk" lang="kk">ҚАЗ</a>
+            <a href="index.html" hreflang="en" lang="en" aria-current="true">ENG</a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Light theme">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="content" class="page" tabindex="-1">
+      <div class="lang-note"><div class="container">The site is being translated into English. Some sections are still in Russian only.</div></div>
+
+      <div class="poster-hero field-yellow">
+        <div class="container">
+          <h1 class="hero-title"><span class="line"><span>First site</span></span> <span class="line"><span>with Python</span></span></h1>
+          <img class="hero-sticker" src="../assets/img/python-left.jpg" width="510" height="474" alt="Old engraving: a reticulated python and another snake" decoding="async" fetchpriority="high">
+
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <p class="lead">A free learning site for people who have never programmed. You will learn the basics of Python, a simple programming language, and build your own website step by step.</p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="start.html">Start from scratch</a>
+              </div>
+              <p class="hero-hint"><a href="../course.html" hreflang="ru">I already know Python</a></p>
+            </div>
+
+            <div class="hero-live">
+              <div class="code-block" data-run="python" data-open data-ui data-poster="#poster-out">
+                <div class="code-head"><span>Change the name and press “Run”</span></div>
+                <pre><code>name = "Anna"
+print("Hello,", name)</code></pre>
+              </div>
+              <div class="poster-out field-pink" aria-hidden="true"><span id="poster-out">Hello, Anna</span></div>
+              <p class="hero-note">This is a real Python program. It runs right here and writes on this page.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="section" id="continue" aria-labelledby="continue-title" hidden>
+        <div class="container">
+          <div class="continue-box">
+            <div>
+              <h2 id="continue-title">Continue learning</h2>
+              <p>You have already started. Here is where you stopped.</p>
+            </div>
+            <div class="continue-links">
+              <a class="btn btn-primary" href="start.html" data-track="start" data-total="7" hidden>Python from scratch: <span data-track-count></span></a>
+              <a class="btn btn-primary" href="../project.html#flask" hreflang="ru" data-track="project-flask" data-total="6" hidden>Flask: <span data-track-count></span></a>
+              <a class="btn btn-primary" href="../project.html#django" hreflang="ru" data-track="project-django" data-total="10" hidden>Django: <span data-track-count></span></a>
+              <a class="btn btn-primary" href="../project2.html" hreflang="ru" data-track="project-blog" data-total="7" hidden>Blog API: <span data-track-count></span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="board" aria-labelledby="intro-title">
+        <div class="container">
+          <div class="board-grid">
+            <div class="tile tile-a field-ink reveal"><h2 id="intro-title" class="slogan"><span class="m"><span>No experience</span></span><span class="m"><span>needed</span></span></h2></div>
+            <div class="tile tile-b field-cyan reveal"><p class="slogan"><span>7</span><span>lessons</span></p></div>
+            <div class="tile tile-c field-orange reveal"><img src="../assets/img/eniac.jpg" width="900" height="617" alt="Two women setting up the ENIAC computer at its cable panels, 1946" loading="lazy" decoding="async"></div>
+          </div>
+          <div class="tile tile-text field-white reveal">
+            <h3>How it works</h3>
+            <p>You start with one line of code and press a button. The first lessons run right in the browser, so there is nothing to install, and a mistake won't break anything. Then you find out how a website works inside: who receives your request, where the data lives and where the page comes from. After that you build your first website, a to-do list, following ready-made instructions, and put it online. The whole course is free. It was made by a student of North Kazakhstan University.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="band field-white" aria-labelledby="plan-title">
+        <div class="container">
+          <h2 id="plan-title" class="band-title reveal">Five steps to your own website</h2>
+
+          <div class="progress-box reveal" data-progress="roadmap">
+            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> of 5 steps done. Your ticks are saved in this browser.</p>
+            <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
+            <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Reset progress</button>
+          </div>
+
+          <div class="stage-bar" data-progress-list="roadmap">
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-yellow">7 lessons</span>
+              <div class="timeline-content">
+                <h3>Learn the basics of Python</h3>
+                <p>How to store data, set conditions and write your own commands. <a href="start.html">From-scratch lessons</a>.</p>
+                <label class="step-check"><input type="checkbox" data-step="1"> Step done</label>
+              </div>
+            </div>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-pink">8 steps</span>
+              <div class="timeline-content">
+                <h3>Understand how a website works</h3>
+                <p>What happens between clicking a link and seeing the page. <a href="../about.html#flow" hreflang="ru">Step-by-step walkthrough</a>.</p>
+                <label class="step-check"><input type="checkbox" data-step="2"> Step done</label>
+              </div>
+            </div>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-cyan">1 quiz</span>
+              <div class="timeline-content">
+                <h3>Pick a tool</h3>
+                <p>There are two ready-made kits for building a site: Flask and Django. A <a href="../frameworks.html#quiz" hreflang="ru">mini quiz</a> will suggest which one to choose.</p>
+                <label class="step-check"><input type="checkbox" data-step="3"> Step done</label>
+              </div>
+            </div>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-orange">1 section</span>
+              <div class="timeline-content">
+                <h3>Teach your site to remember</h3>
+                <p>Records are kept in a <a href="../databases.html" hreflang="ru">database</a>, so they don't disappear.</p>
+                <label class="step-check"><input type="checkbox" data-step="4"> Step done</label>
+              </div>
+            </div>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-blue">6 steps</span>
+              <div class="timeline-content">
+                <h3>Build your own site</h3>
+                <p>A simple first project with <a href="../project.html" hreflang="ru">ready-made instructions</a>. Later you can <a href="../deploy.html" hreflang="ru">put it online</a>.</p>
+                <label class="step-check"><input type="checkbox" data-step="5"> Step done</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band field-pink" aria-labelledby="parts-title">
+        <div class="container">
+          <div class="parts-board">
+            <div class="part-head reveal">
+              <h2 id="parts-title" class="band-title">What a website is made of</h2>
+              <p>Four words you will meet most often.</p>
+            </div>
+            <a class="part part-route field-yellow reveal" href="../glossary.html#route" hreflang="ru">
+              <img src="../assets/img/switchboard.jpg" width="900" height="715" alt="Operators at an international Bell System switchboard connecting calls" loading="lazy" decoding="async">
+              <span class="part-bar field-yellow"><strong>Route</strong><span>Connects an address to the right page, the way an operator connected calls.</span></span>
+            </a>
+            <a class="part part-server field-cyan reveal" href="../glossary.html#server" hreflang="ru">
+              <img src="../assets/img/eniac.jpg" width="900" height="617" alt="A woman setting up the panels of the ENIAC computer, 1946" loading="lazy" decoding="async">
+              <span class="part-bar field-cyan"><strong>Server</strong><span>The computer that runs the website's program. Pictured: ENIAC, 1946.</span></span>
+            </a>
+            <a class="part part-base field-orange reveal" href="../glossary.html#database" hreflang="ru">
+              <img src="../assets/img/card-catalog.jpg" width="900" height="675" alt="Rows of card catalogue drawers at the Library of Congress" loading="lazy" decoding="async">
+              <span class="part-bar field-orange"><strong>Database</strong><span>Keeps records, like cards in a catalogue.</span></span>
+            </a>
+            <a class="part part-frame field-white reveal" href="../glossary.html#framework" hreflang="ru">
+              <img src="../assets/img/reinhardt.jpg" width="900" height="945" alt="Guitarist Django Reinhardt playing the guitar, around 1946" loading="lazy" decoding="async">
+              <span class="part-bar field-white"><strong>Framework</strong><span>A kit for building websites. Django is named after this guitarist.</span></span>
+            </a>
+            <div class="part-more field-white reveal"><p>Came across an unfamiliar word? Everything is explained in the <a href="../glossary.html" hreflang="ru">glossary</a>.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band field-cyan" aria-labelledby="inside-title">
+        <div class="container">
+          <h2 id="inside-title" class="band-title reveal">What's inside</h2>
+          <ul class="lineup">
+            <li class="reveal"><a href="start.html"><span>Python from scratch</span><span>Seven lessons right in the browser, nothing to install</span><span>Lessons</span></a></li>
+            <li class="reveal"><a href="../about.html" hreflang="ru"><span>About Python</span><span>What happens when you open a page</span><span>Section</span></a></li>
+            <li class="reveal"><a href="../frameworks.html" hreflang="ru"><span>Frameworks</span><span>Django, Flask and FastAPI: which to choose</span><span>Section</span></a></li>
+            <li class="reveal"><a href="../databases.html" hreflang="ru"><span>Databases</span><span>Where a site keeps records and how to find them</span><span>Section</span></a></li>
+            <li class="reveal"><a href="../project.html" hreflang="ru"><span>First project</span><span>A to-do list with Flask or Django</span><span>Project</span></a></li>
+            <li class="reveal"><a href="../deploy.html" hreflang="ru"><span>Deployment</span><span>Your site online on PythonAnywhere</span><span>Section</span></a></li>
+            <li class="reveal"><a href="../templates.html" hreflang="ru"><span>Templates and forms</span><span>Pages from templates and data validation</span><span>Section</span></a></li>
+            <li class="reveal"><a href="../auth.html" hreflang="ru"><span>Authentication</span><span>Passwords, login and access rights</span><span>Section</span></a></li>
+            <li class="reveal"><a href="../api.html" hreflang="ru"><span>REST API</span><span>How programs exchange data</span><span>Section</span></a></li>
+            <li class="reveal"><a href="../testing.html" hreflang="ru"><span>Testing</span><span>How to check that everything works</span><span>Section</span></a></li>
+            <li class="reveal"><a href="../git.html" hreflang="ru"><span>Git</span><span>The history of changes in your code</span><span>Section</span></a></li>
+            <li class="reveal"><a href="../project2.html" hreflang="ru"><span>Second project</span><span>An API for a blog</span><span>Project</span></a></li>
+            <li class="reveal"><a href="../playground.html" hreflang="ru"><span>Sandbox</span><span>Write and run code right away</span><span>Tool</span></a></li>
+            <li class="reveal"><a href="../practice.html" hreflang="ru"><span>Exercises</span><span>Ten auto-checked exercises</span><span>Practice</span></a></li>
+            <li class="reveal"><a href="../cheatsheet.html" hreflang="ru"><span>Cheat sheet</span><span>The essentials on one page</span><span>Tool</span></a></li>
+            <li class="reveal"><a href="../exam.html" hreflang="ru"><span>Final test</span><span>Check what you remember</span><span>Practice</span></a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="band field-orange" aria-labelledby="words-title">
+        <div class="container">
+          <h2 id="words-title" class="band-title band-title--mid reveal">Words in plain language</h2>
+          <div class="words">
+            <a class="reveal" href="../glossary.html#python" hreflang="ru">Python</a>
+            <a class="reveal" href="../glossary.html#server" hreflang="ru">Server</a>
+            <a class="reveal" href="../glossary.html#backend" hreflang="ru">Backend</a>
+            <a class="reveal" href="../glossary.html#http" hreflang="ru">HTTP</a>
+            <a class="reveal" href="../glossary.html#html" hreflang="ru">HTML</a>
+            <a class="reveal" href="../glossary.html#css" hreflang="ru">CSS</a>
+            <a class="reveal" href="../glossary.html#javascript" hreflang="ru">JavaScript</a>
+            <a class="reveal" href="../glossary.html#framework" hreflang="ru">Framework</a>
+            <a class="reveal" href="../glossary.html#django" hreflang="ru">Django</a>
+            <a class="reveal" href="../glossary.html#flask" hreflang="ru">Flask</a>
+            <a class="reveal" href="../glossary.html#database" hreflang="ru">Database</a>
+            <a class="reveal" href="../glossary.html#sql" hreflang="ru">SQL</a>
+            <a class="reveal" href="../glossary.html#orm" hreflang="ru">ORM</a>
+            <a class="reveal" href="../glossary.html#api" hreflang="ru">API</a>
+            <a class="reveal" href="../glossary.html#git" hreflang="ru">Git</a>
+            <a class="reveal" href="../glossary.html#deploy" hreflang="ru">Deploy</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band field-white" aria-labelledby="ideas-title">
+        <div class="container">
+          <h2 id="ideas-title" class="band-title reveal">What you can build</h2>
+          <div class="ideas">
+            <article class="idea field-yellow reveal"><h3>To-do list</h3><p>Add, delete and tick off tasks: the simplest real website. <a href="../project.html" hreflang="ru">Step-by-step guide</a>.</p></article>
+            <article class="idea field-pink reveal"><h3>Mini blog</h3><p>Articles, categories and a separate page for each article.</p></article>
+            <article class="idea field-cyan reveal"><h3>Link shortener</h3><p>A long link turns into a short one. Simple logic and a database.</p></article>
+            <article class="idea field-orange reveal"><h3>Portfolio</h3><p>A personal site with your projects, contacts and a good-looking presentation.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="faq-title">
+        <div class="faq-head field-yellow">
+          <div class="container"><h2 id="faq-title" class="band-title reveal">Frequently asked questions</h2></div>
+        </div>
+      <div class="faq-band field-white">
+        <div class="container">
+          <h3 class="reveal">I have never programmed. Can I do it?</h3>
+          <p class="reveal">Yes. Start with the <a href="start.html">from-scratch lessons</a>: they need no experience and nothing to install.</p>
+        </div>
+      </div>
+      <div class="faq-band field-pink">
+        <div class="container">
+          <h3 class="reveal">Is it paid?</h3>
+          <p class="reveal">No, the whole site is free.</p>
+        </div>
+      </div>
+      <div class="faq-band field-white">
+        <div class="container">
+          <h3 class="reveal">Do I need to learn Django and Flask at once?</h3>
+          <p class="reveal">No. It's better to pick one framework, build a simple project with it and only then compare it with the other one.</p>
+        </div>
+      </div>
+      <div class="faq-band field-pink">
+        <div class="container">
+          <h3 class="reveal">Can I build websites without a database?</h3>
+          <p class="reveal">Yes, but most real projects store users, products or content, so a database soon becomes necessary.</p>
+        </div>
+      </div>
+      <div class="faq-band field-white">
+        <div class="container">
+          <h3 class="reveal">What matters more: theory or practice?</h3>
+          <p class="reveal">Practice. Theory helps you understand what is going on, but the skill only comes from writing code and working through your mistakes.</p>
+        </div>
+      </div>
+      </section>
+
+      <section class="section sources-band" aria-labelledby="sources-title">
+        <div class="container">
+          <div class="panel sources reveal">
+            <h2 id="sources-title">Sources</h2>
+            <p class="note">The material is checked against the official documentation. Checked on <time datetime="2026-11-06">06.11.2026</time>.</p>
+            <ul class="list">
+              <li><a href="https://docs.python.org/3/" rel="noopener">Python 3 documentation</a>: the language and the standard library</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/" rel="noopener">Django 6.1 documentation</a>: current version 6.1.3</li>
+              <li><a href="https://flask.palletsprojects.com/en/stable/" rel="noopener">Flask 3.1 documentation</a>: current version 3.1.3</li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview" rel="noopener">MDN: an overview of HTTP</a>: how the browser talks to the server</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-open field-blue" aria-labelledby="final-title">
+        <div class="container">
+          <h2 id="final-title" class="band-title reveal">Start now</h2>
+          <div class="cta-side">
+            <img class="sticker reveal" src="../assets/img/python-right.jpg" width="471" height="450" alt="Old engraving: three snakes from the same sheet" loading="lazy" decoding="async">
+            <p class="reveal">No sign-up needed, and the first lesson takes a few minutes.</p>
+          </div>
+          <div class="cta-try reveal">
+            <div class="code-block" data-run="python" data-open>
+              <div class="code-head"><span>The first lesson is already open</span></div>
+              <pre><code>print("Hello!")
+print("This is my first program")</code></pre>
+            </div>
+            <a class="btn btn-primary" href="start.html#lesson-1">Open the first lesson</a>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="mark reveal" aria-hidden="true"><span>P</span><span>Y</span><span>W</span><span>E</span><span>B</span><span>G</span><span>U</span><span>I</span><span>D</span><span>E</span></div>
+      <div class="footer-links">
+        <div><strong>Start</strong><ul><li><a href="start.html">Python from scratch</a></li><li><a href="../glossary.html" hreflang="ru">Glossary</a></li><li><a href="../playground.html" hreflang="ru">Sandbox</a></li></ul></div>
+        <div><strong>Understand</strong><ul><li><a href="../about.html" hreflang="ru">About Python</a></li><li><a href="../frameworks.html" hreflang="ru">Frameworks</a></li><li><a href="../databases.html" hreflang="ru">Databases</a></li></ul></div>
+        <div><strong>Build</strong><ul><li><a href="../project.html" hreflang="ru">First project</a></li><li><a href="../deploy.html" hreflang="ru">Deployment</a></li><li><a href="../practice.html" hreflang="ru">Exercises</a></li></ul></div>
+        <div><strong>Site</strong><ul><li><a href="../course.html" hreflang="ru">Full course</a></li><li><a href="../contacts.html" hreflang="ru">Contact</a></li><li><a href="index.html">Home</a></li></ul></div>
+      </div>
+      <p class="footer-copy">© 2026 PyWeb Guide, a learning project about Python in web development</p>
+      <p class="note footer-note">Author: <a href="../contacts.html#authors" hreflang="ru">E. Zhanguzhin</a> · Updated: <time datetime="2026-11-06">06.11.2026</time> · Versions in the examples: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 · <a href="https://github.com/pywebguide/pywebguide.github.io" rel="noopener">Source code on GitHub</a></p>
+      <p class="note footer-note">Photos: <a href="https://commons.wikimedia.org/wiki/File:Two_women_operating_ENIAC_(full_resolution).jpg" rel="noopener">ENIAC</a>, U.S. Army; <a href="https://commons.wikimedia.org/wiki/File:Photograph_of_Women_Working_at_a_Bell_System_Telephone_Switchboard_(3660047829).jpg" rel="noopener">Bell switchboard</a>, U.S. National Archives; <a href="https://commons.wikimedia.org/wiki/File:Copyright_Card_Catalog_Files.jpg" rel="noopener">card catalogue</a>, Michael Holley; <a href="https://commons.wikimedia.org/wiki/File:Django_Reinhardt_(Gottlieb_07301).jpg" rel="noopener">Django Reinhardt</a>, William P. Gottlieb, Library of Congress; <a href="https://www.rawpixel.com/image/13959871/image-paper-cartoon-art" rel="noopener">snake engraving</a>, rawpixel, CC0. The other photos are in the public domain.</p>
+      <p class="note footer-note"><a href="../privacy.html" hreflang="ru">Privacy policy</a> · <a href="../terms.html" hreflang="ru">Terms of use</a></p>
+      <p class="note footer-note">This is a learning site. Messages from the form are sent through the public Issues section on GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Back to top">↑</button>
+
+  <script data-goatcounter="https://pywebguide.goatcounter.com/count" async src="https://gc.zgo.at/count.v4.js" crossorigin="anonymous" integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"></script>
+  <script src="../assets/i18n.js"></script>
+  <script src="../script.js"></script>
+  <script src="../features.js"></script>
+</body>
+</html>
