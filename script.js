@@ -408,7 +408,7 @@
     const savedList = document.getElementById("saved-list");
     const clearButton = document.getElementById("clear-saved");
     const formCard = form.closest(".form-card");
-    const ISSUE_URL = "https://github.com/pywebguide-lab/PyWebGuide/issues/new";
+    const ISSUE_URL = "https://github.com/pywebguide/pywebguide.github.io/issues/new";
 
     function setStatus(message, type) {
       status.textContent = message;
