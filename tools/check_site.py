@@ -76,7 +76,7 @@ def main():
             if parts.scheme or link.startswith(("//", "mailto:", "tel:", "data:")):
                 continue
             # Страница 404 открывается с любого адреса, поэтому её ссылки абсолютные
-            target = unquote(parts.path).removeprefix("/PyWebGuide/") or (name if not parts.path else "index.html")
+            target = unquote(parts.path).removeprefix("/") or (name if not parts.path else "index.html")
             if not (ROOT / target).exists():
                 errors.append(f"{name}: нет файла {link}")
             elif parts.fragment and target in pages and parts.fragment not in pages[target].ids:

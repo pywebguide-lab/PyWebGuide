@@ -1,7 +1,7 @@
 PyWeb Guide — учебный веб-ресурс о Python в веб-разработке
 ЛР3–ЛР4, «Введение в веб-дизайн и разработку», ИСУ(СОП)-25
-Авторы: Жангужин Е. Е., Косяк Р. А.
-Сайт: https://pywebguide-lab.github.io/PyWebGuide/
+Автор: Жангужин Е. Е.
+Сайт: https://pywebguide.github.io/
 
 ЗАПУСК
   Откройте index.html в браузере (Chrome, Edge, Firefox).
@@ -14,7 +14,7 @@ PyWeb Guide — учебный веб-ресурс о Python в веб-разр�
     project.html              — первый проект по шагам (Flask и Django), частые ошибки
     deploy.html               — публикация на PythonAnywhere
     404.html                  — страница «не найдено» для GitHub Pages
-    contacts.html             — форма обратной связи, об авторах
+    contacts.html             — форма обратной связи, об авторе
     privacy.html              — политика конфиденциальности
     terms.html                — условия использования
     styles.css                — оформление и медиазапросы
