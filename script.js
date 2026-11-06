@@ -366,7 +366,28 @@
     });
 
     if (reset) {
+      const resetLabel = reset.textContent;
+      let resetTimer = 0;
+
+      // Отметки не вернуть: первое нажатие только просит подтвердить
+      function disarmReset() {
+        clearTimeout(resetTimer);
+        reset.classList.remove("is-armed");
+        reset.textContent = resetLabel;
+      }
+
+      reset.addEventListener("blur", disarmReset);
+
       reset.addEventListener("click", function () {
+        if (!reset.classList.contains("is-armed")) {
+          reset.classList.add("is-armed");
+          reset.textContent = "Снять все отметки? Нажмите ещё раз";
+          resetTimer = setTimeout(disarmReset, 5000);
+          return;
+        }
+
+        disarmReset();
+
         boxes.forEach(function (input) {
           input.checked = false;
         });
@@ -499,15 +520,52 @@
       });
     }
 
+    // Ошибка показывается под своим полем и связана с ним через aria-describedby
+    function setFieldError(field, text) {
+      const id = field.id + "-error";
+      let hint = document.getElementById(id);
+
+      if (!text) {
+        field.removeAttribute("aria-invalid");
+        field.removeAttribute("aria-describedby");
+        if (hint) hint.remove();
+        return;
+      }
+
+      if (!hint) {
+        hint = document.createElement("p");
+        hint.id = id;
+        hint.className = "field-error";
+        field.insertAdjacentElement("afterend", hint);
+      }
+
+      hint.textContent = text;
+      field.setAttribute("aria-invalid", "true");
+      field.setAttribute("aria-describedby", id);
+    }
+
+    ["name", "message"].forEach(function (key) {
+      const field = form.elements.namedItem(key);
+      field.addEventListener("input", function () {
+        if (field.value.trim()) setFieldError(field, "");
+      });
+    });
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
 
       const fields = form.elements;
-      const name = fields.namedItem("name").value.trim();
-      const message = fields.namedItem("message").value.trim();
+      const nameField = fields.namedItem("name");
+      const messageField = fields.namedItem("message");
+      const name = nameField.value.trim();
+      const message = messageField.value.trim();
+
+      setFieldError(nameField, name ? "" : "Напишите имя или псевдоним, чтобы мы знали, как к вам обращаться.");
+      setFieldError(messageField, message ? "" : "Напишите вопрос или предложение, хотя бы одно предложение.");
 
       if (!name || !message) {
-        setStatus("Заполните оба поля: имя и сообщение.", "error");
+        setStatus("Заполните отмеченные поля.", "error");
+        (name ? messageField : nameField).focus();
         shakeForm();
         return;
       }
@@ -546,7 +604,29 @@
     });
 
     if (clearButton) {
+      const clearLabel = clearButton.textContent;
+      let clearTimer = 0;
+
+      // Удаление необратимо: первое нажатие только просит подтвердить
+      function disarmClear() {
+        clearTimeout(clearTimer);
+        clearButton.classList.remove("is-armed");
+        clearButton.textContent = clearLabel;
+      }
+
+      clearButton.addEventListener("blur", disarmClear);
+
       clearButton.addEventListener("click", function () {
+        if (!clearButton.classList.contains("is-armed")) {
+          clearButton.classList.add("is-armed");
+          clearButton.textContent = "Точно удалить? Нажмите ещё раз";
+          setStatus("Сообщения удалятся без возможности восстановить. Нажмите кнопку ещё раз, чтобы подтвердить.", "error");
+          clearTimer = setTimeout(disarmClear, 5000);
+          return;
+        }
+
+        disarmClear();
+
         try {
           localStorage.removeItem(STORE_KEY);
           setStatus("Сохранённые сообщения удалены.", "success");
