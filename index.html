@@ -3,28 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PyWeb Guide — Python в веб-разработке</title>
+  <title>PyWeb Guide — первый сайт на Python с нуля</title>
 
-  <meta name="description" content="PyWeb Guide — учебный ресурс о Python в веб-разработке: backend, Django и Flask, дорожная карта новичка с отметкой прогресса, первый проект по шагам.">
+  <meta name="description" content="Бесплатный учебный сайт для тех, кто никогда не программировал: основы Python прямо в браузере и пошаговая сборка первого сайта.">
   <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:site_name" content="PyWeb Guide">
-  <meta property="og:title" content="PyWeb Guide — Python в веб-разработке">
-  <meta property="og:description" content="PyWeb Guide — учебный ресурс о Python в веб-разработке: backend, Django и Flask, дорожная карта новичка с отметкой прогресса, первый проект по шагам.">
+  <meta property="og:title" content="PyWeb Guide — первый сайт на Python с нуля">
+  <meta property="og:description" content="Бесплатный учебный сайт для тех, кто никогда не программировал: основы Python прямо в браузере и пошаговая сборка первого сайта.">
   <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/">
   <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta property="og:image:alt" content="Плакат PyWeb Guide: первый сайт на Python, бесплатный курс для тех, кто никогда не программировал">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#10161d">
+  <meta name="theme-color" content="#ffd249">
 
 
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
+  <link rel="preload" href="assets/fonts/sofia-sans-extra-condensed-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
 
   <script>
@@ -33,7 +34,7 @@
       var theme;
       try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
       if (theme !== "light" && theme !== "dark") {
-        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        theme = "light";
       }
       document.documentElement.setAttribute("data-theme", theme);
     })();
@@ -64,7 +65,7 @@
   </script>
 </head>
 
-<body id="top" class="home" data-no-toc>
+<body data-band="yellow" id="top" class="home" data-no-toc>
   <div id="progress" aria-hidden="true"></div>
 
   <a class="skip-link" href="#content">Перейти к содержанию</a>
@@ -83,16 +84,18 @@
 
       <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
         <ul class="nav-menu">
-          <li><a class="nav-link active" href="index.html" aria-current="page">Главная</a></li>
-          <li><a class="nav-link" href="about.html">О Python</a></li>
-          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
-          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="start.html">С нуля</a></li>
+          <li><a class="nav-link" href="course.html">Весь курс</a></li>
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
-          <li><a class="nav-link" href="deploy.html">Публикация</a></li>
+          <li><a class="nav-link" href="playground.html">Песочница</a></li>
+          <li><a class="nav-link" href="glossary.html">Словарь</a></li>
           <li class="nav-more"><details>
           <summary class="nav-link">Ещё <span class="caret" aria-hidden="true"></span></summary>
           <ul class="nav-more-list">
-            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li><a href="about.html">О Python</a></li>
+            <li><a href="frameworks.html">Фреймворки</a></li>
+            <li><a href="databases.html">Базы данных</a></li>
+            <li><a href="deploy.html">Публикация</a></li>
             <li class="sep" role="presentation"></li>
             <li><a href="templates.html">Шаблоны и формы</a></li>
             <li><a href="auth.html">Авторизация</a></li>
@@ -101,7 +104,6 @@
             <li><a href="git.html">Git</a></li>
             <li><a href="project2.html">Второй проект</a></li>
             <li class="sep" role="presentation"></li>
-            <li><a href="playground.html">Песочница</a></li>
             <li><a href="practice.html">Задачи</a></li>
             <li><a href="cheatsheet.html">Шпаргалка</a></li>
             <li><a href="exam.html">Финальный тест</a></li>
@@ -120,84 +122,29 @@
 
 
   <main id="content" class="page" tabindex="-1">
-      <div class="hero">
+      <div class="poster-hero field-yellow">
         <div class="container">
-          <h1 class="hero-title"><span class="line"><span>Python для</span></span> <span class="line"><span>веб-разработки</span></span></h1>
+          <h1 class="hero-title"><span class="line"><span>Первый сайт</span></span> <span class="line"><span>на Python</span></span></h1>
+          <img class="hero-sticker" src="assets/img/python-left.jpg" width="510" height="474" alt="Старинная гравюра: сетчатый питон и ещё одна змея" decoding="async" fetchpriority="high">
 
           <div class="hero-grid">
             <div class="hero-copy">
-              <p class="lead">
-                От идеи до первого проекта. PyWeb Guide — учебный сайт, который помогает студентам понять серверную разработку:
-                запросы, базы данных, фреймворки — и выбрать между Django и Flask для первого проекта.
-              </p>
-
+              <p class="lead">Бесплатный учебный сайт для тех, кто никогда не программировал. Вы выучите основы Python, простого языка программирования, и шаг за шагом соберёте свой сайт.</p>
               <div class="hero-actions">
-                <a class="btn btn-primary" href="about.html">Начать изучение</a>
-                <a class="btn btn-secondary" href="frameworks.html">Сравнить фреймворки</a>
+                <a class="btn btn-primary" href="start.html">Начать с нуля</a>
               </div>
-              <p class="hero-hint">Не знаете, что выбрать? <a href="frameworks.html#quiz">Пройдите мини-тест</a> · <a href="course.html">Весь курс</a> · <a href="practice.html">Задачи</a></p>
+              <p class="hero-hint"><a href="course.html">Я уже знаю Python</a></p>
             </div>
 
-            <div class="hero-visual">
-              <div class="window" data-ui>
-              <div class="window-bar">
-                <div class="window-tabs" role="tablist" aria-label="Одна страница на двух фреймворках">
-                  <button class="window-tab" type="button" role="tab" id="tab-flask" aria-selected="true" aria-controls="code-flask">Flask</button>
-                  <button class="window-tab" type="button" role="tab" id="tab-django" aria-selected="false" aria-controls="code-django" tabindex="-1">Django</button>
-                </div>
-                <button class="copy-btn" type="button">Копировать</button>
+            <div class="hero-live">
+              <div class="code-block" data-run="python" data-open data-ui data-poster="#poster-out">
+                <div class="code-head"><span>Замените имя и нажмите «Запустить»</span></div>
+                <pre><code>name = "Аня"
+print("Привет,", name)</code></pre>
               </div>
-              <div class="window-panels">
-                <pre class="window-code is-active" id="code-flask" role="tabpanel" aria-labelledby="tab-flask" tabindex="0"><code># app.py
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return "PyWeb Guide"
-
-# запуск: flask --app app run --debug</code></pre>
-                <pre class="window-code" id="code-django" role="tabpanel" aria-labelledby="tab-django" tabindex="0" inert><code># myapp/views.py
-from django.http import HttpResponse
-
-def home(request):
-    return HttpResponse("PyWeb Guide")
-
-# mysite/urls.py
-from django.urls import path
-from myapp import views
-
-urlpatterns = [path("", views.home)]
-
-# запуск: python manage.py runserver</code></pre>
-              </div>
+              <div class="poster-out field-pink" aria-hidden="true"><span id="poster-out">Привет, Аня</span></div>
+              <p class="hero-note">Это настоящая программа на Python. Она работает прямо здесь и пишет на этой странице.</p>
             </div>
-            <p class="note hero-note">Одна и та же страница на двух фреймворках. Скопируйте код и запустите у себя командой из последней строки.</p>
-            </div>
-          </div>
-
-          <div class="topics">
-          <a class="topic reveal" href="about.html">
-            <span class="topic-picture"><img src="assets/img/eniac.jpg" width="900" height="617" alt="Две женщины настраивают компьютер ENIAC у панелей с кабелями, 1946 год" loading="lazy" decoding="async"></span>
-            <strong>Серверная логика</strong>
-            <span>Компьютер ENIAC, 1946 год</span>
-          </a>
-          <a class="topic reveal" href="about.html#flow">
-            <span class="topic-picture"><img src="assets/img/switchboard.jpg" width="900" height="715" alt="Телефонистки у международного коммутатора Bell System соединяют звонки" loading="lazy" decoding="async"></span>
-            <strong>Маршрутизация</strong>
-            <span>Коммутатор Bell System</span>
-          </a>
-          <a class="topic reveal" href="databases.html">
-            <span class="topic-picture"><img src="assets/img/card-catalog.jpg" width="900" height="675" alt="Ряды ящиков карточного каталога в Библиотеке Конгресса" loading="lazy" decoding="async"></span>
-            <strong>Базы данных</strong>
-            <span>Каталог Библиотеки Конгресса</span>
-          </a>
-          <a class="topic reveal" href="frameworks.html">
-            <span class="topic-picture"><img src="assets/img/reinhardt.jpg" width="900" height="945" alt="Гитарист Джанго Рейнхардт играет на гитаре, около 1946 года" loading="lazy" decoding="async"></span>
-            <strong>Выбор фреймворка</strong>
-            <span>Джанго Рейнхардт: в его честь назван Django</span>
-          </a>
           </div>
         </div>
       </div>
@@ -207,9 +154,10 @@ urlpatterns = [path("", views.home)]
           <div class="continue-box">
             <div>
               <h2 id="continue-title">Продолжить обучение</h2>
-              <p>Вы уже начали первый проект — вот где вы остановились.</p>
+              <p>Вы уже начали. Вот где вы остановились.</p>
             </div>
             <div class="continue-links">
+              <a class="btn btn-primary" href="start.html" data-track="start" data-total="7" hidden>Python с нуля: <span data-track-count></span></a>
               <a class="btn btn-primary" href="project.html#flask" data-track="project-flask" data-total="6" hidden>Flask: <span data-track-count></span></a>
               <a class="btn btn-primary" href="project.html#django" data-track="project-django" data-total="10" hidden>Django: <span data-track-count></span></a>
               <a class="btn btn-primary" href="project2.html" data-track="project-blog" data-total="7" hidden>API блога: <span data-track-count></span></a>
@@ -218,95 +166,68 @@ urlpatterns = [path("", views.home)]
         </div>
       </section>
 
-      <section class="section" aria-label="Что здесь можно изучить">
+      <section class="board" aria-labelledby="intro-title">
         <div class="container">
-          <div class="section-head reveal">
-            <h2>Что здесь можно изучить</h2>
-            <p>
-              Сайт построен как короткий маршрут: от роли Python в вебе — к конкретным инструментам,
-              коду и практике.
-            </p>
+          <div class="board-grid">
+            <div class="tile tile-a field-ink reveal"><h2 id="intro-title" class="slogan"><span class="m"><span>Ничего не</span></span><span class="m"><span>нужно знать</span></span></h2></div>
+            <div class="tile tile-b field-cyan reveal"><p class="slogan"><span>7</span><span>уроков</span></p></div>
+            <div class="tile tile-c field-orange reveal"><img src="assets/img/eniac.jpg" width="900" height="617" alt="Две женщины настраивают компьютер ENIAC у панелей с кабелями, 1946 год" loading="lazy" decoding="async"></div>
           </div>
-
-          <div class="card-grid">
-            <article class="card reveal">
-              <h3>Что такое backend</h3>
-              <p>Серверная часть приложения: принимает запрос, обрабатывает данные и возвращает ответ пользователю. <a href="about.html">Как Python работает на сервере</a>.</p>
-            </article>
-
-            <article class="card reveal">
-              <h3>Что такое Django</h3>
-              <p>Крупный фреймворк с готовыми инструментами «из коробки»: ORM, админ-панель, пользователи.</p>
-            </article>
-
-            <article class="card reveal">
-              <h3>Что такое Flask</h3>
-              <p>Лёгкий фреймворк: берёшь только то, что нужно, и сам решаешь, как устроен проект.</p>
-            </article>
-
-            <article class="card reveal">
-              <h3>Когда что выбирать</h3>
-              <p>Зависит от размера проекта, сроков и опыта: короткий сервис — Flask, большой сайт — Django. <a href="frameworks.html">Сравнение Django и Flask</a>.</p>
-            </article>
+          <div class="tile tile-text field-white reveal">
+            <h3>Как это устроено</h3>
+            <p>Вы начинаете с одной строки кода и нажимаете кнопку. Первые уроки идут прямо в браузере, поэтому ставить ничего не нужно, а ошибка ничего не сломает. Затем вы узнаёте, как сайт устроен изнутри: кто принимает ваш запрос, где лежат данные и откуда берётся страница. После этого вы собираете свой первый сайт, список задач, по готовой инструкции и выкладываете его в интернет. Весь курс бесплатный и на русском языке. Его сделали два студента Северо-Казахстанского университета.</p>
           </div>
         </div>
       </section>
 
-      <section class="section" aria-label="Дорожная карта">
+      <section class="band field-white" aria-labelledby="plan-title">
         <div class="container">
-          <div class="section-head reveal">
-            <h2>План изучения: дорожная карта новичка</h2>
-            <p>Пять шагов, которые помогают пройти путь от синтаксиса до первого веб-приложения. Отмечайте пройденные шаги — прогресс сохранится в этом браузере.</p>
-          </div>
+          <h2 id="plan-title" class="band-title reveal">Пять шагов до своего сайта</h2>
 
           <div class="progress-box reveal" data-progress="roadmap">
-            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 5 шагов пройдено</p>
+            <p class="progress-label" role="status" aria-live="polite"><span data-progress-count>0</span> из 5 шагов пройдено. Отметки сохранятся в этом браузере.</p>
             <div class="progress-track" aria-hidden="true"><div class="progress-fill" data-progress-fill></div></div>
             <button class="btn btn-secondary progress-reset" type="button" data-progress-reset hidden>Сбросить прогресс</button>
           </div>
 
-          <div class="timeline" data-progress-list="roadmap">
-            <div class="timeline-item reveal">
-              <span class="timeline-dot">1</span>
+          <div class="stage-bar" data-progress-list="roadmap">
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-yellow">7 уроков</span>
               <div class="timeline-content">
-                <h3>Повтори основы Python</h3>
-                <p>Переменные, условия, функции, списки и словари — минимальная база для старта.</p>
+                <h3>Выучите основы Python</h3>
+                <p>Как хранить данные, задавать условия и писать свои команды. <a href="start.html">Уроки «С нуля»</a>.</p>
                 <label class="step-check"><input type="checkbox" data-step="1"> Шаг пройден</label>
               </div>
             </div>
-
-            <div class="timeline-item reveal">
-              <span class="timeline-dot">2</span>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-pink">8 шагов</span>
               <div class="timeline-content">
-                <h3>Пойми, как работает веб</h3>
-                <p>Браузер, сервер, HTTP-запрос, ответ, маршруты и страницы — основная логика веба.</p>
+                <h3>Поймите, как работает сайт</h3>
+                <p>Что происходит между нажатием на ссылку и появлением страницы. <a href="about.html#flow">Разбор по шагам</a>.</p>
                 <label class="step-check"><input type="checkbox" data-step="2"> Шаг пройден</label>
               </div>
             </div>
-
-            <div class="timeline-item reveal">
-              <span class="timeline-dot">3</span>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-cyan">1 тест</span>
               <div class="timeline-content">
-                <h3>Выбери первый фреймворк</h3>
-                <p>Flask — для простого старта, Django — для проектов с админкой и базой данных.</p>
+                <h3>Выберите инструмент</h3>
+                <p>Готовых наборов для сборки сайта два: Flask и Django. <a href="frameworks.html#quiz">Мини-тест</a> подскажет, какой взять.</p>
                 <label class="step-check"><input type="checkbox" data-step="3"> Шаг пройден</label>
               </div>
             </div>
-
-            <div class="timeline-item reveal">
-              <span class="timeline-dot">4</span>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-orange">1 раздел</span>
               <div class="timeline-content">
-                <h3>Подключи данные</h3>
-                <p>SQLite, ORM, модели и простые запросы — следующий шаг к реальному приложению. Разбор с примерами — в разделе <a href="databases.html">«Базы данных»</a>.</p>
+                <h3>Научите сайт запоминать</h3>
+                <p>Записи хранятся в <a href="databases.html">базе данных</a>, поэтому не пропадают.</p>
                 <label class="step-check"><input type="checkbox" data-step="4"> Шаг пройден</label>
               </div>
             </div>
-
-            <div class="timeline-item reveal">
-              <span class="timeline-dot">5</span>
+            <div class="timeline-item stage reveal">
+              <span class="stage-block field-blue">6 шагов</span>
               <div class="timeline-content">
-                <h3>Сделай мини-проект</h3>
-                <p>Список задач, блог, портфолио или короткий сервис — практика закрепляет лучше теории. Начните с готовой инструкции: <a href="project.html">первый проект по шагам</a>.</p>
+                <h3>Сделайте свой сайт</h3>
+                <p>Простой первый проект с <a href="project.html">готовой инструкцией</a>. Потом его можно <a href="deploy.html">выложить в интернет</a>.</p>
                 <label class="step-check"><input type="checkbox" data-step="5"> Шаг пройден</label>
               </div>
             </div>
@@ -314,196 +235,177 @@ urlpatterns = [path("", views.home)]
         </div>
       </section>
 
-      <section class="section" aria-label="Карта знаний">
+      <section class="band field-pink" aria-labelledby="parts-title">
         <div class="container">
-          <div class="section-head reveal">
-            <h2>Карта знаний темы</h2>
-            <p>
-              Схема показывает путь запроса от браузера к серверу и обратно, а дерево ниже —
-              иерархию понятий: Python → backend → Django / Flask → база данных.
-            </p>
-          </div>
-
-          <div class="panel reveal">
-            <div class="map-scroll" tabindex="0" role="region" aria-label="Схема пути запроса, прокручивается по горизонтали">
-              <img src="assets/knowledge-map.svg" width="720" height="360"
-                alt="Схема: браузер отправляет запрос на сервер, сервер на Python использует Django или Flask, обращается к базе данных и возвращает страницу пользователю.">
+          <div class="parts-board">
+            <div class="part-head reveal">
+              <h2 id="parts-title" class="band-title">Из чего состоит сайт</h2>
+              <p>Четыре слова, которые встретятся вам чаще всего.</p>
             </div>
-          </div>
-
-          <div class="panel tree reveal stack-gap" role="group" aria-label="Дерево знаний Python и веб-разработки">
-            <ul class="tree-root">
-              <li>
-                <span class="tree-node strong">Python</span>
-                <ul>
-                  <li>
-                    <span class="tree-node">Backend-разработка</span>
-                    <ul>
-                      <li>Обработка запросов</li>
-                      <li>Работа с базой данных</li>
-                      <li>Формирование ответа</li>
-                      <li>Маршруты и контроллеры</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <span class="tree-node">Django</span>
-                    <ul>
-                      <li>ORM и админ-панель</li>
-                      <li>Готовая архитектура</li>
-                      <li>Быстрый старт для CRUD-проектов</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <span class="tree-node">Flask</span>
-                    <ul>
-                      <li>Минимализм и гибкость</li>
-                      <li>Расширения по необходимости</li>
-                      <li>Хорош для небольших API</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+            <a class="part part-route field-yellow reveal" href="glossary.html#route">
+              <img src="assets/img/switchboard.jpg" width="900" height="715" alt="Телефонистки у международного коммутатора Bell System соединяют звонки" loading="lazy" decoding="async">
+              <span class="part-bar field-yellow"><strong>Маршрут</strong><span>Соединяет адрес с нужной страницей, как телефонистка соединяла звонки.</span></span>
+            </a>
+            <a class="part part-server field-cyan reveal" href="glossary.html#server">
+              <img src="assets/img/eniac.jpg" width="900" height="617" alt="Женщина настраивает панели компьютера ENIAC, 1946 год" loading="lazy" decoding="async">
+              <span class="part-bar field-cyan"><strong>Сервер</strong><span>Компьютер, на котором работает программа сайта. На снимке ENIAC, 1946 год.</span></span>
+            </a>
+            <a class="part part-base field-orange reveal" href="glossary.html#database">
+              <img src="assets/img/card-catalog.jpg" width="900" height="675" alt="Ряды ящиков карточного каталога в Библиотеке Конгресса" loading="lazy" decoding="async">
+              <span class="part-bar field-orange"><strong>База данных</strong><span>Хранит записи, как карточки в каталоге.</span></span>
+            </a>
+            <a class="part part-frame field-white reveal" href="glossary.html#framework">
+              <img src="assets/img/reinhardt.jpg" width="900" height="945" alt="Гитарист Джанго Рейнхардт играет на гитаре, около 1946 года" loading="lazy" decoding="async">
+              <span class="part-bar field-white"><strong>Фреймворк</strong><span>Набор для сборки сайта. Django назван в честь этого гитариста.</span></span>
+            </a>
+            <div class="part-more field-white reveal"><p>Встретили незнакомое слово? Всё объяснено в <a href="glossary.html">словаре</a>.</p></div>
           </div>
         </div>
       </section>
 
-      <section class="section" aria-label="Технологии и понятия">
+      <section class="band field-cyan" aria-labelledby="inside-title">
         <div class="container">
-          <div class="section-head reveal">
-            <h2>Ключевые технологии и понятия</h2>
-            <p>Слова, которые часто встречаются в веб-разработке на Python.</p>
-          </div>
-
-          <div class="chips reveal">
-            <span class="chip">Python</span>
-            <span class="chip">HTTP</span>
-            <span class="chip">HTML</span>
-            <span class="chip">CSS</span>
-            <span class="chip">JavaScript</span>
-            <span class="chip">Django</span>
-            <span class="chip">Flask</span>
-            <span class="chip">SQLite</span>
-            <span class="chip">ORM</span>
-            <span class="chip">REST API</span>
-            <span class="chip">Git</span>
-            <span class="chip">Deploy</span>
-          </div>
+          <h2 id="inside-title" class="band-title reveal">Что внутри</h2>
+          <ul class="lineup">
+            <li class="reveal"><a href="start.html"><span>Python с нуля</span><span>Семь уроков прямо в браузере, без установки</span><span>Уроки</span></a></li>
+            <li class="reveal"><a href="about.html"><span>О Python</span><span>Что происходит, когда вы открываете страницу</span><span>Раздел</span></a></li>
+            <li class="reveal"><a href="frameworks.html"><span>Фреймворки</span><span>Django, Flask и FastAPI: что выбрать</span><span>Раздел</span></a></li>
+            <li class="reveal"><a href="databases.html"><span>Базы данных</span><span>Где сайт хранит записи и как их найти</span><span>Раздел</span></a></li>
+            <li class="reveal"><a href="project.html"><span>Первый проект</span><span>Список задач на Flask или Django</span><span>Проект</span></a></li>
+            <li class="reveal"><a href="deploy.html"><span>Публикация</span><span>Сайт в интернете на PythonAnywhere</span><span>Раздел</span></a></li>
+            <li class="reveal"><a href="templates.html"><span>Шаблоны и формы</span><span>Страницы из шаблонов и проверка данных</span><span>Раздел</span></a></li>
+            <li class="reveal"><a href="auth.html"><span>Авторизация</span><span>Пароли, вход и права доступа</span><span>Раздел</span></a></li>
+            <li class="reveal"><a href="api.html"><span>REST API</span><span>Как программы обмениваются данными</span><span>Раздел</span></a></li>
+            <li class="reveal"><a href="testing.html"><span>Тесты</span><span>Как проверить, что всё работает</span><span>Раздел</span></a></li>
+            <li class="reveal"><a href="git.html"><span>Git</span><span>История изменений в коде</span><span>Раздел</span></a></li>
+            <li class="reveal"><a href="project2.html"><span>Второй проект</span><span>API для блога</span><span>Проект</span></a></li>
+            <li class="reveal"><a href="playground.html"><span>Песочница</span><span>Пишите и запускайте код сразу</span><span>Инструмент</span></a></li>
+            <li class="reveal"><a href="practice.html"><span>Задачи</span><span>Десять задач с автопроверкой</span><span>Практика</span></a></li>
+            <li class="reveal"><a href="cheatsheet.html"><span>Шпаргалка</span><span>Главное на одной странице</span><span>Инструмент</span></a></li>
+            <li class="reveal"><a href="exam.html"><span>Финальный тест</span><span>Проверьте, что запомнили</span><span>Практика</span></a></li>
+          </ul>
         </div>
       </section>
 
-      <section class="section" aria-label="Проекты для тренировки">
+      <section class="band field-orange" aria-labelledby="words-title">
         <div class="container">
-          <div class="section-head reveal">
-            <h2>Идеи для практики</h2>
-            <p>Если хочется закрепить материал, лучше всего сделать маленький проект.</p>
-          </div>
-
-          <div class="card-grid idea-rows">
-            <article class="card reveal">
-              <h3>Todo-список</h3>
-              <p>Добавление, удаление и отметка задач — классика для первого CRUD-приложения. <a href="project.html">Пошаговая инструкция</a>.</p>
-            </article>
-
-            <article class="card reveal">
-              <h3>Мини-блог</h3>
-              <p>Статьи, категории и страница с деталями поста — хороший проект для Django.</p>
-            </article>
-
-            <article class="card reveal">
-              <h3>Сокращатель ссылок</h3>
-              <p>Простая логика, база данных и редиректы — удобно делать на Flask.</p>
-            </article>
-
-            <article class="card reveal">
-              <h3>Портфолио</h3>
-              <p>Личный сайт с проектами, контактами и красивой подачей материалов.</p>
-            </article>
+          <h2 id="words-title" class="band-title band-title--mid reveal">Слова простым языком</h2>
+          <div class="words">
+            <a class="reveal" href="glossary.html#python">Python</a>
+            <a class="reveal" href="glossary.html#server">Сервер</a>
+            <a class="reveal" href="glossary.html#backend">Backend</a>
+            <a class="reveal" href="glossary.html#http">HTTP</a>
+            <a class="reveal" href="glossary.html#html">HTML</a>
+            <a class="reveal" href="glossary.html#css">CSS</a>
+            <a class="reveal" href="glossary.html#javascript">JavaScript</a>
+            <a class="reveal" href="glossary.html#framework">Фреймворк</a>
+            <a class="reveal" href="glossary.html#django">Django</a>
+            <a class="reveal" href="glossary.html#flask">Flask</a>
+            <a class="reveal" href="glossary.html#database">База данных</a>
+            <a class="reveal" href="glossary.html#sql">SQL</a>
+            <a class="reveal" href="glossary.html#orm">ORM</a>
+            <a class="reveal" href="glossary.html#api">API</a>
+            <a class="reveal" href="glossary.html#git">Git</a>
+            <a class="reveal" href="glossary.html#deploy">Deploy</a>
           </div>
         </div>
       </section>
 
-      <section class="section faq" aria-label="Частые вопросы">
+      <section class="band field-white" aria-labelledby="ideas-title">
         <div class="container">
-          <div class="section-head reveal">
-            <h2>Частые вопросы</h2>
-            <p>Короткие ответы на то, что обычно спрашивают новички.</p>
+          <h2 id="ideas-title" class="band-title reveal">Что можно сделать</h2>
+          <div class="ideas">
+            <article class="idea field-yellow reveal"><h3>Список задач</h3><p>Добавлять, удалять и отмечать дела: самый простой настоящий сайт. <a href="project.html">Пошаговая инструкция</a>.</p></article>
+            <article class="idea field-pink reveal"><h3>Мини-блог</h3><p>Статьи, рубрики и отдельная страница для каждой статьи.</p></article>
+            <article class="idea field-cyan reveal"><h3>Сокращатель ссылок</h3><p>Длинная ссылка превращается в короткую. Простая логика и база данных.</p></article>
+            <article class="idea field-orange reveal"><h3>Портфолио</h3><p>Личный сайт с проектами, контактами и красивой подачей материалов.</p></article>
           </div>
-
-          <details class="reveal">
-            <summary>Нужно ли сразу учить Django и Flask?</summary>
-            <p>Нет. Лучше выбрать один фреймворк, сделать на нём простой проект и уже потом сравнивать со вторым.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>Можно ли делать сайты без базы данных?</summary>
-            <p>Да, но большинство реальных проектов хранят пользователей, товары или контент, поэтому база данных быстро становится нужна.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>Что важнее: теория или практика?</summary>
-            <p>Практика. Теория помогает понимать, что происходит, но навык появляется только после написания кода и разбора ошибок.</p>
-          </details>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="sources-title">
+      <section aria-labelledby="faq-title">
+        <div class="faq-head field-yellow">
+          <div class="container"><h2 id="faq-title" class="band-title reveal">Частые вопросы</h2></div>
+        </div>
+      <div class="faq-band field-white">
+        <div class="container">
+          <h3 class="reveal">Я никогда не программировал. У меня получится?</h3>
+          <p class="reveal">Да. Начните с <a href="start.html">уроков «С нуля»</a>: они не требуют ни опыта, ни установки программ.</p>
+        </div>
+      </div>
+      <div class="faq-band field-pink">
+        <div class="container">
+          <h3 class="reveal">Это платно?</h3>
+          <p class="reveal">Нет, весь сайт бесплатный.</p>
+        </div>
+      </div>
+      <div class="faq-band field-white">
+        <div class="container">
+          <h3 class="reveal">Нужно ли сразу учить Django и Flask?</h3>
+          <p class="reveal">Нет. Лучше выбрать один фреймворк, сделать на нём простой проект и уже потом сравнивать со вторым.</p>
+        </div>
+      </div>
+      <div class="faq-band field-pink">
+        <div class="container">
+          <h3 class="reveal">Можно ли делать сайты без базы данных?</h3>
+          <p class="reveal">Да, но большинство реальных проектов хранят пользователей, товары или контент, поэтому база данных быстро становится нужна.</p>
+        </div>
+      </div>
+      <div class="faq-band field-white">
+        <div class="container">
+          <h3 class="reveal">Что важнее: теория или практика?</h3>
+          <p class="reveal">Практика. Теория помогает понимать, что происходит, но навык появляется только после написания кода и разбора ошибок.</p>
+        </div>
+      </div>
+      </section>
+
+      <section class="section sources-band" aria-labelledby="sources-title">
         <div class="container">
           <div class="panel sources reveal">
             <h2 id="sources-title">Источники</h2>
-            <p class="note">Материалы сайта сверены с официальной документацией. Проверено <time datetime="2026-10-28">28.10.2026</time>.</p>
+            <p class="note">Материалы сайта сверены с официальной документацией. Проверено <time datetime="2026-11-06">06.11.2026</time>.</p>
             <ul class="list">
-              <li><a href="https://docs.python.org/3/" rel="noopener">Документация Python 3</a> — язык и стандартная библиотека</li>
-              <li><a href="https://docs.djangoproject.com/en/6.1/" rel="noopener">Документация Django 6.1</a> — актуальная версия 6.1.2</li>
-              <li><a href="https://flask.palletsprojects.com/en/stable/" rel="noopener">Документация Flask 3.1</a> — актуальная версия 3.1.3</li>
-              <li><a href="https://developer.mozilla.org/ru/docs/Web/HTTP/Overview" rel="noopener">MDN: обзор протокола HTTP</a> — как браузер общается с сервером</li>
+              <li><a href="https://docs.python.org/3/" rel="noopener">Документация Python 3</a>: язык и стандартная библиотека</li>
+              <li><a href="https://docs.djangoproject.com/en/6.1/" rel="noopener">Документация Django 6.1</a>: актуальная версия 6.1.3</li>
+              <li><a href="https://flask.palletsprojects.com/en/stable/" rel="noopener">Документация Flask 3.1</a>: актуальная версия 3.1.3</li>
+              <li><a href="https://developer.mozilla.org/ru/docs/Web/HTTP/Guides/Overview" rel="noopener">MDN: обзор протокола HTTP</a>: как браузер общается с сервером</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <section class="section" aria-label="Быстрый переход">
+      <section class="cta-open field-blue" aria-labelledby="final-title">
         <div class="container">
-          <div class="cta-panel cta-panel--picture reveal">
-            <div class="cta-body">
-              <h2>Готовы выбрать стек?</h2>
-              <p class="lead cta-lead">
-                Откройте сравнение Django и Flask — там есть таблицы, примеры кода и мини-тест.
-              </p>
-              <div class="cta-actions">
-              <a class="btn btn-primary" href="frameworks.html">Открыть сравнение</a>
+          <h2 id="final-title" class="band-title reveal">Начните сейчас</h2>
+          <div class="cta-side">
+            <img class="sticker reveal" src="assets/img/python-right.jpg" width="471" height="450" alt="Старинная гравюра: три змеи с того же листа" loading="lazy" decoding="async">
+            <p class="reveal">Регистрация не нужна, а первый урок займёт несколько минут.</p>
+          </div>
+          <div class="cta-try reveal">
+            <div class="code-block" data-run="python" data-open>
+              <div class="code-head"><span>Первый урок уже открыт</span></div>
+              <pre><code>print("Привет!")
+print("Это моя первая программа")</code></pre>
             </div>
-            </div>
-            <img class="cta-picture" src="assets/img/snakes.jpg" width="900" height="602" alt="Старая гравюра: восемь змей, среди них сетчатый питон" loading="lazy" decoding="async">
+            <a class="btn btn-primary" href="start.html#lesson-1">Открыть первый урок</a>
           </div>
         </div>
       </section>
   </main>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <div>
-        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+    <div class="container">
+      <div class="mark reveal" aria-hidden="true"><span>P</span><span>Y</span><span>W</span><span>E</span><span>B</span><span>G</span><span>U</span><span>I</span><span>D</span><span>E</span></div>
+      <div class="footer-links">
+        <div><strong>Начать</strong><ul><li><a href="start.html">Python с нуля</a></li><li><a href="glossary.html">Словарь</a></li><li><a href="playground.html">Песочница</a></li></ul></div>
+        <div><strong>Понять</strong><ul><li><a href="about.html">О Python</a></li><li><a href="frameworks.html">Фреймворки</a></li><li><a href="databases.html">Базы данных</a></li></ul></div>
+        <div><strong>Сделать</strong><ul><li><a href="project.html">Первый проект</a></li><li><a href="deploy.html">Публикация</a></li><li><a href="practice.html">Задачи</a></li></ul></div>
+        <div><strong>Сайт</strong><ul><li><a href="course.html">Весь курс</a></li><li><a href="contacts.html">Контакты</a></li><li><a href="index.html">Главная</a></li></ul></div>
       </div>
-      <div>
-        <a href="index.html">Главная</a> •
-        <a href="about.html">О Python</a> •
-        <a href="frameworks.html">Фреймворки</a> •
-        <a href="project.html">Первый проект</a> •
-        <a href="course.html">Весь курс</a> •
-        <a href="contacts.html">Контакты</a>
-      </div>
-      <p class="note footer-note">
-        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
-        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
-        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
-        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
-      </p>
+      <p class="footer-copy">© 2026 PyWeb Guide, учебный проект о Python в веб-разработке</p>
+      <p class="note footer-note">Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> · Обновлено: <time datetime="2026-11-06">06.11.2026</time> · Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 · <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a></p>
       <p class="note footer-note">Снимки: <a href="https://commons.wikimedia.org/wiki/File:Two_women_operating_ENIAC_(full_resolution).jpg" rel="noopener">ENIAC</a>, армия США; <a href="https://commons.wikimedia.org/wiki/File:Photograph_of_Women_Working_at_a_Bell_System_Telephone_Switchboard_(3660047829).jpg" rel="noopener">коммутатор Bell</a>, Национальный архив США; <a href="https://commons.wikimedia.org/wiki/File:Copyright_Card_Catalog_Files.jpg" rel="noopener">каталог</a>, Michael Holley; <a href="https://commons.wikimedia.org/wiki/File:Django_Reinhardt_(Gottlieb_07301).jpg" rel="noopener">Джанго Рейнхардт</a>, William P. Gottlieb, Библиотека Конгресса; <a href="https://www.rawpixel.com/image/13959871/image-paper-cartoon-art" rel="noopener">гравюра со змеями</a>, rawpixel, CC0. Остальные снимки в общественном достоянии.</p>
-      <p class="note footer-note">
-        <a href="privacy.html">Политика конфиденциальности</a> ·
-        <a href="terms.html">Условия использования</a>
-      </p>
+      <p class="note footer-note"><a href="privacy.html">Политика конфиденциальности</a> · <a href="terms.html">Условия использования</a></p>
       <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
     </div>
   </footer>

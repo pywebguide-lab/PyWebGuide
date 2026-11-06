@@ -413,6 +413,43 @@
     });
   }
 
+  /* Вывод на главной: каждый запуск печатает новый лист, цвет прокатывается, затем поднимаются буквы */
+  const POSTER_FIELDS = ["field-pink", "field-cyan", "field-orange", "field-white"];
+  let posterField = 0;
+
+  function printPoster(poster, text) {
+    poster.textContent = text;
+    if (reduced || !poster.animate) return;
+
+    const sheet = poster.parentElement;
+    // Быстрый повторный запуск: прошлый лист сразу дописывается, новый ложится поверх
+    sheet.querySelectorAll(".poster-plate").forEach(function (old) {
+      old.getAnimations().forEach(function (animation) { animation.finish(); });
+    });
+
+    posterField = (posterField + 1) % POSTER_FIELDS.length;
+    const field = POSTER_FIELDS[posterField];
+    const plate = el("div", { class: "poster-plate " + field });
+    sheet.insertBefore(plate, poster);
+
+    plate.animate(
+      [{ clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0 0 0 0)" }],
+      { duration: 420, easing: "cubic-bezier(0.77, 0, 0.175, 1)" }
+    ).onfinish = function () {
+      POSTER_FIELDS.forEach(function (name) { sheet.classList.remove(name); });
+      sheet.classList.add(field);
+      plate.remove();
+    };
+
+    poster.animate(
+      [
+        { transform: "translateY(100%)", clipPath: "inset(0.3em -1em calc(100% - 0.3em) -1em)" },
+        { transform: "translateY(0)", clipPath: "inset(-0.5em -1em -0.3em -1em)" }
+      ],
+      { duration: 520, delay: 160, fill: "backwards", easing: "cubic-bezier(0.23, 1, 0.32, 1)" }
+    );
+  }
+
   /* Примеры на страницах: кнопки «Запустить» и «Изменить» */
   document.querySelectorAll(".code-block[data-run]").forEach(function (block) {
     const head = block.querySelector(".code-head");
@@ -425,54 +462,36 @@
     head.insertBefore(run, edit);
     block.appendChild(box);
 
-    edit.addEventListener("click", function () {
+    function openEditor(focus) {
       const pre = block.querySelector("pre");
-      const area = el("textarea", { class: "code-edit", spellcheck: "false", "aria-label": "Код примера" });
+      const area = el("textarea", { class: "code-edit", spellcheck: "false", "aria-label": "Код примера, его можно менять" });
       area.value = pre.querySelector("code").textContent;
       area.rows = Math.min(24, area.value.split("\n").length + 1);
       tabInsert(area);
+      area.addEventListener("keydown", function (event) {
+        if ((event.ctrlKey || event.metaKey) && event.key === "Enter") run.click();
+      });
       pre.hidden = true;
       pre.parentNode.insertBefore(area, pre.nextSibling);
       edit.remove();
-      area.focus();
-    });
-
-    run.addEventListener("click", function () {
-      runInto(box, { code: codeOf(block) }, run);
-    });
-  });
-
-  /* Главная: запуск вкладки Flask в окне кода */
-  const heroWindow = document.querySelector(".hero .window");
-
-  if (heroWindow) {
-    const bar = heroWindow.querySelector(".window-bar");
-    const copy = bar.querySelector(".copy-btn");
-    const run = el("button", { class: "run-btn", type: "button", text: "Запустить" });
-    const box = outputBox();
-
-    bar.insertBefore(run, copy);
-    heroWindow.appendChild(box);
-
-    function syncRun() {
-      const flask = document.getElementById("code-flask").classList.contains("is-active");
-      run.hidden = !flask;
-      if (!flask) box.hidden = true;
+      if (focus) area.focus();
     }
 
-    heroWindow.querySelectorAll(".window-tab").forEach(function (tab) {
-      tab.addEventListener("click", function () { setTimeout(syncRun); });
-    });
+    edit.addEventListener("click", function () { openEditor(true); });
+    // В уроках код можно менять сразу, без лишней кнопки
+    if (block.hasAttribute("data-open")) openEditor(false);
 
     run.addEventListener("click", function () {
-      const code = document.querySelector("#code-flask code").textContent;
-      runInto(box, {
-        code: code + '\n\nprint("GET / →", app.test_client().get("/").text)'
-      }, run);
+      runInto(box, { code: codeOf(block) }, run).then(function (result) {
+        // На главной вывод программы показывается большими буквами
+        const poster = block.dataset.poster ? document.querySelector(block.dataset.poster) : null;
+        const printed = box.querySelector(".run-text").textContent.trim();
+        if (poster && result.ok && printed) {
+          printPoster(poster, printed.split("\n")[0].slice(0, 40));
+        }
+      });
     });
-
-    syncRun();
-  }
+  });
 
   /* Песочница */
   const playground = document.getElementById("playground");
@@ -557,7 +576,7 @@
             box.classList.add("is-ok");
             solved[id] = true;
             writeJson("pyweb_tasks", solved);
-            node.classList.add("is-solved");
+            node.classList.add("is-solved", "just-solved");
             updateTasks();
           } else {
             status.textContent = "Пока не получилось";
@@ -631,6 +650,7 @@
 
   if (dash) {
     const TRACKS = {
+      "start": { name: "Python с нуля", total: 7, url: "start.html" },
       "roadmap": { name: "Дорожная карта", total: 5, url: "index.html" },
       "project-flask": { name: "Первый проект: Flask", total: 6, url: "project.html#flask" },
       "project-django": { name: "Первый проект: Django", total: 10, url: "project.html#django" },
@@ -736,37 +756,37 @@
       const w = canvas.width;
       const h = canvas.height;
 
-      ctx.fillStyle = "#0b0f16";
+      const display = '"Sofia Sans Extra Condensed", Impact, sans-serif';
+      const body = "Onest, Arial, sans-serif";
+
+      ctx.fillStyle = "#ffd249";
       ctx.fillRect(0, 0, w, h);
-      ctx.strokeStyle = "#4c8dff";
-      ctx.lineWidth = 6;
-      ctx.strokeRect(40, 40, w - 80, h - 80);
       ctx.textAlign = "center";
+      ctx.fillStyle = "#0a0a0a";
 
-      ctx.fillStyle = "#7dd3fc";
-      ctx.font = "700 34px Manrope, Arial, sans-serif";
-      ctx.fillText("PyWeb Guide", w / 2, 130);
+      ctx.font = "900 44px " + display;
+      ctx.fillText("PYWEB GUIDE", w / 2, 100);
 
-      ctx.fillStyle = "#f4f7fb";
-      ctx.font = "800 64px Manrope, Arial, sans-serif";
-      ctx.fillText("Сертификат о прохождении", w / 2, 235);
+      ctx.font = "900 110px " + display;
+      ctx.fillText("СЕРТИФИКАТ О ПРОХОЖДЕНИИ", w / 2, 215);
 
-      let size = 56;
-      ctx.font = "700 " + size + "px Manrope, Arial, sans-serif";
-      while (ctx.measureText(name).width > w - 200 && size > 24) {
+      ctx.fillStyle = "#ffc4ef";
+      ctx.fillRect(0, 262, w, 110);
+      ctx.fillStyle = "#0a0a0a";
+
+      let size = 84;
+      ctx.font = "900 " + size + "px " + display;
+      while (ctx.measureText(name).width > w - 120 && size > 28) {
         size -= 2;
-        ctx.font = "700 " + size + "px Manrope, Arial, sans-serif";
+        ctx.font = "900 " + size + "px " + display;
       }
-      ctx.fillStyle = "#34d399";
       ctx.fillText(name, w / 2, 345);
 
-      ctx.fillStyle = "#f4f7fb";
-      ctx.font = "500 30px Manrope, Arial, sans-serif";
-      ctx.fillText("прошёл(ла) финальный тест курса «Python для веб-разработки»", w / 2, 425);
-      ctx.fillText("Результат: " + score + " из 15 · " + date, w / 2, 475);
+      ctx.font = "500 30px " + body;
+      ctx.fillText("прошёл(ла) финальный тест курса «Python для веб-разработки»", w / 2, 435);
+      ctx.fillText("Результат: " + score + " из 15 · " + date, w / 2, 485);
 
-      ctx.fillStyle = "rgba(244, 247, 251, 0.72)";
-      ctx.font = "400 22px Manrope, Arial, sans-serif";
+      ctx.font = "400 22px " + body;
       ctx.fillText("Учебный сертификат для самопроверки. Не является официальным документом.", w / 2, 565);
     }
 
@@ -795,7 +815,13 @@
 
       certificate.hidden = right < PASS;
       if (right >= PASS) {
-        (document.fonts ? document.fonts.load("700 56px Manrope").catch(function () {}) : Promise.resolve()).then(draw);
+        (document.fonts
+          ? Promise.all([
+              document.fonts.load('900 84px "Sofia Sans Extra Condensed"', "Сертификат"),
+              document.fonts.load("500 30px Onest", "Результат")
+            ]).catch(function () {})
+          : Promise.resolve()
+        ).then(draw);
       }
     });
 

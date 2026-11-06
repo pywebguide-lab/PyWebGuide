@@ -1,0 +1,25 @@
+name: Проверка сайта
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -r tools/requirements.txt
+      - name: Ссылки, заголовки, карта сайта
+        run: python tools/check_site.py
+      - name: Примеры кода
+        run: python tools/check_examples.py
+      - name: Примеры Django в настоящем проекте
+        run: python tools/check_django.py
+      - name: Индекс поиска актуален
+        run: |
+          python tools/build_search.py
+          git diff --exit-code assets/search-index.js

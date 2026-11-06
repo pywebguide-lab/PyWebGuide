@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Словарь веб-разработки простым языком — PyWeb Guide</title>
+
+  <meta name="description" content="Что такое сервер, backend, фреймворк, база данных, API и другие слова из веб-разработки. Объяснения простым языком для новичков.">
+  <link rel="canonical" href="https://pywebguide-lab.github.io/PyWebGuide/glossary.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="PyWeb Guide">
+  <meta property="og:title" content="Словарь веб-разработки простым языком — PyWeb Guide">
+  <meta property="og:description" content="Что такое сервер, backend, фреймворк, база данных, API и другие слова из веб-разработки. Объяснения простым языком для новичков.">
+  <meta property="og:url" content="https://pywebguide-lab.github.io/PyWebGuide/glossary.html">
+  <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Плакат PyWeb Guide: первый сайт на Python, бесплатный курс для тех, кто никогда не программировал">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffc4ef">
+
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="preload" href="assets/fonts/sofia-sans-extra-condensed-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Тема выбирается до отрисовки, чтобы страница не мигала
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body data-band="pink" id="top" data-no-toc>
+  <div id="progress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#content">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-text">PyWeb Guide</span>
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="start.html">С нуля</a></li>
+          <li><a class="nav-link" href="course.html">Весь курс</a></li>
+          <li><a class="nav-link" href="project.html">Первый проект</a></li>
+          <li><a class="nav-link" href="playground.html">Песочница</a></li>
+          <li><a class="nav-link active" href="glossary.html" aria-current="page">Словарь</a></li>
+          <li class="nav-more"><details>
+          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true"></span></summary>
+          <ul class="nav-more-list">
+            <li><a href="about.html">О Python</a></li>
+            <li><a href="frameworks.html">Фреймворки</a></li>
+            <li><a href="databases.html">Базы данных</a></li>
+            <li><a href="deploy.html">Публикация</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="templates.html">Шаблоны и формы</a></li>
+            <li><a href="auth.html">Авторизация</a></li>
+            <li><a href="api.html">REST API</a></li>
+            <li><a href="testing.html">Тесты</a></li>
+            <li><a href="git.html">Git</a></li>
+            <li><a href="project2.html">Второй проект</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="practice.html">Задачи</a></li>
+            <li><a href="cheatsheet.html">Шпаргалка</a></li>
+            <li><a href="exam.html">Финальный тест</a></li>
+            <li class="sep" role="presentation"></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </details></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Светлая тема">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="content" class="page" tabindex="-1">
+<div class="page-band"><div class="container page-hero page-hero--picture">
+<nav class="breadcrumb" aria-label="Хлебные крошки">
+<a href="index.html">Главная</a>
+<span aria-hidden="true">/</span>
+<span>Словарь</span>
+</nav>
+<h1>Словарь простым языком</h1>
+<p class="lead">Что значат слова, которые встречаются на этом сайте. Если забыли какое-то из них, загляните сюда.</p>
+<img class="band-picture" src="assets/img/dictionary.jpg" width="1000" height="703" alt="Титульный лист словаря Шоуэлла, 1885 год" decoding="async">
+</div></div>
+<section class="section" aria-label="Как устроен сайт">
+<div class="container">
+<div class="section-head"><h2>Как устроен сайт</h2></div>
+<div class="card-grid glossary-grid">
+  <article class="card">
+    <h3 id="browser">Браузер</h3>
+    <p>Программа, в которой вы открываете сайты: Chrome, Safari, Firefox.</p>
+  </article>
+  <article class="card">
+    <h3 id="server">Сервер</h3>
+    <p>Компьютер, который всегда включён и подключён к интернету. На нём работает программа сайта.</p>
+  </article>
+  <article class="card">
+    <h3 id="http">Запрос, ответ и HTTP</h3>
+    <p>Браузер просит страницу у сервера, это запрос. Сервер присылает её обратно, это ответ. HTTP — правила, по которым они общаются.</p>
+  </article>
+  <article class="card">
+    <h3 id="frontend">Frontend</h3>
+    <p>Всё, что вы видите на странице: текст, кнопки, оформление. Работает в браузере.</p>
+  </article>
+  <article class="card">
+    <h3 id="backend">Backend</h3>
+    <p>Скрытая часть сайта: программа на сервере, которая принимает запрос, находит данные и готовит ответ. Здесь работает Python.</p>
+  </article>
+  <article class="card">
+    <h3 id="route">Маршрут</h3>
+    <p>Правило, какой адрес какую страницу открывает. Например, адрес /contacts открывает страницу контактов.</p>
+  </article>
+  <article class="card">
+    <h3 id="html">HTML</h3>
+    <p>Содержимое страницы: заголовки, абзацы, ссылки, картинки.</p>
+  </article>
+  <article class="card">
+    <h3 id="css">CSS</h3>
+    <p>Оформление страницы: цвета, шрифты, расположение блоков.</p>
+  </article>
+  <article class="card">
+    <h3 id="javascript">JavaScript</h3>
+    <p>Язык программирования, который работает в браузере. Оживляет страницу: кнопки, меню, проверку форм.</p>
+  </article>
+</div>
+</div>
+</section>
+<section class="section" aria-label="Python и инструменты">
+<div class="container">
+<div class="section-head"><h2>Python и инструменты</h2></div>
+<div class="card-grid glossary-grid">
+  <article class="card">
+    <h3 id="python">Python</h3>
+    <p>Язык программирования с простыми правилами. На нём пишут сайты, анализ данных и автоматизацию. <a href="start.html">Уроки с нуля</a>.</p>
+  </article>
+  <article class="card">
+    <h3 id="framework">Фреймворк</h3>
+    <p>Готовый набор инструментов для сборки сайта. С ним не нужно писать всё самому. <a href="frameworks.html">Сравнение фреймворков</a>.</p>
+  </article>
+  <article class="card">
+    <h3 id="django">Django</h3>
+    <p>Большой фреймворк. Сразу умеет вход по паролю, панель управления и работу с данными. Назван в честь гитариста Джанго Рейнхардта.</p>
+  </article>
+  <article class="card">
+    <h3 id="flask">Flask</h3>
+    <p>Маленький фреймворк. Даёт только основу, а остальное подключается по мере необходимости. Хорош для первого сайта.</p>
+  </article>
+</div>
+</div>
+</section>
+<section class="section" aria-label="Данные">
+<div class="container">
+<div class="section-head"><h2>Данные</h2></div>
+<div class="card-grid glossary-grid">
+  <article class="card">
+    <h3 id="database">База данных</h3>
+    <p>Хранилище записей, в котором легко искать и менять данные: пользователей, товары, заказы. <a href="databases.html">Раздел о базах данных</a>.</p>
+  </article>
+  <article class="card">
+    <h3 id="sql">SQL</h3>
+    <p>Язык запросов к базе данных. Например: «покажи все задачи, которые ещё не выполнены».</p>
+  </article>
+  <article class="card">
+    <h3 id="sqlite">SQLite</h3>
+    <p>Простая база данных, которая хранится в одном файле. Удобна для обучения и небольших проектов.</p>
+  </article>
+  <article class="card">
+    <h3 id="orm">ORM</h3>
+    <p>Способ работать с базой данных на Python, не составляя SQL-запросы вручную.</p>
+  </article>
+  <article class="card">
+    <h3 id="crud">CRUD</h3>
+    <p>Четыре основных действия с записями: создать, прочитать, изменить и удалить. Они есть почти на любом сайте.</p>
+  </article>
+</div>
+</div>
+</section>
+<section class="section" aria-label="Работа над проектом">
+<div class="container">
+<div class="section-head"><h2>Работа над проектом</h2></div>
+<div class="card-grid glossary-grid">
+  <article class="card">
+    <h3 id="api">API и REST API</h3>
+    <p>Способ, которым программы общаются между собой. Например, приложение погоды получает данные с сервера через API.</p>
+  </article>
+  <article class="card">
+    <h3 id="git">Git</h3>
+    <p>Программа, которая хранит историю изменений в коде. К любой версии можно вернуться. <a href="git.html">Раздел о Git</a>.</p>
+  </article>
+  <article class="card">
+    <h3 id="deploy">Deploy (публикация)</h3>
+    <p>Выкладывание сайта в интернет, чтобы его могли открыть другие люди. <a href="deploy.html">Как опубликовать сайт</a>.</p>
+  </article>
+</div>
+</div>
+</section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="mark reveal" aria-hidden="true"><span>P</span><span>Y</span><span>W</span><span>E</span><span>B</span><span>G</span><span>U</span><span>I</span><span>D</span><span>E</span></div>
+      <div class="footer-links">
+        <div><strong>Начать</strong><ul><li><a href="start.html">Python с нуля</a></li><li><a href="glossary.html">Словарь</a></li><li><a href="playground.html">Песочница</a></li></ul></div>
+        <div><strong>Понять</strong><ul><li><a href="about.html">О Python</a></li><li><a href="frameworks.html">Фреймворки</a></li><li><a href="databases.html">Базы данных</a></li></ul></div>
+        <div><strong>Сделать</strong><ul><li><a href="project.html">Первый проект</a></li><li><a href="deploy.html">Публикация</a></li><li><a href="practice.html">Задачи</a></li></ul></div>
+        <div><strong>Сайт</strong><ul><li><a href="course.html">Весь курс</a></li><li><a href="contacts.html">Контакты</a></li><li><a href="index.html">Главная</a></li></ul></div>
+      </div>
+      <p class="footer-copy">© 2026 PyWeb Guide, учебный проект о Python в веб-разработке</p>
+      <p class="note footer-note">Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> · Обновлено: <time datetime="2026-11-06">06.11.2026</time> · Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 · <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a></p>
+      <p class="note footer-note">Снимок: <a href="https://commons.wikimedia.org/wiki/File:Showell%27s_Dictionary_of_Birmingham_-_title_page.jpg" rel="noopener">титульный лист словаря Шоуэлла, 1885</a>.</p>
+      <p class="note footer-note"><a href="privacy.html">Политика конфиденциальности</a> · <a href="terms.html">Условия использования</a></p>
+      <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутить наверх">↑</button>
+
+  <script src="script.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>

@@ -16,15 +16,16 @@
   <meta property="og:image" content="https://pywebguide-lab.github.io/PyWebGuide/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="PyWeb Guide — Python для веб-разработки: Django, Flask, первый проект">
+  <meta property="og:image:alt" content="Плакат PyWeb Guide: первый сайт на Python, бесплатный курс для тех, кто никогда не программировал">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#10161d">
+  <meta name="theme-color" content="#ffc4ef">
 
 
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
+  <link rel="preload" href="assets/fonts/sofia-sans-extra-condensed-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
 
   <script>
@@ -33,14 +34,14 @@
       var theme;
       try { theme = localStorage.getItem("pyweb_theme"); } catch (e) {}
       if (theme !== "light" && theme !== "dark") {
-        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        theme = "light";
       }
       document.documentElement.setAttribute("data-theme", theme);
     })();
   </script>
 </head>
 
-<body id="top">
+<body data-band="pink" id="top">
   <div id="progress" aria-hidden="true"></div>
 
   <a class="skip-link" href="#content">Перейти к содержанию</a>
@@ -59,16 +60,18 @@
 
       <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
         <ul class="nav-menu">
-          <li><a class="nav-link" href="index.html">Главная</a></li>
-          <li><a class="nav-link" href="about.html">О Python</a></li>
-          <li><a class="nav-link" href="frameworks.html">Фреймворки</a></li>
-          <li><a class="nav-link" href="databases.html">Базы данных</a></li>
+          <li><a class="nav-link" href="start.html">С нуля</a></li>
+          <li><a class="nav-link" href="course.html">Весь курс</a></li>
           <li><a class="nav-link" href="project.html">Первый проект</a></li>
-          <li><a class="nav-link active" href="deploy.html" aria-current="page">Публикация</a></li>
+          <li><a class="nav-link" href="playground.html">Песочница</a></li>
+          <li><a class="nav-link" href="glossary.html">Словарь</a></li>
           <li class="nav-more"><details>
-          <summary class="nav-link">Ещё <span class="caret" aria-hidden="true"></span></summary>
+          <summary class="nav-link active">Ещё <span class="caret" aria-hidden="true"></span></summary>
           <ul class="nav-more-list">
-            <li><a href="course.html">Весь курс и прогресс</a></li>
+            <li><a href="about.html">О Python</a></li>
+            <li><a href="frameworks.html">Фреймворки</a></li>
+            <li><a href="databases.html">Базы данных</a></li>
+            <li><a href="deploy.html" aria-current="page">Публикация</a></li>
             <li class="sep" role="presentation"></li>
             <li><a href="templates.html">Шаблоны и формы</a></li>
             <li><a href="auth.html">Авторизация</a></li>
@@ -77,7 +80,6 @@
             <li><a href="git.html">Git</a></li>
             <li><a href="project2.html">Второй проект</a></li>
             <li class="sep" role="presentation"></li>
-            <li><a href="playground.html">Песочница</a></li>
             <li><a href="practice.html">Задачи</a></li>
             <li><a href="cheatsheet.html">Шпаргалка</a></li>
             <li><a href="exam.html">Финальный тест</a></li>
@@ -96,19 +98,20 @@
 
 
   <main id="content" class="page" tabindex="-1">
-      <div class="container page-hero">
+      <div class="page-band"><div class="container page-hero page-hero--picture">
         <nav class="breadcrumb" aria-label="Хлебные крошки">
           <a href="index.html">Главная</a>
           <span aria-hidden="true">/</span>
           <span>Публикация</span>
         </nav>
-        <h1>Публикация: как выложить приложение в интернет</h1>
+        <h1>Как выложить сайт в интернет</h1>
         <p class="lead">
           Пока сервер запущен на вашем компьютере, сайт видите только вы. Разберём, как бесплатно опубликовать
           список задач из <a href="project.html">первого проекта</a> на хостинге PythonAnywhere —
           он создан специально для Python и не требует настройки сервера.
         </p>
-      </div>
+      <img class="band-picture" src="assets/img/press.jpg" width="1000" height="620" alt="Рисунок Сэмюэла Локстона, 1908 год: первая печатная машина газеты Daily Press, Бристоль, 1858 год" decoding="async">
+</div></div>
 
       <section class="section" aria-labelledby="plan-title">
         <div class="container">
@@ -125,6 +128,7 @@
                 <li>512 МБ на диске — для учебного проекта с SQLite хватает с запасом</li>
                 <li>Приложение работает месяц; затем его нужно продлить кнопкой на вкладке Web</li>
                 <li>Выход в интернет из кода — только к сайтам из разрешённого списка</li>
+                <li>100 секунд процессора в день на код в консолях; на работу самого сайта они не тратятся</li>
               </ul>
             </article>
 
@@ -140,7 +144,7 @@
             </article>
           </div>
 
-          <p class="note stack-gap">Условия тарифа взяты из справки PythonAnywhere на октябрь 2026 года и могут измениться — актуальные данные есть в источниках внизу страницы.</p>
+          <p class="note stack-gap">Условия тарифа взяты из справки PythonAnywhere на ноябрь 2026 года и могут измениться — актуальные данные есть в источниках внизу страницы.</p>
         </div>
       </section>
 
@@ -205,6 +209,8 @@ mkvirtualenv --python=/usr/bin/python3.13 mysite-venv
 cd mysite
 pip install -r requirements.txt</code></pre>
               </div>
+              <p class="note">Python 3.13 есть только в системном образе <strong>innit</strong>. Если команда пишет, что <code>python3.13</code> не найден,
+                откройте страницу <strong>Account</strong>, вкладку <strong>System image</strong>, и выберите innit.</p>
             </li>
 
             <li class="project-step reveal">
@@ -345,11 +351,12 @@ python manage.py migrate
         <div class="container">
           <div class="panel sources reveal">
             <h2 id="sources-title">Источники</h2>
-            <p class="note">Справка PythonAnywhere проверена <time datetime="2026-10-28">28.10.2026</time>.</p>
+            <p class="note">Справка PythonAnywhere проверена <time datetime="2026-11-06">06.11.2026</time>.</p>
             <ul class="list">
               <li><a href="https://help.pythonanywhere.com/pages/Flask/" rel="noopener">PythonAnywhere: публикация Flask</a></li>
               <li><a href="https://help.pythonanywhere.com/pages/DeployExistingDjangoProject/" rel="noopener">PythonAnywhere: публикация готового проекта Django</a></li>
               <li><a href="https://help.pythonanywhere.com/pages/FreeAccountsFeatures/" rel="noopener">PythonAnywhere: возможности бесплатного тарифа</a></li>
+              <li><a href="https://help.pythonanywhere.com/pages/PythonVersions/" rel="noopener">PythonAnywhere: версии Python в системных образах</a></li>
               <li><a href="https://help.pythonanywhere.com/pages/EnvironmentVariables/" rel="noopener">PythonAnywhere: переменные окружения</a> — где хранить SECRET_KEY</li>
               <li><a href="https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/" rel="noopener">Django 6.1: чек-лист перед публикацией</a></li>
             </ul>
@@ -373,28 +380,18 @@ python manage.py migrate
   </main>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <div>
-        © 2026 PyWeb Guide — учебный проект о Python в веб-разработке
+    <div class="container">
+      <div class="mark reveal" aria-hidden="true"><span>P</span><span>Y</span><span>W</span><span>E</span><span>B</span><span>G</span><span>U</span><span>I</span><span>D</span><span>E</span></div>
+      <div class="footer-links">
+        <div><strong>Начать</strong><ul><li><a href="start.html">Python с нуля</a></li><li><a href="glossary.html">Словарь</a></li><li><a href="playground.html">Песочница</a></li></ul></div>
+        <div><strong>Понять</strong><ul><li><a href="about.html">О Python</a></li><li><a href="frameworks.html">Фреймворки</a></li><li><a href="databases.html">Базы данных</a></li></ul></div>
+        <div><strong>Сделать</strong><ul><li><a href="project.html">Первый проект</a></li><li><a href="deploy.html">Публикация</a></li><li><a href="practice.html">Задачи</a></li></ul></div>
+        <div><strong>Сайт</strong><ul><li><a href="course.html">Весь курс</a></li><li><a href="contacts.html">Контакты</a></li><li><a href="index.html">Главная</a></li></ul></div>
       </div>
-      <div>
-        <a href="index.html">Главная</a> •
-        <a href="about.html">О Python</a> •
-        <a href="frameworks.html">Фреймворки</a> •
-        <a href="project.html">Первый проект</a> •
-        <a href="course.html">Весь курс</a> •
-        <a href="contacts.html">Контакты</a>
-      </div>
-      <p class="note footer-note">
-        Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> ·
-        Обновлено: <time datetime="2026-11-04">04.11.2026</time> ·
-        Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 ·
-        <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a>
-      </p>
-      <p class="note footer-note">
-        <a href="privacy.html">Политика конфиденциальности</a> ·
-        <a href="terms.html">Условия использования</a>
-      </p>
+      <p class="footer-copy">© 2026 PyWeb Guide, учебный проект о Python в веб-разработке</p>
+      <p class="note footer-note">Авторы: <a href="contacts.html#authors">Жангужин Е. Е., Косяк Р. А.</a> · Обновлено: <time datetime="2026-11-06">06.11.2026</time> · Версии в примерах: Python 3.12+, Django 6.1, Flask 3.1, FastAPI 0.162 · <a href="https://github.com/pywebguide-lab/PyWebGuide" rel="noopener">Исходный код на GitHub</a></p>
+      <p class="note footer-note">Рисунок: <a href="https://commons.wikimedia.org/wiki/File:Western_Daily_Press_printing_press_1858.jpg" rel="noopener">первая печатная машина газеты Daily Press (Бристоль, 1858), Samuel Loxton, 1908</a>.</p>
+      <p class="note footer-note"><a href="privacy.html">Политика конфиденциальности</a> · <a href="terms.html">Условия использования</a></p>
       <p class="note footer-note">Сайт учебный. Сообщения с формы отправляются через публичный раздел Issues на GitHub.</p>
     </div>
   </footer>

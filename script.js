@@ -89,8 +89,13 @@
     document.documentElement.classList.add("js-reveal");
 
     const revealObserver = new IntersectionObserver(function (entries) {
+      // Блоки, вошедшие в экран вместе, появляются друг за другом, а не все сразу
+      let order = 0;
+
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
+          entry.target.style.setProperty("--i", Math.min(order, 7));
+          order += 1;
           entry.target.classList.add("visible");
           revealObserver.unobserve(entry.target);
         }
@@ -100,14 +105,18 @@
     });
 
     revealElements.forEach(function (element) {
-      // Соседние блоки появляются друг за другом, а не все сразу
-      const siblings = Array.prototype.filter.call(element.parentElement.children, function (node) {
-        return node.classList.contains("reveal");
-      });
-      element.style.setProperty("--i", Math.min(siblings.indexOf(element), 5));
       revealObserver.observe(element);
     });
   }
+
+  /* Кнопка «Назад» уводит лист обратно вниз. Браузер без этого API просто покажет обычный переход */
+  window.addEventListener("pagereveal", function (event) {
+    const activation = window.navigation && window.navigation.activation;
+    if (!event.viewTransition || !activation || !activation.from || !activation.entry) return;
+    if (activation.navigationType === "traverse" && activation.entry.index < activation.from.index) {
+      event.viewTransition.types.add("back");
+    }
+  });
 
   /* Progress + toTop */
   const progress = document.getElementById("progress");
@@ -116,10 +125,10 @@
   function updateScrollUI() {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrolled = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    const scrolled = docHeight > 0 ? scrollTop / docHeight : 0;
 
     if (progress) {
-      progress.style.width = scrolled + "%";
+      progress.style.transform = "scaleX(" + scrolled + ")";
     }
 
     if (toTop) {
@@ -554,12 +563,10 @@
 
   /* Тема: тёмная или светлая, выбор сохраняется в localStorage */
   const themeToggle = document.querySelector(".theme-toggle");
-  const themeMeta = document.querySelector('meta[name="theme-color"]');
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     if (themeToggle) themeToggle.setAttribute("aria-pressed", String(theme === "light"));
-    if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#f5f7fb" : "#0b0f16");
   }
 
   applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
@@ -567,7 +574,13 @@
   if (themeToggle) {
     themeToggle.addEventListener("click", function () {
       const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
-      applyTheme(next);
+
+      // Новая тема накрывает страницу тем же листом, что и переход между разделами
+      if (document.startViewTransition && !prefersReducedMotion) {
+        document.startViewTransition(function () { applyTheme(next); });
+      } else {
+        applyTheme(next);
+      }
 
       try {
         localStorage.setItem("pyweb_theme", next);
